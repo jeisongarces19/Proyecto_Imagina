@@ -1,0 +1,13 @@
+{
+  "partCode": "22000032439",
+  "units": "mm",
+  "connectors": [
+    {
+      "id": "top_edge",
+      "type": "edge",
+      "role": "host",
+      "compatibleWith": ["top_edge", "surface_edge"],
+      "line": { "from": [0, 600, 0], "to": [30, 600, 0] }
+    }
+  ]
+}
