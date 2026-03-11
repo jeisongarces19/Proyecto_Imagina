@@ -1,0 +1,10 @@
+001_Textiles
+002_Formicas
+003_Plasticos
+004_Cantos
+005_Vidrios
+006_Pinturas
+007_Maderas
+008_LBP
+009_Fieltro
+materiales.txt

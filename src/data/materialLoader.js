@@ -50,25 +50,29 @@ export async function loadMaterialsFromGenEsp(url = '/data/xml/gen-esp_3.xml') {
 
       const vigenciaRaw = getAny(pt, ['VIGENCIA']) || null;
       const subCategory = getAny(pt, ['SUB_CATEGORIA', 'SUBCATEGORIA']) || null;
+      const category = getAny(pt, ['CATEGORIA']) || null;
+      const family = getAny(pt, ['FAMILIA']) || null;
+      const subfamily = getAny(pt, ['SUBFAMILIA']) || null;
 
       // ✅ claves para Three
       const rgbValue = getAny(pt, ['VALOR_RGB', 'RGB', 'RGB_VALUE']) || null; // "210_158_108"
       const textureFile = getAny(pt, ['ARCHIVO_TEXTURA', 'TEXTURA', 'TEXTURE_FILE']) || null; // "alpiclaro1799.jpg"
 
       const obj = {
-        code, // materialCode real
+        code,
         name,
-        shortName, // ✅ nuevo: útil para buscador
-        type, // ✅ nuevo
-        material, // ✅ nuevo
-        activo, // ✅ nuevo
-        activoRaw, // ✅ nuevo (por debug)
+        shortName,
+        type,
+        material,
+        activo,
+        activoRaw,
         groupCode,
         groupName,
+        category,
+        family,
+        subfamily,
         vigenciaRaw,
         subCategory,
-
-        // ✅ para materialRegistry / applyMaterial
         rgbValue,
         textureFile,
       };

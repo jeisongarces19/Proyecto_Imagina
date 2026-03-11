@@ -8,6 +8,8 @@ import PropertiesPanel from './components/PropertiesPanel';
 import SurfaceModal from './components/SurfaceModal';
 import WallsPanel from './components/WallsPanel';
 
+import TopMenuBar from './components/TopMenuBar';
+
 import { buildCatalogFromXml, CATALOG_COUNTRIES } from './catalog/buildCatalogFromXml';
 import { loadMaterialsFromGenEsp } from './data/materialLoader';
 
@@ -29,6 +31,11 @@ import Plan2DUploader from './components/Plan2DUploader';
 import { exportProjectPPT } from './exports/exportPPT';
 
 import { useAuth, getRolePermissions } from './auth/AuthContext.jsx';
+
+import LeftRail from './components/LeftRail';
+import LeftPanel from './components/LeftPanel';
+
+import { loadCategoriasIntranet } from './services/categoriasIntranet.js';
 
 function normalizeCode(code) {
   return String(code ?? '').trim();
@@ -96,6 +103,51 @@ export default function App() {
   const [walls, setWalls] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
   const [surfaceOpen, setSurfaceOpen] = useState(false);
+
+  //Tipologias
+  const [leftSection, setLeftSection] = useState('catalog');
+  const [categoriasRaw, setCategoriasRaw] = useState([]);
+  const [categoriasAgrupadas, setCategoriasAgrupadas] = useState([]);
+  const [selectedNombreCategoria, setSelectedNombreCategoria] = useState('');
+  const [selectedCategoriaTipologiaId, setSelectedCategoriaTipologiaId] = useState(null);
+
+  const [profundidadFilter, setProfundidadFilter] = useState('');
+  const [longitudFilter, setLongitudFilter] = useState('');
+  const [espesorFilter, setEspesorFilter] = useState('');
+
+  //La Parte Superior o barra horizontal de opciones, archivo, etc
+  const handleSave = () => {
+    const data = threeApiRef.current?.exportProject?.();
+    if (!data) return;
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'proyecto-imagina.json';
+    a.click();
+  };
+
+  const handleOpenFile = async (file) => {
+    const text = await file.text();
+    const json = JSON.parse(text);
+
+    // IMPORTANTE: llama tu API load (la que ya tienes con pendingProject)
+    threeApiRef.current?.loadProject?.(json);
+    // o si tu flujo es setProjectToLoad(json), usa el tuyo.
+  };
+
+  const handleNew = () => {
+    threeApiRef.current?.clearProject?.(); // si expusiste clearProject
+    // o resetea el estado del proyecto como lo tengas
+  };
+
+  const handleExit = () => {
+    // en web no se puede “cerrar” la pestaña por seguridad
+    // pero puedes ir a Home, limpiar, abrir modal, etc.
+    handleNew();
+  };
+
+  //////////////////////////
 
   // Si se elimina/deselecciona en 3D, limpiamos selección 2D para evitar IDs “fantasma”
   useEffect(() => {
@@ -234,6 +286,61 @@ export default function App() {
   }, []);
 
   /* ==========================
+     Cargar Tipologias por categorias (categorias_intranet)
+     ========================== */
+
+  useEffect(() => {
+    async function load() {
+      const data = await loadCategoriasIntranet();
+      setCategoriasRaw(data);
+
+      const map = {};
+
+      data.forEach((c) => {
+        const nombre = String(c.nombre || '').trim();
+        if (!nombre) return;
+
+        if (!map[nombre]) {
+          map[nombre] = [];
+        }
+
+        map[nombre].push({
+          id: c.id,
+          padre_id: c.padre_id,
+          slug: c.slug,
+          nombre: c.nombre,
+        });
+      });
+
+      const arr = Object.entries(map).map(([nombre, items]) => ({
+        nombre,
+        items,
+      }));
+
+      setCategoriasAgrupadas(arr);
+    }
+
+    load();
+  }, []);
+
+  const categoriasPorNombre = useMemo(() => {
+    if (!selectedNombreCategoria) return [];
+    return categoriasRaw.filter((c) => c.nombre === selectedNombreCategoria);
+  }, [categoriasRaw, selectedNombreCategoria]);
+
+  const categoriaIdsSeleccionados = useMemo(() => {
+    if (selectedCategoriaTipologiaId) {
+      return [Number(selectedCategoriaTipologiaId)];
+    }
+
+    if (selectedNombreCategoria) {
+      return categoriasPorNombre.map((c) => Number(c.id));
+    }
+
+    return null;
+  }, [selectedCategoriaTipologiaId, selectedNombreCategoria, categoriasPorNombre]);
+
+  /* ==========================
      Cargar catálogo (ptsinbom)
      ========================== */
   useEffect(() => {
@@ -245,351 +352,333 @@ export default function App() {
   }, []);
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr 320px', height: '100vh' }}>
-      {/* LEFT */}
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* TOP BAR */}
+      <TopMenuBar
+        user={user}
+        perms={perms}
+        country={country}
+        setCountry={setCountry}
+        catalogCountries={CATALOG_COUNTRIES}
+        materialsByCode={materialsByCode}
+        threeApiRef={threeApiRef}
+        onLogout={logout}
+        onNewProject={() => threeApiRef.current?.clearProject?.()}
+        debugSaveAlert={false}
+        onOpenBom={() => setBomOpen(true)}
+        onCloseBom={() => setBomOpen(false)}
+      />
 
+      {/* APP GRID */}
       <div
         style={{
-          borderRight: '1px solid #e5e5e5',
-          padding: 12,
-          background: '#fff',
-          overflow: 'auto',
+          flex: 1,
+          display: 'grid',
+          gridTemplateColumns: '280px 1fr 320px',
+          minHeight: 0,
         }}
       >
-        <h3 style={{ margin: '0 0 12px 0' }}>Productos/Materiales</h3>
+        {/* LEFT (Rail + Panel estilo CET) */}
+        <div style={{ display: 'flex', minHeight: 0, borderRight: '1px solid #e5e5e5' }}>
+          <LeftRail active={leftSection} onChange={setLeftSection} />
+          {/* CONTENEDOR VERTICAL */}
+          <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+            {/* SELECT ARRIBA */}
+            {leftSection === 'typologies' && (
+              <div style={{ padding: 8, borderBottom: '1px solid #e5e5e5', background: '#fafafa' }}>
+                {/* Select 1: Nombre */}
+                <select
+                  value={selectedNombreCategoria}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSelectedNombreCategoria(value);
+                    setSelectedCategoriaTipologiaId(null);
+                    setProfundidadFilter('');
+                    setLongitudFilter('');
+                    setEspesorFilter('');
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: 8,
+                    borderRadius: 8,
+                    border: '1px solid #ddd',
+                    marginBottom: 8,
+                  }}
+                >
+                  <option value="">Todas las líneas</option>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 10,
-            marginBottom: 10,
-            padding: '8px 10px',
-            borderRadius: 12,
-            border: '1px solid #e5e7eb',
-            background: '#fafafa',
-          }}
-        >
-          <div style={{ display: 'grid', gap: 2 }}>
-            <div style={{ fontSize: 12, fontWeight: 800 }}>Sesión: {user?.label || user?.role}</div>
-            <div style={{ fontSize: 11, opacity: 0.75 }}>Usuario: {user?.username}</div>
-          </div>
-          <button
-            onClick={logout}
-            style={{
-              padding: '8px 10px',
-              borderRadius: 12,
-              border: '1px solid #ddd',
-              background: '#fff',
-              cursor: 'pointer',
-              fontWeight: 800,
-            }}
-          >
-            Salir
-          </button>
-        </div>
+                  {categoriasAgrupadas.map((c) => (
+                    <option key={c.nombre} value={c.nombre}>
+                      {c.nombre}
+                    </option>
+                  ))}
+                </select>
 
-        <div style={{ marginTop: 6, marginBottom: 10, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          {/*style={{ position: 'absolute', top: 12, right: 12, zIndex: 50, display: 'flex', gap: 8 }}*/}
-          <button onClick={() => setBomOpen(true)}>Abrir BOM</button>
-          <button onClick={() => setBomOpen(false)}>Cerrar BOM</button>
-        </div>
+                {/* Select 2: Id dentro del nombre seleccionado */}
+                <select
+                  value={selectedCategoriaTipologiaId || ''}
+                  onChange={(e) => {
+                    setSelectedCategoriaTipologiaId(e.target.value ? Number(e.target.value) : null);
 
-        <Plan2DUploader onLoadFile={handleLoadPlan2D} />
+                    setProfundidadFilter('');
+                    setLongitudFilter('');
+                    setEspesorFilter('');
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: 8,
+                    borderRadius: 8,
+                    border: '1px solid #ddd',
+                  }}
+                  disabled={!selectedNombreCategoria}
+                >
+                  <option value="">
+                    {selectedNombreCategoria
+                      ? 'Todas las variantes de esta línea'
+                      : 'Primero selecciona una línea'}
+                  </option>
 
-        <button
-          onClick={() => setPlan2DVisible((v) => !v)}
-          style={{
-            padding: '8px 12px',
-            borderRadius: 10,
-            border: '1px solid #ddd',
-            cursor: 'pointer',
-            fontWeight: 700,
-          }}
-        >
-          {plan2DVisible ? 'Ocultar plano' : 'Mostrar plano'}
-        </button>
+                  {categoriasPorNombre.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.id} - {c.slug}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 10 }}>
-          <select value={country} onChange={(e) => setCountry(e.target.value)}>
-            {CATALOG_COUNTRIES.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-
-          <button
-            onClick={() => {
-              const data = threeApiRef.current?.exportProject?.();
-              if (!data) return;
-
-              alert(
-                JSON.stringify(
-                  {
-                    firstPartKeys: Object.keys(data.parts?.[0] || {}),
-                    firstFinishes: data.parts?.[0]?.finishes || null,
-                    finishesCount: data.parts?.[0]?.finishes
-                      ? Object.keys(data.parts[0].finishes).length
-                      : 0,
-                  },
-                  null,
-                  2
-                )
-              );
-
-              const blob = new Blob([JSON.stringify(data, null, 2)], {
-                type: 'application/json',
-              });
-              const a = document.createElement('a');
-              a.href = URL.createObjectURL(blob);
-              a.download = 'proyecto-imagina.json';
-              a.click();
-            }}
-            disabled={!perms.canLoadSave}
-          >
-            Guardar
-          </button>
-
-          <label
-            style={{
-              border: '1px solid #ddd',
-              padding: '6px 10px',
-              borderRadius: 8,
-              cursor: 'pointer',
-              opacity: perms.canLoadSave ? 1 : 0.5,
-            }}
-          >
-            Cargar
-            <input
-              type="file"
-              accept="application/json"
-              style={{ display: 'none' }}
-              disabled={!perms.canLoadSave}
-              onChange={async (e) => {
-                if (!perms.canLoadSave) return;
-                const file = e.target.files?.[0];
-                if (!file) return;
-                const text = await file.text();
-                const json = JSON.parse(text);
-                if (!materialsByCode || materialsByCode.size === 0) {
-                  alert(
-                    'Aún no se han cargado los materiales. Espera un momento y vuelve a intentar.'
-                  );
-                  return;
-                }
-                threeApiRef.current?.loadProject?.(json);
-                e.target.value = '';
+            {/* PANEL */}
+            <LeftPanel
+              section={leftSection}
+              readOnly={readOnly}
+              catalogItems={catalogItems}
+              country={country}
+              categoriaTipologiaId={categoriaIdsSeleccionados}
+              profundidadFilter={profundidadFilter}
+              setProfundidadFilter={setProfundidadFilter}
+              longitudFilter={longitudFilter}
+              setLongitudFilter={setLongitudFilter}
+              espesorFilter={espesorFilter}
+              setEspesorFilter={setEspesorFilter}
+              selectedPart={selectedPart}
+              onAddCatalogItem={(codigoPT) =>
+                !readOnly && threeApiRef.current?.addCatalogItem?.(codigoPT)
+              }
+              onAddTypology={(codigoPT) =>
+                !readOnly && threeApiRef.current?.addTypology?.(codigoPT)
+              }
+              onToggleSnap={() => !readOnly && threeApiRef.current?.toggleSnap?.()}
+              onApplyGlobalMaterial={(code, scope = 'ALL') => {
+                if (readOnly) return;
+                const def = code ? materialsByCode?.get?.(String(code)) || null : null;
+                threeApiRef.current?.applyFinishToActivePart?.(code, def, scope);
               }}
+              materials={materials}
+              materialsByCode={materialsByCode}
+              setSurfaceOpen={setSurfaceOpen}
+              Plan2DUploader={Plan2DUploader}
+              handleLoadPlan2D={handleLoadPlan2D}
+              plan2DVisible={plan2DVisible}
+              setPlan2DVisible={setPlan2DVisible}
+              wallMode={wallMode}
+              setWallMode={setWallMode}
+              wallHeight={wallHeight}
+              setWallHeight={setWallHeight}
+              wallThickness={wallThickness}
+              setWallThickness={setWallThickness}
+              onUndoLastWall={() => setWalls((prev) => prev.slice(0, -1))}
+              onClearWalls={() => setWalls([])}
             />
-          </label>
+          </div>
 
-          <button
-            onClick={() => perms.canLoadSave && threeApiRef.current?.clearProject?.()}
-            disabled={!perms.canLoadSave}
-          >
-            Nuevo
-          </button>
-        </div>
-
-        {/*<button onClick={() => threeApiRef.current?.addTypology?.('22000131997')}>
-            Agregar tipología 22000131997
-          </button>*/}
-
-        <CatalogPanel
-          country={country}
-          items={catalogItems}
-          disabled={!isReady || readOnly}
-          onAddCatalogItem={(codigoPT) =>
-            !readOnly && threeApiRef.current?.addCatalogItem?.(codigoPT)
-          }
-          onToggleSnap={() => !readOnly && threeApiRef.current?.toggleSnap?.()}
-          onAddSurface={() => !readOnly && setSurfaceOpen(true)}
-          onAddTypology={(codigoPT) => !readOnly && threeApiRef.current?.addTypology?.(codigoPT)} // ✅ NUEVO
-        />
-
-        {!isReady && (
-          <div style={{ marginTop: 12, fontSize: 12, opacity: 0.7 }}>Cargando visor...</div>
-        )}
-      </div>
-
-      {/* CENTER */}
-      <div style={{ minHeight: 0, position: 'relative' }}>
-        {/* BOTONES UI */}
-        <div
-          style={{ position: 'absolute', top: 12, right: 12, zIndex: 10, display: 'flex', gap: 8 }}
-        >
-          {perms.canExport && (
-            <>
-              <button onClick={() => threeApiRef.current?.exportGLTF?.()}>Exportar GLB</button>
-              <button onClick={() => threeApiRef.current?.exportDXF?.()}>
-                Exportar DXF (planta)
-              </button>
-            </>
+          {!isReady && (
+            <div style={{ padding: 12, fontSize: 12, opacity: 0.7 }}>Cargando visor...</div>
           )}
         </div>
 
-        <ThreeCanvas
-          walls={walls}
-          readOnly={readOnly}
-          materialsByCode={materialsByCode}
-          onApiReady={(api) => {
-            threeApiRef.current = api;
-            setIsReady(true);
-          }}
-          onSelectionChange={setSelectedPart}
-          onBOMChange={handleBOMChange}
-        />
-        <Plan2DOverlay
-          getSnapshot={() => threeApiRef.current?.getPartsSnapshot2D?.() || []}
-          selectedIds={selectedIds}
-          onPickIds={(ids) => {
-            setSelectedIds(ids);
-
-            // opcional: si quieres que el 3D seleccione el último que tocaste
-            const last = ids?.[ids.length - 1];
-            if (last) threeApiRef.current?.selectPartById?.(last);
-          }}
-          // compat (si aún lo usas en otras partes)
-          onPickId={(id) => threeApiRef.current?.selectPartById?.(id)}
-          walls={walls}
-          wallMode={wallMode}
-          wallHeight={wallHeight}
-          wallThickness={wallThickness}
-          onAddWall={(wall) => setWalls((prev) => [...prev, wall])}
-          onSetWalls={setWalls}
-          height={240} // ✅ grande como antes
-          invertZ={true} // ✅ si lo ves “vertical al revés”, cambia a false
-        />
-
-        {/* ✅ Ventana nueva del BOM */}
-        <BOMWindow open={bomOpen} title="BOM - Proyecto" onClose={() => setBomOpen(false)}>
-          <BOMView items={bomItems} />
-        </BOMWindow>
-
-        {/* Ayuda + export PPT */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 12,
-            bottom: 12,
-            zIndex: 10,
-            display: 'grid',
-            gap: 10,
-            maxWidth: 360,
-          }}
-        >
+        {/* CENTER */}
+        <div style={{ minHeight: 0, position: 'relative' }}>
+          {/* Export buttons */}
           <div
             style={{
-              padding: '10px 12px',
-              borderRadius: 14,
-              border: '1px solid #e5e7eb',
-              background: 'rgba(255,255,255,0.9)',
-              backdropFilter: 'blur(6px)',
-              fontSize: 12,
-              opacity: 0.95,
-              lineHeight: 1.4,
+              position: 'absolute',
+              top: 12,
+              right: 12,
+              zIndex: 10,
+              display: 'flex',
+              gap: 8,
             }}
           >
-            <b>Controles</b>
-            <br />• Mover pieza activa: <b>WASD</b> o <b>Flechas</b>
-            <br />• Subir/Bajar: <b>Q</b> / <b>E</b>
-            <br />• Snap: <b>Espacio</b>
-            <br />• Eliminar pieza: <b>Supr</b> (Delete)
-            {readOnly && (
-              <div style={{ marginTop: 6, opacity: 0.8 }}>
-                <b>Modo comercial:</b> navegación y exportación, sin edición.
-              </div>
+            {perms.canExport && (
+              <>
+                <button onClick={() => threeApiRef.current?.exportGLTF?.()}>Exportar GLB</button>
+                <button onClick={() => threeApiRef.current?.exportDXF?.()}>
+                  Exportar DXF (planta)
+                </button>
+              </>
             )}
           </div>
 
-          {perms.canExport && (
-            <button
-              onClick={() => {
-                const planCanvas = document.querySelector('#plan2d-canvas');
-                const planPng = planCanvas?.toDataURL?.('image/png');
+          <ThreeCanvas
+            walls={walls}
+            readOnly={readOnly}
+            materialsByCode={materialsByCode}
+            onApiReady={(api) => {
+              threeApiRef.current = api;
+              setIsReady(true);
+            }}
+            onSelectionChange={setSelectedPart}
+            onBOMChange={handleBOMChange}
+          />
 
-                // mejor: usa tu ref real del renderer
-                const threeCanvas = document.querySelector('canvas');
-                const threePng = threeCanvas?.toDataURL?.('image/png') || null;
+          <Plan2DOverlay
+            getSnapshot={() => threeApiRef.current?.getPartsSnapshot2D?.() || []}
+            selectedIds={selectedIds}
+            onPickIds={(ids) => {
+              setSelectedIds(ids);
+              const last = ids?.[ids.length - 1];
+              if (last) threeApiRef.current?.selectPartById?.(last);
+            }}
+            onPickId={(id) => threeApiRef.current?.selectPartById?.(id)}
+            walls={walls}
+            wallMode={wallMode}
+            wallHeight={wallHeight}
+            wallThickness={wallThickness}
+            onAddWall={(wall) => setWalls((prev) => [...prev, wall])}
+            onSetWalls={setWalls}
+            height={240}
+            invertZ={true}
+          />
 
-                exportProjectPPT({
-                  projectName: 'Proyecto IMAGINA',
-                  planPngDataUrl: planPng,
-                  threePngDataUrl: threePng,
-                  bomItems: bomItems,
-                });
-              }}
+          <BOMWindow open={bomOpen} title="BOM - Proyecto" onClose={() => setBomOpen(false)}>
+            <BOMView items={bomItems} />
+          </BOMWindow>
+
+          {/* Help + PPT */}
+          <div
+            style={{
+              position: 'absolute',
+              left: 12,
+              bottom: 12,
+              zIndex: 10,
+              display: 'grid',
+              gap: 10,
+              maxWidth: 360,
+            }}
+          >
+            <div
               style={{
                 padding: '10px 12px',
                 borderRadius: 14,
-                border: '1px solid #111827',
-                background: '#111827',
-                color: '#fff',
-                cursor: 'pointer',
-                fontWeight: 900,
+                border: '1px solid #e5e7eb',
+                background: 'rgba(255,255,255,0.9)',
+                backdropFilter: 'blur(6px)',
+                fontSize: 12,
+                opacity: 0.95,
+                lineHeight: 1.4,
               }}
             >
-              Exportar PowerPoint
-            </button>
-          )}
+              <b>Controles</b>
+              <br />• Mover pieza activa: <b>WASD</b> o <b>Flechas</b>
+              <br />• Subir/Bajar: <b>Q</b> / <b>E</b>
+              <br />• Snap: <b>Espacio</b>
+              <br />• Eliminar pieza: <b>Supr</b> (Delete)
+              {readOnly && (
+                <div style={{ marginTop: 6, opacity: 0.8 }}>
+                  <b>Modo comercial:</b> navegación y exportación, sin edición.
+                </div>
+              )}
+            </div>
+
+            {perms.canExport && (
+              <button
+                onClick={() => {
+                  const planCanvas = document.querySelector('#plan2d-canvas');
+                  const planPng = planCanvas?.toDataURL?.('image/png');
+                  const threeCanvas = document.querySelector('canvas');
+                  const threePng = threeCanvas?.toDataURL?.('image/png') || null;
+
+                  exportProjectPPT({
+                    projectName: 'Proyecto IMAGINA',
+                    planPngDataUrl: planPng,
+                    threePngDataUrl: threePng,
+                    bomItems: bomItems,
+                  });
+                }}
+                style={{
+                  padding: '10px 12px',
+                  borderRadius: 14,
+                  border: '1px solid #111827',
+                  background: '#111827',
+                  color: '#fff',
+                  cursor: 'pointer',
+                  fontWeight: 900,
+                }}
+              >
+                Exportar PowerPoint
+              </button>
+            )}
+          </div>
         </div>
-      </div>
 
-      {/* RIGHT */}
-      <div style={{ borderLeft: '1px solid #e5e5e5', background: '#fff', overflow: 'auto' }}>
-        <WallsPanel
-          wallMode={wallMode}
-          setWallMode={setWallMode}
-          wallHeight={wallHeight}
-          setWallHeight={setWallHeight}
-          wallThickness={wallThickness}
-          setWallThickness={setWallThickness}
-          wallsCount={walls.length}
-          onUndoLastWall={() => setWalls((prev) => prev.slice(0, -1))}
-          onClearWalls={() => setWalls([])}
-          onExportSvg={exportPlanSvg}
-          onExportPng={exportPlanPng}
-          onExportPdf={exportPlanPdf}
-          readOnly={readOnly}
+        {/* RIGHT */}
+        <div
+          style={{
+            borderLeft: '1px solid #e5e5e5',
+            background: '#fff',
+            overflow: 'auto',
+            minHeight: 0,
+          }}
+        >
+          <WallsPanel
+            wallMode={wallMode}
+            setWallMode={setWallMode}
+            wallHeight={wallHeight}
+            setWallHeight={setWallHeight}
+            wallThickness={wallThickness}
+            setWallThickness={setWallThickness}
+            wallsCount={walls.length}
+            onUndoLastWall={() => setWalls((prev) => prev.slice(0, -1))}
+            onClearWalls={() => setWalls([])}
+            onExportSvg={exportPlanSvg}
+            onExportPng={exportPlanPng}
+            onExportPdf={exportPlanPdf}
+            readOnly={readOnly}
+          />
+
+          <PropertiesPanel
+            part={selectedPart}
+            partAcabado={materialsForPanel}
+            bomItems={bomItems}
+            country={country}
+            byCode={byCode}
+            api={threeApiRef.current}
+            materials={filteredMaterials}
+            materialsAcabado={filteredMaterialsAcabado}
+            materialsByCode={materialsByCode}
+            readOnly={readOnly}
+          />
+        </div>
+
+        {/* MODAL (fuera del grid interno pero dentro del return) */}
+        <SurfaceModal
+          open={surfaceOpen}
+          onClose={() => setSurfaceOpen(false)}
+          lines={['LINK.SYS', 'KONCISA.PLUS']}
+          defaultLine="LINK.SYS"
+          onCreate={({ line, widthMm, depthMm, thickMm, codigoPT }) => {
+            setSurfaceOpen(false);
+            threeApiRef.current?.addSurface?.({
+              line,
+              codigoPT,
+              widthM: widthMm / 1000,
+              depthM: depthMm / 1000,
+              thicknessM: thickMm / 1000,
+              dim: { widthMm, depthMm, thickMm },
+            });
+          }}
         />
-
-        <PropertiesPanel
-          part={selectedPart}
-          partAcabado={materialsForPanel}
-          bomItems={bomItems}
-          country={country}
-          byCode={byCode}
-          api={threeApiRef.current}
-          materials={filteredMaterials} // ✅ SOLO LOS DEL GENÉRICO
-          materialsAcabado={filteredMaterialsAcabado}
-          materialsByCode={materialsByCode}
-          readOnly={readOnly}
-        />
       </div>
-
-      {/* MODAL */}
-      <SurfaceModal
-        open={surfaceOpen}
-        onClose={() => setSurfaceOpen(false)}
-        lines={['LINK.SYS', 'KONCISA.PLUS']}
-        defaultLine="LINK.SYS"
-        onCreate={({ line, widthMm, depthMm, thickMm, codigoPT }) => {
-          setSurfaceOpen(false);
-
-          threeApiRef.current?.addSurface?.({
-            line,
-            codigoPT,
-            widthM: widthMm / 1000,
-            depthM: depthMm / 1000,
-            thicknessM: thickMm / 1000,
-            dim: { widthMm, depthMm, thickMm },
-          });
-        }}
-      />
-
-      {/* (Se movió ayuda + export PPT al overlay del visor para evitar romper el grid) */}
     </div>
   );
 }

@@ -17,6 +17,8 @@ export default function WallsPanel({
 }) {
   return (
     <div style={{ padding: 12, borderBottom: '1px solid #eee' }}>
+      {/* 
+      
       <h3 style={{ margin: '0 0 10px 0' }}>Muros</h3>
 
       <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 10 }}>
@@ -95,6 +97,7 @@ export default function WallsPanel({
           Borrar todo
         </button>
       </div>
+      */}
 
       <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px dashed #eee' }}>
         <div style={{ fontSize: 12, color: '#444', marginBottom: 8 }}>
@@ -103,19 +106,34 @@ export default function WallsPanel({
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <button
             onClick={onExportSvg}
-            style={{ padding: '7px 10px', borderRadius: 10, border: '1px solid #ddd', cursor: 'pointer' }}
+            style={{
+              padding: '7px 10px',
+              borderRadius: 10,
+              border: '1px solid #ddd',
+              cursor: 'pointer',
+            }}
           >
             Exportar SVG
           </button>
           <button
             onClick={onExportPng}
-            style={{ padding: '7px 10px', borderRadius: 10, border: '1px solid #ddd', cursor: 'pointer' }}
+            style={{
+              padding: '7px 10px',
+              borderRadius: 10,
+              border: '1px solid #ddd',
+              cursor: 'pointer',
+            }}
           >
             Exportar PNG
           </button>
           <button
             onClick={onExportPdf}
-            style={{ padding: '7px 10px', borderRadius: 10, border: '1px solid #ddd', cursor: 'pointer' }}
+            style={{
+              padding: '7px 10px',
+              borderRadius: 10,
+              border: '1px solid #ddd',
+              cursor: 'pointer',
+            }}
           >
             Exportar PDF
           </button>
@@ -126,9 +144,15 @@ export default function WallsPanel({
       </div>
 
       <div style={{ marginTop: 10, fontSize: 12, color: '#666', lineHeight: 1.35 }}>
-        <div><b>Cómo trazar:</b> activa “Modo muros”, luego haz click para poner puntos.</div>
-        <div><b>Terminar muro:</b> doble click.</div>
-        <div><b>Cancelar trazo:</b> tecla Esc.</div>
+        <div>
+          <b>Cómo trazar:</b> activa “Modo muros”, luego haz click para poner puntos.
+        </div>
+        <div>
+          <b>Terminar muro:</b> doble click.
+        </div>
+        <div>
+          <b>Cancelar trazo:</b> tecla Esc.
+        </div>
       </div>
     </div>
   );

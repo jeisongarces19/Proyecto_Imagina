@@ -1,0 +1,2779 @@
+[
+  {
+    "id": 11910,
+    "imagen": {
+      "id": 2192,
+      "nombre": "SILLAS Y MESAS",
+      "ubicacion": "uploads/2022/3/14/13_25_56_10438.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/3/14/13_25_56_10438.jpg"
+    },
+    "imagen_id": 2192,
+    "nombre": "SILLAS Y MESAS",
+    "slug": "SILLAS Y MESAS"
+  },
+  {
+    "id": 11911,
+    "imagen": {
+      "id": 66,
+      "nombre": "ACCESORIOS COMERCIALIZADO",
+      "ubicacion": "uploads/2021/4/8/22_57_3_79701.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/4/8/22_57_3_79701.jpg"
+    },
+    "imagen_id": 66,
+    "nombre": "ACCESORIOS COMERCIALIZADOS",
+    "slug": "ACCESORIOS COMERCIALIZADOS"
+  },
+  {
+    "id": 11914,
+    "imagen": {
+      "id": 5,
+      "nombre": "TIPOLOGIAS",
+      "ubicacion": "uploads/2021/3/17/15_38_26_57904.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/17/15_38_26_57904.jpg"
+    },
+    "imagen_id": 5,
+    "nombre": "TIPOLOGIAS",
+    "slug": "TIPOLOGIAS"
+  },
+  {
+    "id": 11915,
+    "imagen": {
+      "id": 1,
+      "nombre": "SERVICIOS BPO",
+      "ubicacion": "uploads/2021/3/17/15_36_10_647717.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/17/15_36_10_647717.jpg"
+    },
+    "imagen_id": 1,
+    "nombre": "SERVICIOS BPO",
+    "slug": "SERVICIOS BPO"
+  },
+  {
+    "id": 11916,
+    "imagen": {
+      "id": 49,
+      "nombre": "S-OFIC-PRESIDENCIALES",
+      "ubicacion": "uploads/2021/3/30/3_55_22_539729.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/30/3_55_22_539729.JPG"
+    },
+    "imagen_id": 49,
+    "nombre": "SILLAS OFICINA PRESIDENCIALES",
+    "padre_id": 11910,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA PRESIDENCIALES"
+  },
+  {
+    "id": 11917,
+    "imagen": {
+      "id": 50,
+      "nombre": "S-OFIC-GERENCIALES",
+      "ubicacion": "uploads/2021/3/30/3_55_40_461860.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/30/3_55_40_461860.jpg"
+    },
+    "imagen_id": 50,
+    "nombre": "SILLAS OFICINA GERENCIALES",
+    "padre_id": 11910,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA GERENCIALES"
+  },
+  {
+    "id": 11918,
+    "imagen": {
+      "id": 48,
+      "nombre": "S-OFIC-EJECUTIVAS",
+      "ubicacion": "uploads/2021/3/23/21_0_10_304901.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/23/21_0_10_304901.jpg"
+    },
+    "imagen_id": 48,
+    "nombre": "SILLAS OFICINA EJECUTIVAS",
+    "padre_id": 11910,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA EJECUTIVAS"
+  },
+  {
+    "id": 11919,
+    "imagen": {
+      "id": 51,
+      "nombre": "S-OFIC-VISITANTES",
+      "ubicacion": "uploads/2021/3/25/17_8_5_203784.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/25/17_8_5_203784.jpg"
+    },
+    "imagen_id": 51,
+    "nombre": "SILLAS OFICINA VISITANTES",
+    "padre_id": 11910,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA VISITANTES"
+  },
+  {
+    "id": 11920,
+    "imagen": {
+      "id": 55,
+      "nombre": "S-OFIC-OPERATIVAS",
+      "ubicacion": "uploads/2021/3/25/18_49_10_672867.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/25/18_49_10_672867.jpg"
+    },
+    "imagen_id": 55,
+    "nombre": "SILLAS OFICINA OPERATIVAS",
+    "padre_id": 11910,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA OPERATIVAS"
+  },
+  {
+    "id": 11921,
+    "imagen": {
+      "id": 44,
+      "nombre": "S-COLECT-INT",
+      "ubicacion": "uploads/2021/3/23/16_16_7_257926.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/23/16_16_7_257926.jpg"
+    },
+    "imagen_id": 44,
+    "nombre": "SILLAS DE COLECTIVIDAD INTERIORES",
+    "padre_id": 11910,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD INTERIORES"
+  },
+  {
+    "id": 11922,
+    "imagen": {
+      "id": 61,
+      "nombre": "S-COLECT-EXT",
+      "ubicacion": "uploads/2021/3/30/3_52_33_423428.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/30/3_52_33_423428.jpg"
+    },
+    "imagen_id": 61,
+    "nombre": "SILLAS DE COLECTIVIDAD EXTERIORES",
+    "padre_id": 11910,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD EXTERIORES"
+  },
+  {
+    "id": 11925,
+    "imagen": {
+      "id": 65,
+      "nombre": "S-BASES Y MESAS",
+      "ubicacion": "uploads/2021/4/8/22_48_43_408543.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/4/8/22_48_43_408543.jpg"
+    },
+    "imagen_id": 65,
+    "nombre": "BASES Y MESAS",
+    "padre_id": 11910,
+    "slug": "SILLAS Y MESAS.BASES Y MESAS"
+  },
+  {
+    "id": 11930,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIOS",
+    "padre_id": 11911,
+    "slug": "ACCESORIOS COMERCIALIZADOS.ACCESORIOS"
+  },
+  {
+    "id": 11950,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "REUBICACION",
+    "padre_id": 11915,
+    "slug": "SERVICIOS BPO.REUBICACION"
+  },
+  {
+    "id": 11951,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "REFACCION",
+    "padre_id": 11915,
+    "slug": "SERVICIOS BPO.REFACCION"
+  },
+  {
+    "id": 11952,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MANTENIMIENTOS",
+    "padre_id": 11915,
+    "slug": "SERVICIOS BPO.MANTENIMIENTOS"
+  },
+  {
+    "id": 11953,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MANO DE OBRA",
+    "padre_id": 11915,
+    "slug": "SERVICIOS BPO.MANO DE OBRA"
+  },
+  {
+    "id": 11954,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "OBRA CIVIL",
+    "padre_id": 11915,
+    "slug": "SERVICIOS BPO.OBRA CIVIL"
+  },
+  {
+    "id": 11959,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "DAWON",
+    "padre_id": 11921,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD INTERIORES.DAWON"
+  },
+  {
+    "id": 11961,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "DUOBACK",
+    "padre_id": 11917,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA GERENCIALES.DUOBACK"
+  },
+  {
+    "id": 11968,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "GABER",
+    "padre_id": 11922,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD EXTERIORES.GABER"
+  },
+  {
+    "id": 11969,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "GABER",
+    "padre_id": 11921,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD INTERIORES.GABER"
+  },
+  {
+    "id": 11970,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "INORCA",
+    "padre_id": 11922,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD EXTERIORES.INORCA"
+  },
+  {
+    "id": 11975,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "INORCA",
+    "padre_id": 11925,
+    "slug": "SILLAS Y MESAS.BASES Y MESAS.INORCA"
+  },
+  {
+    "id": 11979,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "OFIPARTES",
+    "padre_id": 11918,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA EJECUTIVAS.OFIPARTES"
+  },
+  {
+    "id": 11980,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "OFIPARTES",
+    "padre_id": 11920,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA OPERATIVAS.OFIPARTES"
+  },
+  {
+    "id": 11982,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "OFIPARTES",
+    "padre_id": 11921,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD INTERIORES.OFIPARTES"
+  },
+  {
+    "id": 11990,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "OKAMURA",
+    "padre_id": 11916,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA PRESIDENCIALES.OKAMURA"
+  },
+  {
+    "id": 11996,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PROVEEDORES VARIOS",
+    "padre_id": 11918,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA EJECUTIVAS.PROVEEDORES VARIOS"
+  },
+  {
+    "id": 11997,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PROVEEDORES VARIOS",
+    "padre_id": 11920,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA OPERATIVAS.PROVEEDORES VARIOS"
+  },
+  {
+    "id": 11998,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PROVEFABRICA",
+    "padre_id": 11916,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA PRESIDENCIALES.PROVEFABRICA"
+  },
+  {
+    "id": 12000,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PROVEFABRICA",
+    "padre_id": 11918,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA EJECUTIVAS.PROVEFABRICA"
+  },
+  {
+    "id": 12001,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PROVEFABRICA",
+    "padre_id": 11920,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA OPERATIVAS.PROVEFABRICA"
+  },
+  {
+    "id": 12002,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PROVEFABRICA",
+    "padre_id": 11921,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD INTERIORES.PROVEFABRICA"
+  },
+  {
+    "id": 12003,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PROVEFABRICA",
+    "padre_id": 11922,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD EXTERIORES.PROVEFABRICA"
+  },
+  {
+    "id": 12017,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "DAUPHIN",
+    "padre_id": 11917,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA GERENCIALES.DAUPHIN"
+  },
+  {
+    "id": 12022,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PROVEEDORES VARIOS",
+    "padre_id": 11930,
+    "slug": "ACCESORIOS COMERCIALIZADOS.ACCESORIOS.PROVEEDORES VARIOS"
+  },
+  {
+    "id": 12581,
+    "imagen": {
+      "id": 2039,
+      "nombre": "SISTEMAS MODULARES",
+      "ubicacion": "uploads/2021/9/28/21_24_1_720468.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/9/28/21_24_1_720468.jpg"
+    },
+    "imagen_id": 2039,
+    "nombre": "SISTEMAS MODULARES DE OFICINA",
+    "slug": "SISTEMAS MODULARES DE OFICINA"
+  },
+  {
+    "id": 12582,
+    "imagen": {
+      "id": 4293,
+      "nombre": "SISTEMAS MODULARES PANELERIA",
+      "ubicacion": "uploads/2025/8/28/19_55_53_29741.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2025/8/28/19_55_53_29741.jpg"
+    },
+    "imagen_id": 4293,
+    "nombre": "SISTEMAS MODULARES PANELERIA",
+    "slug": "SISTEMAS MODULARES PANELERIA"
+  },
+  {
+    "id": 12583,
+    "imagen": {
+      "id": 12,
+      "nombre": "SM-LINK",
+      "ubicacion": "uploads/2021/3/18/14_49_15_249224.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_49_15_249224.jpg"
+    },
+    "imagen_id": 12,
+    "nombre": "LINK",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.LINK"
+  },
+  {
+    "id": 12584,
+    "imagen": {
+      "id": 16,
+      "nombre": "SM-TEK",
+      "ubicacion": "uploads/2021/3/18/14_50_35_964294.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_50_35_964294.jpg"
+    },
+    "imagen_id": 16,
+    "nombre": "TEK",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TEK"
+  },
+  {
+    "id": 12585,
+    "imagen": {
+      "id": 2106,
+      "nombre": "SM-KONCISA",
+      "ubicacion": "uploads/2022/2/15/17_8_59_218287.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/2/15/17_8_59_218287.jpg"
+    },
+    "imagen_id": 2106,
+    "nombre": "KONCISA",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KONCISA"
+  },
+  {
+    "id": 12586,
+    "imagen": {
+      "id": 11,
+      "nombre": "SM-KUO",
+      "ubicacion": "uploads/2021/3/18/14_48_59_721022.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_48_59_721022.jpg"
+    },
+    "imagen_id": 11,
+    "nombre": "KUO",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO"
+  },
+  {
+    "id": 12587,
+    "imagen": {
+      "id": 11,
+      "nombre": "SM-KUO",
+      "ubicacion": "uploads/2021/3/18/14_48_59_721022.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_48_59_721022.jpg"
+    },
+    "imagen_id": 11,
+    "nombre": "NAO",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.NAO"
+  },
+  {
+    "id": 12589,
+    "imagen": {
+      "id": 8,
+      "nombre": "SM-CLAK",
+      "ubicacion": "uploads/2021/3/18/14_47_42_612452.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_47_42_612452.jpg"
+    },
+    "imagen_id": 8,
+    "nombre": "CLAK",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK"
+  },
+  {
+    "id": 12590,
+    "imagen": {
+      "id": 15,
+      "nombre": "SM-TEK SOCIAL",
+      "ubicacion": "uploads/2021/3/18/14_50_15_857083.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_50_15_857083.jpg"
+    },
+    "imagen_id": 15,
+    "nombre": "TK SOCIAL",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL"
+  },
+  {
+    "id": 12591,
+    "imagen": {
+      "id": 14,
+      "nombre": "SM-SUPERFICIE",
+      "ubicacion": "uploads/2021/3/18/14_49_59_722132.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_49_59_722132.jpg"
+    },
+    "imagen_id": 14,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.SUPERFICIE"
+  },
+  {
+    "id": 12592,
+    "imagen": {
+      "id": 7,
+      "nombre": "SM-ALMACENAMIENTO",
+      "ubicacion": "uploads/2021/3/18/14_47_23_693711.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_47_23_693711.jpg"
+    },
+    "imagen_id": 7,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO"
+  },
+  {
+    "id": 12593,
+    "imagen": {
+      "id": 6,
+      "nombre": "SM-ACCESORIOS",
+      "ubicacion": "uploads/2021/3/18/14_47_9_935315.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_47_9_935315.jpg"
+    },
+    "imagen_id": 6,
+    "nombre": "ACCESORIO",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ACCESORIO"
+  },
+  {
+    "id": 12594,
+    "imagen": {
+      "id": 1721,
+      "nombre": "SMP-CRITTERIUM",
+      "ubicacion": "uploads/2021/7/16/18_49_51_933875.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/7/16/18_49_51_933875.jpg"
+    },
+    "imagen_id": 1721,
+    "nombre": "CRITTERIUM",
+    "padre_id": 12582,
+    "slug": "SISTEMAS MODULARES PANELERIA.CRITTERIUM"
+  },
+  {
+    "id": 12595,
+    "imagen": {
+      "id": 388,
+      "nombre": "SMP-MULTIPLE",
+      "ubicacion": "uploads/2021/5/6/19_20_34_435157.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/5/6/19_20_34_435157.jpg"
+    },
+    "imagen_id": 388,
+    "nombre": "MULTIPLE",
+    "padre_id": 12582,
+    "slug": "SISTEMAS MODULARES PANELERIA.MULTIPLE"
+  },
+  {
+    "id": 12597,
+    "imagen": {
+      "id": 17,
+      "nombre": "SM-VETRO",
+      "ubicacion": "uploads/2021/3/18/14_50_48_909455.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_50_48_909455.jpg"
+    },
+    "imagen_id": 17,
+    "nombre": "VETRO",
+    "padre_id": 12582,
+    "slug": "SISTEMAS MODULARES PANELERIA.VETRO"
+  },
+  {
+    "id": 12598,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.ACCESORIO"
+  },
+  {
+    "id": 12600,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.ACCESORIO"
+  },
+  {
+    "id": 12602,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "HOUSE",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.HOUSE"
+  },
+  {
+    "id": 12603,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "POLTRONA",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.POLTRONA"
+  },
+  {
+    "id": 12604,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PUFF",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.PUFF"
+  },
+  {
+    "id": 12605,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MESA",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.MESA"
+  },
+  {
+    "id": 12607,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.ACCESORIO"
+  },
+  {
+    "id": 12608,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12586,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO.ACCESORIO"
+  },
+  {
+    "id": 12611,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12585,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KONCISA.ALMACENAMIENTO"
+  },
+  {
+    "id": 12612,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12583,
+    "slug": "SISTEMAS MODULARES DE OFICINA.LINK.ALMACENAMIENTO"
+  },
+  {
+    "id": 12614,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12586,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO.ALMACENAMIENTO"
+  },
+  {
+    "id": 12615,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.ALMACENAMIENTO"
+  },
+  {
+    "id": 12617,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12584,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TEK.ALMACENAMIENTO"
+  },
+  {
+    "id": 12618,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12586,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO.ALTURA VARIABLE"
+  },
+  {
+    "id": 12619,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ARCHIVADOR LATERAL",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.ARCHIVADOR LATERAL"
+  },
+  {
+    "id": 12620,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "BANCA",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.BANCA"
+  },
+  {
+    "id": 12621,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "BANCA",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.BANCA"
+  },
+  {
+    "id": 12623,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "BIBLIOTECA",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.BIBLIOTECA"
+  },
+  {
+    "id": 12624,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "CAJONERA",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.CAJONERA"
+  },
+  {
+    "id": 12629,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12587,
+    "slug": "SISTEMAS MODULARES DE OFICINA.NAO.ALMACENAMIENTO"
+  },
+  {
+    "id": 12630,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12587,
+    "slug": "SISTEMAS MODULARES DE OFICINA.NAO.SOPORTE"
+  },
+  {
+    "id": 12633,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ELEMENTO DE REPOSICION",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.ELEMENTO DE REPOSICION"
+  },
+  {
+    "id": 12634,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ELEMENTO DE REPOSICION",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.ELEMENTO DE REPOSICION"
+  },
+  {
+    "id": 12636,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "FALDA",
+    "padre_id": 12593,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ACCESORIO.FALDA"
+  },
+  {
+    "id": 12637,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "GABINETE",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.GABINETE"
+  },
+  {
+    "id": 12638,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "GENERAL",
+    "padre_id": 12591,
+    "slug": "SISTEMAS MODULARES DE OFICINA.SUPERFICIE.GENERAL"
+  },
+  {
+    "id": 12639,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "GENERAL",
+    "padre_id": 12593,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ACCESORIO.GENERAL"
+  },
+  {
+    "id": 12642,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "LOCKER",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.LOCKER"
+  },
+  {
+    "id": 12643,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MESA",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.MESA"
+  },
+  {
+    "id": 12648,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MODULAR",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.MODULAR"
+  },
+  {
+    "id": 12649,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MULTIARCHIVO",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.MULTIARCHIVO"
+  },
+  {
+    "id": 12651,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PANEL",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.PANEL"
+  },
+  {
+    "id": 12652,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PANEL",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.PANEL"
+  },
+  {
+    "id": 12653,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PANTALLA",
+    "padre_id": 12593,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ACCESORIO.PANTALLA"
+  },
+  {
+    "id": 12654,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PEDESTAL",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.PEDESTAL"
+  },
+  {
+    "id": 12655,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "POLTRONA",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.POLTRONA"
+  },
+  {
+    "id": 12656,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PRECABLEADO",
+    "padre_id": 12584,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TEK.PRECABLEADO"
+  },
+  {
+    "id": 12657,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PRECABLEADO",
+    "padre_id": 12583,
+    "slug": "SISTEMAS MODULARES DE OFICINA.LINK.PRECABLEADO"
+  },
+  {
+    "id": 12658,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PUFF",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.PUFF"
+  },
+  {
+    "id": 12660,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "REPISA",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.REPISA"
+  },
+  {
+    "id": 12661,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12583,
+    "slug": "SISTEMAS MODULARES DE OFICINA.LINK.SOPORTE"
+  },
+  {
+    "id": 12662,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.SOPORTE"
+  },
+  {
+    "id": 12663,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12585,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KONCISA.SOPORTE"
+  },
+  {
+    "id": 12664,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12586,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO.SOPORTE"
+  },
+  {
+    "id": 12665,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.SOPORTE"
+  },
+  {
+    "id": 12666,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12584,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TEK.SOPORTE"
+  },
+  {
+    "id": 12667,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.SUPERFICIE"
+  },
+  {
+    "id": 12669,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "BALDOSA",
+    "padre_id": 12594,
+    "slug": "SISTEMAS MODULARES PANELERIA.CRITTERIUM.BALDOSA"
+  },
+  {
+    "id": 12670,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MARCO",
+    "padre_id": 12594,
+    "slug": "SISTEMAS MODULARES PANELERIA.CRITTERIUM.MARCO"
+  },
+  {
+    "id": 12671,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "KIT UNION",
+    "padre_id": 12594,
+    "slug": "SISTEMAS MODULARES PANELERIA.CRITTERIUM.KIT UNION"
+  },
+  {
+    "id": 12672,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12594,
+    "slug": "SISTEMAS MODULARES PANELERIA.CRITTERIUM.ACCESORIO"
+  },
+  {
+    "id": 12673,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ELEMENTO DE REPOSICION",
+    "padre_id": 12594,
+    "slug": "SISTEMAS MODULARES PANELERIA.CRITTERIUM.ELEMENTO DE REPOSICION"
+  },
+  {
+    "id": 12674,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MARCO PUERTA",
+    "padre_id": 12595,
+    "slug": "SISTEMAS MODULARES PANELERIA.MULTIPLE.MARCO PUERTA"
+  },
+  {
+    "id": 12675,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "NAVE PUERTA",
+    "padre_id": 12595,
+    "slug": "SISTEMAS MODULARES PANELERIA.MULTIPLE.NAVE PUERTA"
+  },
+  {
+    "id": 12676,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ELEMENTO DE REPOSICION",
+    "padre_id": 12595,
+    "slug": "SISTEMAS MODULARES PANELERIA.MULTIPLE.ELEMENTO DE REPOSICION"
+  },
+  {
+    "id": 12681,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PANEL",
+    "padre_id": 12597,
+    "slug": "SISTEMAS MODULARES PANELERIA.VETRO.PANEL"
+  },
+  {
+    "id": 12682,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MARCO PUERTA",
+    "padre_id": 12597,
+    "slug": "SISTEMAS MODULARES PANELERIA.VETRO.MARCO PUERTA"
+  },
+  {
+    "id": 12683,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "NAVE PUERTA",
+    "padre_id": 12597,
+    "slug": "SISTEMAS MODULARES PANELERIA.VETRO.NAVE PUERTA"
+  },
+  {
+    "id": 12684,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "KIT UNION",
+    "padre_id": 12597,
+    "slug": "SISTEMAS MODULARES PANELERIA.VETRO.KIT UNION"
+  },
+  {
+    "id": 12685,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ELEMENTO DE REPOSICION",
+    "padre_id": 12597,
+    "slug": "SISTEMAS MODULARES PANELERIA.VETRO.ELEMENTO DE REPOSICION"
+  },
+  {
+    "id": 12704,
+    "imagen": {
+      "id": 2026,
+      "nombre": "SM-KUO-GO",
+      "ubicacion": "uploads/2021/9/14/15_25_18_572345.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/9/14/15_25_18_572345.jpg"
+    },
+    "imagen_id": 2026,
+    "nombre": "KUO-GO",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO-GO"
+  },
+  {
+    "id": 12706,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12704,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO-GO.ACCESORIO"
+  },
+  {
+    "id": 12707,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12704,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO-GO.ALMACENAMIENTO"
+  },
+  {
+    "id": 12711,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MESA",
+    "padre_id": 12704,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO-GO.MESA"
+  },
+  {
+    "id": 12713,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PANTALLA",
+    "padre_id": 12704,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO-GO.PANTALLA"
+  },
+  {
+    "id": 12714,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PRECABLEADO",
+    "padre_id": 12704,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO-GO.PRECABLEADO"
+  },
+  {
+    "id": 12716,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12704,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO-GO.SOPORTE"
+  },
+  {
+    "id": 12717,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12704,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO-GO.SUPERFICIE"
+  },
+  {
+    "id": 12721,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "CABINA",
+    "padre_id": 12590,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TK SOCIAL.CABINA"
+  },
+  {
+    "id": 12728,
+    "imagen": {
+      "id": 21,
+      "nombre": "T-TEK SOCIAL",
+      "ubicacion": "uploads/2021/3/18/14_55_9_291628.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_55_9_291628.jpg"
+    },
+    "imagen_id": 21,
+    "nombre": "POLTRONAS MILA",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.POLTRONAS MILA"
+  },
+  {
+    "id": 12729,
+    "imagen": {
+      "id": 2052,
+      "nombre": "T-KUO-GO",
+      "ubicacion": "uploads/2021/12/15/20_23_39_343273.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/12/15/20_23_39_343273.jpg"
+    },
+    "imagen_id": 2052,
+    "nombre": "MESAS ABATIBLES",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.MESAS ABATIBLES"
+  },
+  {
+    "id": 12730,
+    "imagen": {
+      "id": 28,
+      "nombre": "T-LINK MESA J-120X120",
+      "ubicacion": "uploads/2021/3/18/17_8_52_471292.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/17_8_52_471292.jpg"
+    },
+    "imagen_id": 28,
+    "nombre": "MESAS DE JUNTAS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.MESAS DE JUNTAS"
+  },
+  {
+    "id": 12731,
+    "imagen": {
+      "id": 23,
+      "nombre": "T-KONCISA MESAcirc90",
+      "ubicacion": "uploads/2021/3/18/17_7_30_179167.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/17_7_30_179167.jpg"
+    },
+    "imagen_id": 23,
+    "nombre": "MESAS CIRCULARES",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.MESAS CIRCULARES"
+  },
+  {
+    "id": 12732,
+    "imagen": {
+      "id": 34,
+      "nombre": "T-TEK ISLA 6 ConPantVidrioLaminadoFORMICA",
+      "ubicacion": "uploads/2024/7/29/15_59_31_275680.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/7/29/15_59_31_275680.jpg"
+    },
+    "imagen_id": 34,
+    "nombre": "ISLA DE 6",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.ISLA DE 6"
+  },
+  {
+    "id": 12733,
+    "imagen": {
+      "id": 2617,
+      "nombre": "T-LINK-ISLA4PANTALLA",
+      "ubicacion": "uploads/2022/11/17/13_7_44_389213.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/11/17/13_7_44_389213.jpg"
+    },
+    "imagen_id": 2617,
+    "nombre": "ISLA DE 4",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.ISLA DE 4"
+  },
+  {
+    "id": 12734,
+    "imagen": {
+      "id": 2343,
+      "nombre": "T-ISLA2",
+      "ubicacion": "uploads/2022/5/27/18_59_44_876828.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/27/18_59_44_876828.JPG"
+    },
+    "imagen_id": 2343,
+    "nombre": "ISLA DE 2",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.ISLA DE 2"
+  },
+  {
+    "id": 12735,
+    "imagen": {
+      "id": 2346,
+      "nombre": "T-PERIMETRAL3",
+      "ubicacion": "uploads/2022/5/27/20_19_12_595445.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/27/20_19_12_595445.JPG"
+    },
+    "imagen_id": 2346,
+    "nombre": "PERIMETRAL 3 PUESTOS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.PERIMETRAL 3 PUESTOS"
+  },
+  {
+    "id": 12736,
+    "imagen": {
+      "id": 2110,
+      "nombre": "T-LINK PERIMETRAL1",
+      "ubicacion": "uploads/2022/2/21/17_46_18_192277.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/2/21/17_46_18_192277.jpg"
+    },
+    "imagen_id": 2110,
+    "nombre": "PERIMETRAL 1 PUESTO",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.PERIMETRAL 1 PUESTO"
+  },
+  {
+    "id": 12737,
+    "imagen": {
+      "id": 2348,
+      "nombre": "T-JEFATURA",
+      "ubicacion": "uploads/2022/5/27/20_37_21_792929.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/27/20_37_21_792929.JPG"
+    },
+    "imagen_id": 2348,
+    "nombre": "PUESTOS GERENCIALES Y JEFATURAS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.PUESTOS GERENCIALES Y JEFATURAS"
+  },
+  {
+    "id": 12738,
+    "imagen": {
+      "id": 1372,
+      "nombre": "T-CLAK MVIDEOCONFERENCIA",
+      "ubicacion": "uploads/2021/6/10/20_57_27_628308.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/6/10/20_57_27_628308.jpg"
+    },
+    "imagen_id": 1372,
+    "nombre": "MODULO VIDEO CONFERENCIA",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.MODULO VIDEO CONFERENCIA"
+  },
+  {
+    "id": 12739,
+    "imagen": {
+      "id": 1770,
+      "nombre": "T-POLTRONA2PsinApBr",
+      "ubicacion": "uploads/2021/7/19/20_30_44_420344.png",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/7/19/20_30_44_420344.png"
+    },
+    "imagen_id": 1770,
+    "nombre": "SIN BRAZOS",
+    "padre_id": 12728,
+    "slug": "TIPOLOGIAS.POLTRONAS MILA.SIN BRAZOS"
+  },
+  {
+    "id": 12740,
+    "imagen": {
+      "id": 1774,
+      "nombre": "T-POLTRONA2PconApBr I-D-2antes",
+      "ubicacion": "uploads/2021/7/20/21_4_22_65032.png",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/7/20/21_4_22_65032.png"
+    },
+    "imagen_id": 1774,
+    "nombre": "CON BRAZOS",
+    "padre_id": 12728,
+    "slug": "TIPOLOGIAS.POLTRONAS MILA.CON BRAZOS"
+  },
+  {
+    "id": 12741,
+    "imagen": {
+      "id": 2053,
+      "nombre": "T-KUO-GO-PUNTARECTA",
+      "ubicacion": "uploads/2021/12/16/19_45_19_349837.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/12/16/19_45_19_349837.jpg"
+    },
+    "imagen_id": 2053,
+    "nombre": "PUNTAS RECTAS",
+    "padre_id": 12729,
+    "slug": "TIPOLOGIAS.MESAS ABATIBLES.PUNTAS RECTAS"
+  },
+  {
+    "id": 12742,
+    "imagen": {
+      "id": 2056,
+      "nombre": "T-KUO-GO-PUNTAREDONDA-120",
+      "ubicacion": "uploads/2021/12/16/19_46_8_197501.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/12/16/19_46_8_197501.jpg"
+    },
+    "imagen_id": 2056,
+    "nombre": "PUNTAS REDONDAS",
+    "padre_id": 12729,
+    "slug": "TIPOLOGIAS.MESAS ABATIBLES.PUNTAS REDONDAS"
+  },
+  {
+    "id": 12743,
+    "imagen": {
+      "id": 28,
+      "nombre": "T-LINK MESA J-120X120",
+      "ubicacion": "uploads/2021/3/18/17_8_52_471292.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/17_8_52_471292.jpg"
+    },
+    "imagen_id": 28,
+    "nombre": "LINK",
+    "padre_id": 12730,
+    "slug": "TIPOLOGIAS.MESAS DE JUNTAS.LINK"
+  },
+  {
+    "id": 12745,
+    "imagen": {
+      "id": 27,
+      "nombre": "T-LINK ISLA 6-PantallaFrontal",
+      "ubicacion": "uploads/2021/3/18/17_8_38_213282.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/17_8_38_213282.jpg"
+    },
+    "imagen_id": 27,
+    "nombre": "LINK",
+    "padre_id": 12732,
+    "slug": "TIPOLOGIAS.ISLA DE 6.LINK"
+  },
+  {
+    "id": 12746,
+    "imagen": {
+      "id": 34,
+      "nombre": "T-TEK ISLA 6 ConPantVidrioLaminadoFORMICA",
+      "ubicacion": "uploads/2024/7/29/15_59_31_275680.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/7/29/15_59_31_275680.jpg"
+    },
+    "imagen_id": 34,
+    "nombre": "TEK",
+    "padre_id": 12732,
+    "slug": "TIPOLOGIAS.ISLA DE 6.TEK"
+  },
+  {
+    "id": 12748,
+    "imagen": {
+      "id": 2311,
+      "nombre": "T-PERIMETRAL3-LINKsinPantallaFEA",
+      "ubicacion": "uploads/2022/5/5/23_28_22_890250.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/5/23_28_22_890250.jpg"
+    },
+    "imagen_id": 2311,
+    "nombre": "LINK",
+    "padre_id": 12735,
+    "slug": "TIPOLOGIAS.PERIMETRAL 3 PUESTOS.LINK"
+  },
+  {
+    "id": 12751,
+    "imagen": {
+      "id": 2355,
+      "nombre": "T-TEK-Gerente180x150credenza",
+      "ubicacion": "uploads/2022/6/10/15_22_31_71620.png",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/6/10/15_22_31_71620.png"
+    },
+    "imagen_id": 2355,
+    "nombre": "TEK",
+    "padre_id": 12737,
+    "slug": "TIPOLOGIAS.PUESTOS GERECIALES Y JEFATURAS.TEK"
+  },
+  {
+    "id": 12755,
+    "imagen": {
+      "id": 2122,
+      "nombre": "T-LINK-PERIMETRAL1",
+      "ubicacion": "uploads/2022/2/21/22_41_31_59167.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/2/21/22_41_31_59167.jpg"
+    },
+    "imagen_id": 2122,
+    "nombre": "LINK",
+    "padre_id": 12736,
+    "slug": "TIPOLOGIAS.PERIMETRAL 1 PUESTO.LINK"
+  },
+  {
+    "id": 12756,
+    "imagen": {
+      "id": 2121,
+      "nombre": "T-TEK-PERIMETRAL1",
+      "ubicacion": "uploads/2022/2/21/22_33_46_96128.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/2/21/22_33_46_96128.jpg"
+    },
+    "imagen_id": 2121,
+    "nombre": "TEK",
+    "padre_id": 12736,
+    "slug": "TIPOLOGIAS.PERIMETRAL 1 PUESTO.TEK"
+  },
+  {
+    "id": 12758,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12583,
+    "slug": "SISTEMAS MODULARES DE OFICINA.LINK.SUPERFICIE"
+  },
+  {
+    "id": 12759,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ELEMENTO DE REPOSICION",
+    "padre_id": 12583,
+    "slug": "SISTEMAS MODULARES DE OFICINA.LINK.ELEMENTO DE REPOSICION"
+  },
+  {
+    "id": 12760,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12584,
+    "slug": "SISTEMAS MODULARES DE OFICINA.TEK.SUPERFICIE"
+  },
+  {
+    "id": 12762,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12589,
+    "slug": "SISTEMAS MODULARES DE OFICINA.CLAK.SUPERFICIE"
+  },
+  {
+    "id": 12763,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12585,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KONCISA.SUPERFICIE"
+  },
+  {
+    "id": 12764,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12587,
+    "slug": "SISTEMAS MODULARES DE OFICINA.NAO.SUPERFICIE"
+  },
+  {
+    "id": 12765,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12586,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KUO.SUPERFICIE"
+  },
+  {
+    "id": 12769,
+    "imagen": {
+      "id": 2376,
+      "nombre": "ISLA-4P-AVariableDL5Blanca-CInd",
+      "ubicacion": "uploads/2022/7/21/14_4_42_339372.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/7/21/14_4_42_339372.jpeg"
+    },
+    "imagen_id": 2376,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12733,
+    "slug": "TIPOLOGIAS.ISLA DE 4.ALTURA VARIABLE"
+  },
+  {
+    "id": 12770,
+    "imagen": {
+      "id": 2375,
+      "nombre": "ISLA-2P-AVariable",
+      "ubicacion": "uploads/2022/7/21/13_34_20_759155.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/7/21/13_34_20_759155.jpeg"
+    },
+    "imagen_id": 2375,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12734,
+    "slug": "TIPOLOGIAS.ISLA DE 2.ALTURA VARIABLE"
+  },
+  {
+    "id": 12771,
+    "imagen": {
+      "id": 2374,
+      "nombre": "PERIMETRAL-1p-AVariableCostadoLleno",
+      "ubicacion": "uploads/2022/7/21/13_30_15_399046.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/7/21/13_30_15_399046.jpeg"
+    },
+    "imagen_id": 2374,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12736,
+    "slug": "TIPOLOGIAS.PERIMETRAL 1 PUESTO.ALTURA VARIABLE"
+  },
+  {
+    "id": 12773,
+    "imagen": {
+      "id": 4130,
+      "nombre": "T-Is10P-KPLUS-Form-120X120-C-RECTconPdstal",
+      "ubicacion": "uploads/2024/10/4/0_9_56_404074.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/10/4/0_9_56_404074.jpg"
+    },
+    "imagen_id": 4130,
+    "nombre": "ISLA DE 10",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.ISLA DE 10"
+  },
+  {
+    "id": 12774,
+    "imagen": {
+      "id": 2627,
+      "nombre": "T-TEK-ISLA10-PantFrontalVLam",
+      "ubicacion": "uploads/2022/11/21/20_31_36_19955.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/11/21/20_31_36_19955.jpg"
+    },
+    "imagen_id": 2627,
+    "nombre": "TEK",
+    "padre_id": 12773,
+    "slug": "TIPOLOGIAS.ISLA DE 10.TEK"
+  },
+  {
+    "id": 12775,
+    "imagen": {
+      "id": 2617,
+      "nombre": "T-LINK-ISLA4PANTALLA",
+      "ubicacion": "uploads/2022/11/17/13_7_44_389213.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/11/17/13_7_44_389213.jpg"
+    },
+    "imagen_id": 2617,
+    "nombre": "LINK",
+    "padre_id": 12733,
+    "slug": "TIPOLOGIAS.ISLA DE 4.LINK"
+  },
+  {
+    "id": 12780,
+    "imagen": {
+      "id": 2615,
+      "nombre": "T-LINK-ISLA8-PantallaFrontVLam",
+      "ubicacion": "uploads/2022/11/16/21_47_14_472401.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/11/16/21_47_14_472401.jpg"
+    },
+    "imagen_id": 2615,
+    "nombre": "ISLA DE 8",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.ISLA DE 8"
+  },
+  {
+    "id": 12781,
+    "imagen": {
+      "id": 2261,
+      "nombre": "T-ISLA-8-TEK",
+      "ubicacion": "uploads/2022/4/22/21_3_46_268716.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/4/22/21_3_46_268716.jpg"
+    },
+    "imagen_id": 2261,
+    "nombre": "TEK",
+    "padre_id": 12780,
+    "slug": "TIPOLOGIAS.ISLA DE 8.TEK"
+  },
+  {
+    "id": 12782,
+    "imagen": {
+      "id": 2615,
+      "nombre": "T-LINK-ISLA8-PantallaFrontVLam",
+      "ubicacion": "uploads/2022/11/16/21_47_14_472401.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/11/16/21_47_14_472401.jpg"
+    },
+    "imagen_id": 2615,
+    "nombre": "LINK",
+    "padre_id": 12780,
+    "slug": "TIPOLOGIAS.ISLA DE 8.LINK"
+  },
+  {
+    "id": 12783,
+    "imagen": {
+      "id": 2269,
+      "nombre": "T-LINK-PERIM-4P",
+      "ubicacion": "uploads/2022/4/22/21_18_32_257396.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/4/22/21_18_32_257396.jpg"
+    },
+    "imagen_id": 2269,
+    "nombre": "PERIMETRAL 4 PUESTOS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.PERIMETRAL 4 PUESTOS"
+  },
+  {
+    "id": 12784,
+    "imagen": {
+      "id": 2309,
+      "nombre": "T-LINK-PERIMETRAL4sinPantalla",
+      "ubicacion": "uploads/2022/5/5/23_14_31_690118.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/5/23_14_31_690118.jpg"
+    },
+    "imagen_id": 2309,
+    "nombre": "LINK",
+    "padre_id": 12783,
+    "slug": "TIPOLOGIAS.PERIMETRAL 4 PUESTOS.LINK"
+  },
+  {
+    "id": 12785,
+    "imagen": {
+      "id": 2308,
+      "nombre": "T-PERIMETRAL2P-TEK",
+      "ubicacion": "uploads/2022/5/4/21_35_5_93960.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/4/21_35_5_93960.jpg"
+    },
+    "imagen_id": 2308,
+    "nombre": "PERIMETRAL 2 PUESTOS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.PERIMETRAL 2 PUESTOS"
+  },
+  {
+    "id": 12786,
+    "imagen": {
+      "id": 2308,
+      "nombre": "T-PERIMETRAL2P-TEK",
+      "ubicacion": "uploads/2022/5/4/21_35_5_93960.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/4/21_35_5_93960.jpg"
+    },
+    "imagen_id": 2308,
+    "nombre": "TEK",
+    "padre_id": 12785,
+    "slug": "TIPOLOGIAS.PERIMETRAL 2 PUESTOS.TEK"
+  },
+  {
+    "id": 12787,
+    "imagen": {
+      "id": 2315,
+      "nombre": "T-PERIMETRAL2P-LINK",
+      "ubicacion": "uploads/2022/5/11/19_31_49_288488.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/11/19_31_49_288488.jpg"
+    },
+    "imagen_id": 2315,
+    "nombre": "LINK",
+    "padre_id": 12785,
+    "slug": "TIPOLOGIAS.PERIMETRAL 2 PUESTOS.LINK"
+  },
+  {
+    "id": 12788,
+    "imagen": {
+      "id": 2274,
+      "nombre": "T-MILA-5P-3y2conGIRO60-SinApybrazos",
+      "ubicacion": "uploads/2023/3/27/14_10_32_428295.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2023/3/27/14_10_32_428295.jpg"
+    },
+    "imagen_id": 2274,
+    "nombre": "CON GIRO",
+    "padre_id": 12728,
+    "slug": "TIPOLOGIAS.POLTRONAS MILA.CON GIRO"
+  },
+  {
+    "id": 12789,
+    "imagen": {
+      "id": 2271,
+      "nombre": "T-MILA-6P-PANEL",
+      "ubicacion": "uploads/2022/5/2/20_9_5_586247.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/2/20_9_5_586247.jpg"
+    },
+    "imagen_id": 2271,
+    "nombre": "CON PANEL",
+    "padre_id": 12728,
+    "slug": "TIPOLOGIAS.POLTRONAS MILA.CON PANEL"
+  },
+  {
+    "id": 12790,
+    "imagen": {
+      "id": 2277,
+      "nombre": "T-CLAK 4P EspaldarMesaLaptopSinApy",
+      "ubicacion": "uploads/2022/5/2/20_9_5_610080.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/2/20_9_5_610080.jpg"
+    },
+    "imagen_id": 2277,
+    "nombre": "POLTRONAS CLAK",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.POLTRONAS CLAK"
+  },
+  {
+    "id": 12791,
+    "imagen": {
+      "id": 2276,
+      "nombre": "T-CLAK 6P Giro60G SinApy",
+      "ubicacion": "uploads/2022/5/2/20_9_5_606600.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/2/20_9_5_606600.jpg"
+    },
+    "imagen_id": 2276,
+    "nombre": "CON GIRO",
+    "padre_id": 12790,
+    "slug": "TIPOLOGIAS.POLTRONAS CLAK.CON GIRO"
+  },
+  {
+    "id": 12792,
+    "imagen": {
+      "id": 2279,
+      "nombre": "T-CLAK 5PBanca3pyMesaCentroSinApy",
+      "ubicacion": "uploads/2022/5/2/20_9_5_618549.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/2/20_9_5_618549.jpg"
+    },
+    "imagen_id": 2279,
+    "nombre": "CON MESA",
+    "padre_id": 12790,
+    "slug": "TIPOLOGIAS.POLTRONAS CLAK.CON MESA"
+  },
+  {
+    "id": 12794,
+    "imagen": {
+      "id": 2345,
+      "nombre": "T-PUNTOSIMPRESION",
+      "ubicacion": "uploads/2022/5/27/19_20_41_746392.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/27/19_20_41_746392.JPG"
+    },
+    "imagen_id": 2345,
+    "nombre": "PUNTOS DE IMPRESION-ALMACENAMIENTOS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.PUNTOS DE IMPRESION-ALMACENAMIENTOS"
+  },
+  {
+    "id": 12800,
+    "imagen": {
+      "id": 2351,
+      "nombre": "T-ISLA3",
+      "ubicacion": "uploads/2022/5/31/23_15_48_599102.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/31/23_15_48_599102.JPG"
+    },
+    "imagen_id": 2351,
+    "nombre": "ISLA DE 3",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.ISLA DE 3"
+  },
+  {
+    "id": 12801,
+    "imagen": {
+      "id": 2352,
+      "nombre": "T-ISLA3-LINK",
+      "ubicacion": "uploads/2022/5/31/23_17_20_88385.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/5/31/23_17_20_88385.JPG"
+    },
+    "imagen_id": 2352,
+    "nombre": "LINK",
+    "padre_id": 12800,
+    "slug": "TIPOLOGIAS.ISLA DE 3.LINK"
+  },
+  {
+    "id": 12813,
+    "imagen": {
+      "id": 2421,
+      "nombre": "T-SALUD",
+      "ubicacion": "uploads/2022/8/4/18_28_45_256460.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/8/4/18_28_45_256460.jpg"
+    },
+    "imagen_id": 2421,
+    "nombre": "MUEBLES PARA SECTOR SALUD",
+    "slug": "MUEBLES PARA SECTOR SALUD"
+  },
+  {
+    "id": 12814,
+    "imagen": {
+      "id": 2421,
+      "nombre": "T-SALUD",
+      "ubicacion": "uploads/2022/8/4/18_28_45_256460.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/8/4/18_28_45_256460.jpg"
+    },
+    "imagen_id": 2421,
+    "nombre": "MOREA",
+    "padre_id": 12813,
+    "slug": "MUEBLES PARA SECTOR SALUD.MOREA"
+  },
+  {
+    "id": 12815,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12814,
+    "slug": "MUEBLES PARA SECTOR SALUD.MOREA.SUPERFICIE"
+  },
+  {
+    "id": 12817,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "POLTRONA",
+    "padre_id": 12814,
+    "slug": "MUEBLES PARA SECTOR SALUD.MOREA.POLTRONA"
+  },
+  {
+    "id": 12819,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12814,
+    "slug": "MUEBLES PARA SECTOR SALUD.MOREA.SOPORTE"
+  },
+  {
+    "id": 12820,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12814,
+    "slug": "MUEBLES PARA SECTOR SALUD.MOREA.ACCESORIO"
+  },
+  {
+    "id": 12821,
+    "imagen": {
+      "id": 2541,
+      "nombre": "5P (3-2) GIRO 1 SUPERFICIE",
+      "ubicacion": "uploads/2023/12/13/16_52_2_30959.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2023/12/13/16_52_2_30959.jpeg"
+    },
+    "imagen_id": 2541,
+    "nombre": "POLTRONAS MOREA",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.POLTRONAS MOREA"
+  },
+  {
+    "id": 12822,
+    "imagen": {
+      "id": 2520,
+      "nombre": "5P SENCILLA CB",
+      "ubicacion": "uploads/2023/12/13/16_49_40_64361.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2023/12/13/16_49_40_64361.jpeg"
+    },
+    "imagen_id": 2520,
+    "nombre": "SENCILLA",
+    "padre_id": 12821,
+    "slug": "TIPOLOGIAS.POLTRONAS MOREA.SENCILLA"
+  },
+  {
+    "id": 12823,
+    "imagen": {
+      "id": 3622,
+      "nombre": "T-MOREA-4P-DOBLE-CONBRAZOS",
+      "ubicacion": "uploads/2024/1/23/13_50_53_193943.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/1/23/13_50_53_193943.jpeg"
+    },
+    "imagen_id": 3622,
+    "nombre": "DOBLE",
+    "padre_id": 12821,
+    "slug": "TIPOLOGIAS.POLTRONAS MOREA.DOBLE"
+  },
+  {
+    "id": 12824,
+    "imagen": {
+      "id": 2531,
+      "nombre": "BANCA 2P SENCILLA",
+      "ubicacion": "uploads/2023/12/13/16_19_37_194990.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2023/12/13/16_19_37_194990.jpeg"
+    },
+    "imagen_id": 2531,
+    "nombre": "BANCO SENCILLO",
+    "padre_id": 12821,
+    "slug": "TIPOLOGIAS.POLTRONAS MOREA.BANCO SENCILLO"
+  },
+  {
+    "id": 12825,
+    "imagen": {
+      "id": 2538,
+      "nombre": "BANCA 5P DOBLE",
+      "ubicacion": "uploads/2023/12/13/16_38_22_706061.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2023/12/13/16_38_22_706061.jpeg"
+    },
+    "imagen_id": 2538,
+    "nombre": "BANCO DOBLE",
+    "padre_id": 12821,
+    "slug": "TIPOLOGIAS.POLTRONAS MOREA.BANCO DOBLE"
+  },
+  {
+    "id": 12826,
+    "imagen": {
+      "id": 2539,
+      "nombre": "4P (1-2-1) GIRO 2 SUPERFICIES",
+      "ubicacion": "uploads/2023/12/13/16_52_52_597054.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2023/12/13/16_52_52_597054.jpeg"
+    },
+    "imagen_id": 2539,
+    "nombre": "CON GIRO",
+    "padre_id": 12821,
+    "slug": "TIPOLOGIAS.POLTRONAS MOREA.CON GIRO"
+  },
+  {
+    "id": 12831,
+    "imagen": {
+      "id": 2616,
+      "nombre": "T-LINK-ISLA10 PantallaFrontalVL",
+      "ubicacion": "uploads/2022/11/16/21_47_14_479282.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/11/16/21_47_14_479282.jpg"
+    },
+    "imagen_id": 2616,
+    "nombre": "LINK",
+    "padre_id": 12773,
+    "slug": "TIPOLOGIAS.ISLA DE 10.LINK"
+  },
+  {
+    "id": 12832,
+    "imagen": {
+      "id": 2619,
+      "nombre": "T-ISLA-6P-AvariableCostadoIndividual",
+      "ubicacion": "uploads/2022/11/21/19_22_8_525032.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/11/21/19_22_8_525032.jpg"
+    },
+    "imagen_id": 2619,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12732,
+    "slug": "TIPOLOGIAS.ISLA DE 6.ALTURA VARIABLE"
+  },
+  {
+    "id": 12833,
+    "imagen": {
+      "id": 2621,
+      "nombre": "T-ISLA-10P-AvariableCostInd",
+      "ubicacion": "uploads/2022/11/21/19_22_8_546955.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/11/21/19_22_8_546955.jpg"
+    },
+    "imagen_id": 2621,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12773,
+    "slug": "TIPOLOGIAS.ISLA DE 10.ALTURA VARIABLE"
+  },
+  {
+    "id": 12834,
+    "imagen": {
+      "id": 2620,
+      "nombre": "T-ISLA-8P-AvariableCostIndividual",
+      "ubicacion": "uploads/2022/11/21/19_22_8_541596.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2022/11/21/19_22_8_541596.jpg"
+    },
+    "imagen_id": 2620,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12780,
+    "slug": "TIPOLOGIAS.ISLA DE 8.ALTURA VARIABLE"
+  },
+  {
+    "id": 12858,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MATERIAL DE EMPAQUE",
+    "padre_id": 11915,
+    "slug": "SERVICIOS BPO.MATERIAL DE EMPAQUE"
+  },
+  {
+    "id": 12859,
+    "imagen": {
+      "id": 9,
+      "nombre": "SM-EDUK",
+      "ubicacion": "uploads/2021/3/18/14_48_16_65387.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_48_16_65387.jpg"
+    },
+    "imagen_id": 9,
+    "nombre": "MUEBLES PARA EDUCACION",
+    "slug": "MUEBLES PARA EDUCACION"
+  },
+  {
+    "id": 12860,
+    "imagen": {
+      "id": 9,
+      "nombre": "SM-EDUK",
+      "ubicacion": "uploads/2021/3/18/14_48_16_65387.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/18/14_48_16_65387.jpg"
+    },
+    "imagen_id": 9,
+    "nombre": "EDUK",
+    "padre_id": 12859,
+    "slug": "MUEBLES PARA EDUCACION.EDUK"
+  },
+  {
+    "id": 12861,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12860,
+    "slug": "MUEBLES PARA EDUCACION.EDUK.ACCESORIO"
+  },
+  {
+    "id": 12862,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12860,
+    "slug": "MUEBLES PARA EDUCACION.EDUK.ALMACENAMIENTO"
+  },
+  {
+    "id": 12863,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "CARRO",
+    "padre_id": 12860,
+    "slug": "MUEBLES PARA EDUCACION.EDUK.CARRO"
+  },
+  {
+    "id": 12864,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ELEMENTOS DE REPOSICION",
+    "padre_id": 12860,
+    "slug": "MUEBLES PARA EDUCACION.EDUK.ELEMENTOS DE REPOSICION"
+  },
+  {
+    "id": 12866,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "MESA",
+    "padre_id": 12860,
+    "slug": "MUEBLES PARA EDUCACION.EDUK.MESA"
+  },
+  {
+    "id": 12867,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ESTANTERIA",
+    "padre_id": 12860,
+    "slug": "MUEBLES PARA EDUCACION.EDUK.ESTANTERIA"
+  },
+  {
+    "id": 12868,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "PUFF",
+    "padre_id": 12860,
+    "slug": "MUEBLES PARA EDUCACION.EDUK.PUFF"
+  },
+  {
+    "id": 12872,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "TABLERO",
+    "padre_id": 12860,
+    "slug": "MUEBLES PARA EDUCACION.EDUK.TABLERO"
+  },
+  {
+    "id": 12873,
+    "imagen": {
+      "id": 3181,
+      "nombre": "T-ISLA2-LINK",
+      "ubicacion": "uploads/2023/3/28/19_44_22_66743.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2023/3/28/19_44_22_66743.jpg"
+    },
+    "imagen_id": 3181,
+    "nombre": "LINK",
+    "padre_id": 12734,
+    "slug": "TIPOLOGIAS.ISLA DE 2.LINK"
+  },
+  {
+    "id": 12874,
+    "imagen": {
+      "id": 3059,
+      "nombre": "EDKME310000",
+      "ubicacion": "uploads/2024/2/26/21_42_23_765689.png",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/2/26/21_42_23_765689.png"
+    },
+    "imagen_id": 3059,
+    "nombre": "MESAS INDIVIDUALES",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.MESAS INDIVIDUALES"
+  },
+  {
+    "id": 12875,
+    "imagen": {
+      "id": 3808,
+      "nombre": "22000126390",
+      "ubicacion": "uploads/2024/3/18/20_9_33_715913.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/3/18/20_9_33_715913.jpg"
+    },
+    "imagen_id": 3808,
+    "nombre": "ISLAS ESPECIALES",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.ISLAS ESPECIALES"
+  },
+  {
+    "id": 12876,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ESTANTERIA",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.ESTANTERIA"
+  },
+  {
+    "id": 12877,
+    "imagen": {
+      "id": 3195,
+      "nombre": "T-CLAK-TREBOL",
+      "ubicacion": "uploads/2024/12/17/20_2_3_262849.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/12/17/20_2_3_262849.jpg"
+    },
+    "imagen_id": 3195,
+    "nombre": "PUFF",
+    "padre_id": 12790,
+    "slug": "TIPOLOGIAS.POLTRONAS CLAK.PUFF"
+  },
+  {
+    "id": 12878,
+    "imagen": {
+      "id": 4115,
+      "nombre": "T-LAB-ISLA6-ALTA-POCETA",
+      "ubicacion": "uploads/2024/11/12/20_20_59_956716.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/11/12/20_20_59_956716.jpeg"
+    },
+    "imagen_id": 4115,
+    "nombre": "LABORATORIO",
+    "padre_id": 12813,
+    "slug": "MUEBLES PARA SECTOR SALUD.LABORATORIO"
+  },
+  {
+    "id": 12880,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12878,
+    "slug": "MUEBLES PARA SECTOR SALUD.LABORATORIO.ALMACENAMIENTO"
+  },
+  {
+    "id": 12882,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12878,
+    "slug": "MUEBLES PARA SECTOR SALUD.LABORATORIO.SOPORTE"
+  },
+  {
+    "id": 12883,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12878,
+    "slug": "MUEBLES PARA SECTOR SALUD.LABORATORIO.SUPERFICIE"
+  },
+  {
+    "id": 12884,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12585,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KONCISA.ACCESORIO"
+  },
+  {
+    "id": 12886,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12583,
+    "slug": "SISTEMAS MODULARES DE OFICINA.LINK.ACCESORIO"
+  },
+  {
+    "id": 12894,
+    "imagen": {
+      "id": 3696,
+      "nombre": "T-AREACol-Mila_tablero-mesaclak-puff",
+      "ubicacion": "uploads/2024/2/7/13_57_17_272115.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/2/7/13_57_17_272115.jpg"
+    },
+    "imagen_id": 3696,
+    "nombre": "AREAS COLABORATIVAS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.AREAS COLABORATIVAS"
+  },
+  {
+    "id": 12900,
+    "imagen": {
+      "id": 3702,
+      "nombre": "T-BARRAALTACAFETERIA-6P",
+      "ubicacion": "uploads/2024/2/7/13_57_17_301231.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/2/7/13_57_17_301231.jpg"
+    },
+    "imagen_id": 3702,
+    "nombre": "BARRAS y CAFETERIA",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.BARRAS y CAFETERIA"
+  },
+  {
+    "id": 12901,
+    "imagen": {
+      "id": 4214,
+      "nombre": "T-ALM-BIBLIOPUERT-FOR-2MATERAS",
+      "ubicacion": "uploads/2024/12/12/19_11_51_262020.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/12/12/19_11_51_262020.jpg"
+    },
+    "imagen_id": 4214,
+    "nombre": "MATERAS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.MATERAS"
+  },
+  {
+    "id": 12902,
+    "imagen": {
+      "id": 3208,
+      "nombre": "T-MJUNTASConsulta",
+      "ubicacion": "uploads/2024/2/21/0_57_53_543998.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/2/21/0_57_53_543998.jpeg"
+    },
+    "imagen_id": 3208,
+    "nombre": "MESAS INDIVIDUALES",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.MESAS INDIVIDUALES"
+  },
+  {
+    "id": 12904,
+    "imagen": {
+      "id": 3767,
+      "nombre": "T-TEK ISLA 2-PantallaFrontal",
+      "ubicacion": "uploads/2024/3/14/21_12_38_448463.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/3/14/21_12_38_448463.JPG"
+    },
+    "imagen_id": 3767,
+    "nombre": "TEK",
+    "padre_id": 12734,
+    "slug": "TIPOLOGIAS.ISLA DE 2.TEK"
+  },
+  {
+    "id": 12905,
+    "imagen": {
+      "id": 3817,
+      "nombre": "T-LCK-T-Met9NavesMet-1",
+      "ubicacion": "uploads/2024/3/18/20_9_33_746897.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/3/18/20_9_33_746897.jpg"
+    },
+    "imagen_id": 3817,
+    "nombre": "LOCKERS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.LOCKERS"
+  },
+  {
+    "id": 12906,
+    "imagen": {
+      "id": 3872,
+      "nombre": "PERIMETRAL-2P-AVariableConPantalla",
+      "ubicacion": "uploads/2024/4/8/21_14_57_765855.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/4/8/21_14_57_765855.jpg"
+    },
+    "imagen_id": 3872,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12785,
+    "slug": "TIPOLOGIAS.PERIMETRAL 2 PUESTOS.ALTURA VARIABLE"
+  },
+  {
+    "id": 12908,
+    "imagen": {
+      "id": 3880,
+      "nombre": "PERIMETRAL-3P-AVariableConPantalla",
+      "ubicacion": "uploads/2024/4/10/21_3_9_152243.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/4/10/21_3_9_152243.jpg"
+    },
+    "imagen_id": 3880,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12735,
+    "slug": "TIPOLOGIAS.PERIMETRAL 3 PUESTOS.ALTURA VARIABLE"
+  },
+  {
+    "id": 12909,
+    "imagen": {
+      "id": 3882,
+      "nombre": "PERIMETRAL-3P-TEKSinPantalla",
+      "ubicacion": "uploads/2024/4/10/21_14_0_26086.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/4/10/21_14_0_26086.jpg"
+    },
+    "imagen_id": 3882,
+    "nombre": "TEK",
+    "padre_id": 12735,
+    "slug": "TIPOLOGIAS.PERIMETRAL 3 PUESTOS.TEK"
+  },
+  {
+    "id": 12910,
+    "imagen": {
+      "id": 3886,
+      "nombre": "PERIMETRAL-4P-AVariableConPantalla",
+      "ubicacion": "uploads/2024/4/22/16_36_39_118262.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/4/22/16_36_39_118262.jpg"
+    },
+    "imagen_id": 3886,
+    "nombre": "ALTURA VARIABLE",
+    "padre_id": 12783,
+    "slug": "TIPOLOGIAS.PERIMETRAL 4 PUESTOS.ALTURA VARIABLE"
+  },
+  {
+    "id": 12911,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "CREDENZA",
+    "padre_id": 12592,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ALMACENAMIENTO.CREDENZA"
+  },
+  {
+    "id": 12912,
+    "imagen": {
+      "id": 3928,
+      "nombre": "T-M-AVARIABLE-FIJAblanco",
+      "ubicacion": "uploads/2024/5/23/20_41_21_507133.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/5/23/20_41_21_507133.jpg"
+    },
+    "imagen_id": 3928,
+    "nombre": "MESAS ALTURA VARIABLE",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.MESAS ALTURA VARIABLE"
+  },
+  {
+    "id": 12913,
+    "imagen": {
+      "id": 3927,
+      "nombre": "T-M-AVARIABLE-MOVILmadera",
+      "ubicacion": "uploads/2024/5/24/17_19_11_21545.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/5/24/17_19_11_21545.jpg"
+    },
+    "imagen_id": 3927,
+    "nombre": "MOVIL",
+    "padre_id": 12912,
+    "slug": "TIPOLOGIAS.MESAS ALTURA VARIABLE.MOVIL"
+  },
+  {
+    "id": 12914,
+    "imagen": {
+      "id": 3928,
+      "nombre": "T-M-AVARIABLE-FIJAblanco",
+      "ubicacion": "uploads/2024/5/23/20_41_21_507133.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/5/23/20_41_21_507133.jpg"
+    },
+    "imagen_id": 3928,
+    "nombre": "FIJA",
+    "padre_id": 12912,
+    "slug": "TIPOLOGIAS.MESAS ALTURA VARIABLE.FIJA"
+  },
+  {
+    "id": 12917,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "OMP",
+    "padre_id": 11921,
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD INTERIORES.OMP"
+  },
+  {
+    "id": 12918,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "OMP",
+    "padre_id": 11919,
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA VISITANTES.OMP"
+  },
+  {
+    "id": 12919,
+    "imagen": {
+      "id": 4000,
+      "nombre": "T-TEK-PERIM-4P-SINP-SINALM-F",
+      "ubicacion": "uploads/2024/7/2/13_5_58_449528.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/7/2/13_5_58_449528.jpg"
+    },
+    "imagen_id": 4000,
+    "nombre": "TEK",
+    "padre_id": 12783,
+    "slug": "TIPOLOGIAS.PERIMETRAL 4 PUESTOS.TEK"
+  },
+  {
+    "id": 12921,
+    "imagen": {
+      "id": 4097,
+      "nombre": "ISLA2PKPLUS",
+      "ubicacion": "uploads/2024/8/30/14_16_26_614191.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/8/30/14_16_26_614191.jpeg"
+    },
+    "imagen_id": 4097,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12734,
+    "slug": "TIPOLOGIAS.ISLA DE 2.KONCISA PLUS"
+  },
+  {
+    "id": 12922,
+    "imagen": {
+      "id": 4071,
+      "nombre": "ISLA4PKPLUS-CATEGORIA",
+      "ubicacion": "uploads/2024/8/28/15_47_50_783762.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/8/28/15_47_50_783762.jpeg"
+    },
+    "imagen_id": 4071,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12733,
+    "slug": "TIPOLOGIAS.ISLA DE 4.KONCISA PLUS"
+  },
+  {
+    "id": 12923,
+    "imagen": {
+      "id": 4102,
+      "nombre": "ISLA6PKPLUS",
+      "ubicacion": "uploads/2024/8/30/16_43_25_834019.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/8/30/16_43_25_834019.jpeg"
+    },
+    "imagen_id": 4102,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12732,
+    "slug": "TIPOLOGIAS.ISLA DE 6.KONCISA PLUS"
+  },
+  {
+    "id": 12924,
+    "imagen": {
+      "id": 4105,
+      "nombre": "ISLA8PKPLUS",
+      "ubicacion": "uploads/2024/8/30/17_17_20_118762.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/8/30/17_17_20_118762.jpeg"
+    },
+    "imagen_id": 4105,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12780,
+    "slug": "TIPOLOGIAS.ISLA DE 8.KONCISA PLUS"
+  },
+  {
+    "id": 12925,
+    "imagen": {
+      "id": 4069,
+      "nombre": "T-P1P-KPLUS-Form-75X150 C-TRAP",
+      "ubicacion": "uploads/2024/8/27/11_4_54_760873.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/8/27/11_4_54_760873.jpeg"
+    },
+    "imagen_id": 4069,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12736,
+    "slug": "TIPOLOGIAS.PERIMETRAL 1 PUESTO.KONCISA PLUS"
+  },
+  {
+    "id": 12926,
+    "imagen": {
+      "id": 4070,
+      "nombre": "T-P2P-KPLUS-Form-60X120 C-RECT",
+      "ubicacion": "uploads/2024/8/28/15_1_19_143557.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/8/28/15_1_19_143557.jpeg"
+    },
+    "imagen_id": 4070,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12785,
+    "slug": "TIPOLOGIAS.PERIMETRAL 2 PUESTOS.KONCISA PLUS"
+  },
+  {
+    "id": 12927,
+    "imagen": {
+      "id": 4093,
+      "nombre": "PERIM-3P-KPLUS",
+      "ubicacion": "uploads/2024/8/30/2_59_3_257620.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/8/30/2_59_3_257620.jpeg"
+    },
+    "imagen_id": 4093,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12735,
+    "slug": "TIPOLOGIAS.PERIMETRAL 3 PUESTOS.KONCISA PLUS"
+  },
+  {
+    "id": 12928,
+    "imagen": {
+      "id": 4020,
+      "nombre": "PERIMETRAL-1P-COMPENDIO-TPasac",
+      "ubicacion": "uploads/2024/7/29/16_5_20_567788.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/7/29/16_5_20_567788.jpg"
+    },
+    "imagen_id": 4020,
+    "nombre": "COMPENDIO",
+    "padre_id": 12736,
+    "slug": "TIPOLOGIAS.PERIMETRAL 1 PUESTO.COMPENDIO"
+  },
+  {
+    "id": 12929,
+    "imagen": {
+      "id": 4022,
+      "nombre": "T-PENL-DERECHOconPedestal",
+      "ubicacion": "uploads/2024/7/29/17_39_49_81581.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/7/29/17_39_49_81581.jpg"
+    },
+    "imagen_id": 4022,
+    "nombre": "COMPENDIO",
+    "padre_id": 12737,
+    "slug": "TIPOLOGIAS.PUESTOS GERENCIALES Y JEFATURAS.COMPENDIO"
+  },
+  {
+    "id": 12930,
+    "imagen": {
+      "id": 4045,
+      "nombre": "SM-KONCISAPLUS",
+      "ubicacion": "uploads/2024/8/14/21_55_45_917239.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/8/14/21_55_45_917239.JPG"
+    },
+    "imagen_id": 4045,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KONCISA PLUS"
+  },
+  {
+    "id": 12931,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12930,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KONCISA PLUS.ACCESORIO"
+  },
+  {
+    "id": 12932,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12930,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KONCISA PLUS.SOPORTE"
+  },
+  {
+    "id": 12933,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12930,
+    "slug": "SISTEMAS MODULARES DE OFICINA.KONCISA PLUS.SUPERFICIE"
+  },
+  {
+    "id": 12935,
+    "imagen": {
+      "id": 4094,
+      "nombre": "PERIM-4P-KPLUS",
+      "ubicacion": "uploads/2024/8/30/3_0_56_324473.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/8/30/3_0_56_324473.jpeg"
+    },
+    "imagen_id": 4094,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12783,
+    "slug": "TIPOLOGIAS.PERIMETRAL 4 PUESTOS.KONCISA PLUS"
+  },
+  {
+    "id": 12938,
+    "imagen": {
+      "id": 4106,
+      "nombre": "SM-INTEGRA",
+      "ubicacion": "uploads/2024/9/6/20_13_3_425244.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/9/6/20_13_3_425244.jpeg"
+    },
+    "imagen_id": 4106,
+    "nombre": "INTEGRA",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.INTEGRA"
+  },
+  {
+    "id": 12939,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ACCESORIO",
+    "padre_id": 12938,
+    "slug": "SISTEMAS MODULARES DE OFICINA.INTEGRA.ACCESORIO"
+  },
+  {
+    "id": 12940,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "ALMACENAMIENTO",
+    "padre_id": 12938,
+    "slug": "SISTEMAS MODULARES DE OFICINA.INTEGRA.ALMACENAMIENTO"
+  },
+  {
+    "id": 12941,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SOPORTE",
+    "padre_id": 12938,
+    "slug": "SISTEMAS MODULARES DE OFICINA.INTEGRA.SOPORTE"
+  },
+  {
+    "id": 12942,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "SUPERFICIE",
+    "padre_id": 12938,
+    "slug": "SISTEMAS MODULARES DE OFICINA.INTEGRA.SUPERFICIE"
+  },
+  {
+    "id": 12943,
+    "imagen": {
+      "id": 4145,
+      "nombre": "T-P1P-INTEGRA-Form-120X120-GROMMET-FALPANT",
+      "ubicacion": "uploads/2024/10/4/22_6_13_796590.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/10/4/22_6_13_796590.jpg"
+    },
+    "imagen_id": 4145,
+    "nombre": "INTEGRA",
+    "padre_id": 12736,
+    "slug": "TIPOLOGIAS.PERIMETRAL 1 PUESTO.INTEGRA"
+  },
+  {
+    "id": 12944,
+    "imagen": {
+      "id": 4144,
+      "nombre": "T-P2P-INTEGRA-Form-120X120-GROMMET-FALPANT",
+      "ubicacion": "uploads/2024/10/4/22_6_13_792957.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/10/4/22_6_13_792957.jpg"
+    },
+    "imagen_id": 4144,
+    "nombre": "INTEGRA",
+    "padre_id": 12785,
+    "slug": "TIPOLOGIAS.PERIMETRAL 2 PUESTOS.INTEGRA"
+  },
+  {
+    "id": 12945,
+    "imagen": {
+      "id": 4143,
+      "nombre": "T-P3P-INTEGRA-Form-120X120-GROMMET-FALPANT",
+      "ubicacion": "uploads/2024/10/4/22_6_13_785151.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/10/4/22_6_13_785151.jpg"
+    },
+    "imagen_id": 4143,
+    "nombre": "INTEGRA",
+    "padre_id": 12735,
+    "slug": "TIPOLOGIAS.PERIMETRAL 3 PUESTOS.INTEGRA"
+  },
+  {
+    "id": 12946,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "INTEGRA",
+    "padre_id": 12783,
+    "slug": "TIPOLOGIAS.PERIMETRAL 4 PUESTOS.INTEGRA"
+  },
+  {
+    "id": 12947,
+    "imagen": {
+      "id": 4151,
+      "nombre": "T-Is2P-INTEGRA-Form-120X120-GROMMET-PANT",
+      "ubicacion": "uploads/2024/10/4/22_6_13_821249.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/10/4/22_6_13_821249.jpg"
+    },
+    "imagen_id": 4151,
+    "nombre": "INTEGRA",
+    "padre_id": 12734,
+    "slug": "TIPOLOGIAS.ISLA DE 2.INTEGRA"
+  },
+  {
+    "id": 12948,
+    "imagen": {
+      "id": 4150,
+      "nombre": "T-Is4P-INTEGRA-Form-120X120-GROMMET-PANT",
+      "ubicacion": "uploads/2024/10/4/22_6_13_818436.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/10/4/22_6_13_818436.jpg"
+    },
+    "imagen_id": 4150,
+    "nombre": "INTEGRA",
+    "padre_id": 12733,
+    "slug": "TIPOLOGIAS.ISLA DE 4.INTEGRA"
+  },
+  {
+    "id": 12949,
+    "imagen": {
+      "id": 4149,
+      "nombre": "T-Is6P-INTEGRA-Form-120X120-GROMMET-PANT",
+      "ubicacion": "uploads/2024/10/4/22_6_13_815530.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/10/4/22_6_13_815530.jpg"
+    },
+    "imagen_id": 4149,
+    "nombre": "INTEGRA",
+    "padre_id": 12732,
+    "slug": "TIPOLOGIAS.ISLA DE 6.INTEGRA"
+  },
+  {
+    "id": 12950,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "INTEGRA",
+    "padre_id": 12780,
+    "slug": "TIPOLOGIAS.ISLA DE 8.INTEGRA"
+  },
+  {
+    "id": 12958,
+    "imagen": {
+      "id": 4131,
+      "nombre": "T-Is10P-KPLUS-Form-120X120-C-TRAPconPdstal",
+      "ubicacion": "uploads/2024/10/4/0_10_21_441053.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/10/4/0_10_21_441053.jpg"
+    },
+    "imagen_id": 4131,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12773,
+    "slug": "TIPOLOGIAS.ISLA DE 10.KONCISA PLUS"
+  },
+  {
+    "id": 12959,
+    "imagen": {
+      "id": 4116,
+      "nombre": "T-LAB-ISLA6-ALTA-MESON",
+      "ubicacion": "uploads/2024/11/12/20_20_42_281097.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/11/12/20_20_42_281097.jpeg"
+    },
+    "imagen_id": 4116,
+    "nombre": "LABORATORIO",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.LABORATORIO"
+  },
+  {
+    "id": 12960,
+    "imagen": {
+      "id": 4108,
+      "nombre": "T-LAB-PERIM3-BAJA",
+      "ubicacion": "uploads/2024/12/11/21_5_57_488721.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/12/11/21_5_57_488721.jpeg"
+    },
+    "imagen_id": 4108,
+    "nombre": "PERIMETRAL BAJA",
+    "padre_id": 12959,
+    "slug": "TIPOLOGIAS.LABORATORIO.PERIMETRAL BAJA"
+  },
+  {
+    "id": 12961,
+    "imagen": {
+      "id": 4109,
+      "nombre": "T-LAB-PERIM1-ALTA",
+      "ubicacion": "uploads/2024/12/11/21_3_34_993389.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/12/11/21_3_34_993389.jpeg"
+    },
+    "imagen_id": 4109,
+    "nombre": "PERIMETRAL ALTA",
+    "padre_id": 12959,
+    "slug": "TIPOLOGIAS.LABORATORIO.PERIMETRAL ALTA"
+  },
+  {
+    "id": 12962,
+    "imagen": {
+      "id": 4113,
+      "nombre": "T-LAB-ISLA6-BAJA",
+      "ubicacion": "uploads/2024/11/12/20_21_36_573149.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/11/12/20_21_36_573149.jpeg"
+    },
+    "imagen_id": 4113,
+    "nombre": "ISLA DOBLE BAJA",
+    "padre_id": 12959,
+    "slug": "TIPOLOGIAS.LABORATORIO.ISLA DOBLE BAJA"
+  },
+  {
+    "id": 12963,
+    "imagen": {
+      "id": 4115,
+      "nombre": "T-LAB-ISLA6-ALTA-POCETA",
+      "ubicacion": "uploads/2024/11/12/20_20_59_956716.jpeg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2024/11/12/20_20_59_956716.jpeg"
+    },
+    "imagen_id": 4115,
+    "nombre": "ISLA DOBLE ALTA",
+    "padre_id": 12959,
+    "slug": "TIPOLOGIAS.LABORATORIO.ISLA DOBLE ALTA"
+  },
+  {
+    "id": 12964,
+    "imagen": {
+      "id": 4243,
+      "nombre": "T-P5P-KPLUS-Form-60X120COST-RECT-PASAC",
+      "ubicacion": "uploads/2025/2/7/14_29_30_232271.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2025/2/7/14_29_30_232271.jpg"
+    },
+    "imagen_id": 4243,
+    "nombre": "PERIMETRAL 5 PUESTOS",
+    "padre_id": 11914,
+    "slug": "TIPOLOGIAS.PERIMETRAL 5 PUESTOS"
+  },
+  {
+    "id": 12965,
+    "imagen": {
+      "id": 4243,
+      "nombre": "T-P5P-KPLUS-Form-60X120COST-RECT-PASAC",
+      "ubicacion": "uploads/2025/2/7/14_29_30_232271.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2025/2/7/14_29_30_232271.jpg"
+    },
+    "imagen_id": 4243,
+    "nombre": "KONCISA PLUS",
+    "padre_id": 12964,
+    "slug": "TIPOLOGIAS.PERIMETRAL 5 PUESTOS.KONCISA PLUS"
+  },
+  {
+    "id": 12966,
+    "imagen": {
+      "id": 4271,
+      "nombre": "T-LINK PGRNCIAL-CR120",
+      "ubicacion": "uploads/2025/3/25/21_42_15_459584.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2025/3/25/21_42_15_459584.jpg"
+    },
+    "imagen_id": 4271,
+    "nombre": "LINK",
+    "padre_id": 12737,
+    "slug": "TIPOLOGIAS.PUESTOS GERENCIALES Y JEFATURAS.LINK"
+  },
+  {
+    "id": 12967,
+    "imagen": {
+      "id": 4282,
+      "nombre": "LINEA-ARES",
+      "ubicacion": "uploads/2025/4/3/19_41_4_954258.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2025/4/3/19_41_4_954258.JPG"
+    },
+    "imagen_id": 4282,
+    "nombre": "ARES",
+    "padre_id": 12581,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ARES"
+  },
+  {
+    "id": 12968,
+    "imagen": null,
+    "imagen_id": null,
+    "nombre": "POLTRONA",
+    "padre_id": 12967,
+    "slug": "SISTEMAS MODULARES DE OFICINA.ARES.POLTRONA"
+  }
+]
