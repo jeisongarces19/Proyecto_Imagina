@@ -3,8 +3,12 @@ import { useMemo, useState, useEffect } from 'react';
 import { loadTipologiasDetalle } from '../services/tipologiasDetalle';
 import { getThreeMaterialFromDef } from '../materials/materialRegistry'; // Ajusta la ruta según tu estructura de carpetas
 
+import KoncisaPlusPanel from './KoncisaPlusPanel';
+import { buildKoncisaPlus } from '../koncisaPlus/KoncisaPlusBuilder';
+
 export default function LeftPanel({
   section,
+  threeApiRef,
   readOnly,
   // datos
   catalogItems,
@@ -420,6 +424,15 @@ export default function LeftPanel({
         </>
       )}
 
+      {section === 'koncisaPlus' && (
+        <KoncisaPlusPanel
+          onCreate={(config) => {
+            const parts = buildKoncisaPlus(config);
+            console.log('PARTS KONCISA', parts);
+          }}
+        />
+      )}
+
       {/* ======================= MUROS ======================= */}
       {section === 'walls' && (
         <>
@@ -454,6 +467,18 @@ export default function LeftPanel({
 
               <div style={{ fontSize: 12, opacity: 0.75, marginTop: 6 }}>
                 En “Dibujar”: clic para puntos, doble clic para terminar.
+              </div>
+
+              <div style={{ marginTop: 10, fontSize: 12, color: '#666', lineHeight: 1.35 }}>
+                <div>
+                  <b>Cómo trazar:</b> activa “Modo muros”, luego haz click para poner puntos.
+                </div>
+                <div>
+                  <b>Terminar muro:</b> doble click.
+                </div>
+                <div>
+                  <b>Cancelar trazo:</b> tecla Esc.
+                </div>
               </div>
             </div>
 

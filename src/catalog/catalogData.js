@@ -6,6 +6,7 @@ export const CATALOG_COUNTRIES = ['CO', 'EUC', 'USD'];
 export const ITEM_TYPES = {
   COSTADO: 'COSTADO',
   SUPERFICIE: 'SUPERFICIE',
+  ACCESORIOS: 'ACCESORIOS', // Se añadió este tipo de item
 };
 
 // Tipos de modelo 3D
@@ -68,6 +69,19 @@ export const catalogItems = [
       // src no aplica aquí; lo genera la factory
     },
     prices: { CO: 120000 }, // mock (ejemplo)
+  },
+  {
+    codigoPT: 'ACCESORY001',
+    type: ITEM_TYPES.ACCESORIOS, // Tipo de item es 'ACCESORIOS'
+    ui: {
+      title: 'Koncisa Plus - Kit de Accesorios', // Título del artículo
+      subtitle: 'Kit completo de accesorios para el tratamiento Koncisa Plus', // Subtítulo
+      tags: ['Koncisa Plus', 'Accesorios', 'Cuidado Capilar'], // Etiquetas relacionadas
+    },
+    model: {
+      kind: MODEL_TYPES.GLB, // Tipo de modelo 3D
+      src: '/assets/accessories/koncisa_plus_kit.glb', // Fuente del modelo 3D
+    },
   },
 ];
 

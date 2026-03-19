@@ -11,12 +11,15 @@ export default function TopMenuBar({
   threeApiRef,
   onLogout,
   onNewProject,
-  // opcional: si quieres seguir usando el debug alert
   debugSaveAlert = false,
   onOpenBom,
   onCloseBom,
+  onExportSvg,
+  onExportPng,
+  onExportPdf,
 }) {
   const [open, setOpen] = useState(false);
+  const [exportOpen, setExportOpen] = useState(false);
   const fileRef = useRef(null);
 
   const canLoadSave = !!perms?.canLoadSave;
@@ -47,7 +50,9 @@ export default function TopMenuBar({
       );
     }
 
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: 'application/json',
+    });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'proyecto-imagina.json';
@@ -81,6 +86,7 @@ export default function TopMenuBar({
     } finally {
       e.target.value = '';
       setOpen(false);
+      setExportOpen(false);
     }
   };
 
@@ -88,11 +94,31 @@ export default function TopMenuBar({
     if (!canLoadSave) return;
     onNewProject?.();
     setOpen(false);
+    setExportOpen(false);
   };
 
   const doExit = () => {
     setOpen(false);
+    setExportOpen(false);
     onLogout?.();
+  };
+
+  const doExportSvg = () => {
+    onExportSvg?.();
+    setOpen(false);
+    setExportOpen(false);
+  };
+
+  const doExportPng = () => {
+    onExportPng?.();
+    setOpen(false);
+    setExportOpen(false);
+  };
+
+  const doExportPdf = () => {
+    onExportPdf?.();
+    setOpen(false);
+    setExportOpen(false);
   };
 
   return (
@@ -108,16 +134,18 @@ export default function TopMenuBar({
         userSelect: 'none',
       }}
     >
-      {/* LEFT: Menú Archivo */}
       <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            setOpen((v) => !v);
+            setExportOpen(false);
+          }}
           style={{
-            border: '1px solid transparent',
-            background: open ? '#f3f4f6' : 'transparent',
-            padding: '6px 10px',
-            borderRadius: 8,
+            border: '1px solid #111',
+            background: open ? '#f3f4f6' : '#fff',
+            padding: '6px 12px',
+            borderRadius: 10,
             cursor: 'pointer',
             fontWeight: 800,
           }}
@@ -133,22 +161,63 @@ export default function TopMenuBar({
               left: 0,
               width: 220,
               background: '#fff',
-              border: '1px solid #e5e7eb',
+              border: '1px solid #d1d5db',
               borderRadius: 12,
               boxShadow: '0 12px 24px rgba(0,0,0,0.08)',
-              overflow: 'hidden',
+              overflow: 'visible',
               zIndex: 9999,
             }}
           >
             <MenuItem label="Nuevo" disabled={!canLoadSave} onClick={doNew} />
-            <MenuItem label="Abrir…" disabled={!canLoadSave} onClick={doOpen} />
+            <MenuItem label="Abrir..." disabled={!canLoadSave} onClick={doOpen} />
             <MenuItem label="Guardar" disabled={!canLoadSave} onClick={doSave} />
+
+            <div style={{ position: 'relative' }}>
+              <button
+                type="button"
+                onClick={() => setExportOpen((v) => !v)}
+                style={{
+                  width: '100%',
+                  textAlign: 'left',
+                  padding: '10px 12px',
+                  border: 'none',
+                  background: exportOpen ? '#f3f4f6' : 'transparent',
+                  cursor: 'pointer',
+                  fontWeight: 800,
+                }}
+                onMouseDown={(e) => e.preventDefault()}
+              >
+                exportar 2d
+              </button>
+
+              {exportOpen && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: '100%',
+                    width: 220,
+                    background: '#fff',
+                    border: '1px solid #111',
+                    boxShadow: '0 12px 24px rgba(0,0,0,0.08)',
+                    zIndex: 10000,
+                  }}
+                >
+                  <MenuItem label="Exportar SVG" onClick={doExportSvg} />
+                  <MenuItem label="Exportar PNG" onClick={doExportPng} />
+                  <MenuItem label="Exportar PDF" onClick={doExportPdf} />
+                  <div style={{ marginTop: 8, fontSize: 11, color: '#777', lineHeight: 1.35 }}>
+                    PDF abre la ventana de impresión (puedes elegir “Guardar como PDF”).
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div style={{ height: 1, background: '#e5e7eb', margin: '6px 0' }} />
             <MenuItem label="Salir" onClick={doExit} />
           </div>
         )}
 
-        {/* Input oculto del Abrir */}
         <input
           ref={fileRef}
           type="file"
@@ -158,12 +227,11 @@ export default function TopMenuBar({
           disabled={!canLoadSave}
         />
 
-        {/* País (si lo quieres en la barra) */}
         <select
           value={country}
           onChange={(e) => setCountry(e.target.value)}
           style={{
-            height: 30,
+            height: 34,
             borderRadius: 8,
             border: '1px solid #ddd',
             padding: '0 8px',
@@ -177,7 +245,6 @@ export default function TopMenuBar({
         </select>
       </div>
 
-      {/* RIGHT: estado sesión */}
       <div style={{ fontSize: 12, opacity: 0.8, fontWeight: 800 }}>
         {labelUser}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -205,7 +272,7 @@ function MenuItem({ label, onClick, disabled }) {
         fontWeight: 800,
         opacity: disabled ? 0.45 : 1,
       }}
-      onMouseDown={(e) => e.preventDefault()} // evita perder foco raro
+      onMouseDown={(e) => e.preventDefault()}
     >
       {label}
     </button>

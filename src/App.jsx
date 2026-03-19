@@ -6,7 +6,6 @@ import ThreeCanvas from './components/ThreeCanvas';
 import CatalogPanel from './components/CatalogPanel';
 import PropertiesPanel from './components/PropertiesPanel';
 import SurfaceModal from './components/SurfaceModal';
-import WallsPanel from './components/WallsPanel';
 
 import TopMenuBar from './components/TopMenuBar';
 
@@ -367,6 +366,9 @@ export default function App() {
         debugSaveAlert={false}
         onOpenBom={() => setBomOpen(true)}
         onCloseBom={() => setBomOpen(false)}
+        onExportSvg={exportPlanSvg}
+        onExportPng={exportPlanPng}
+        onExportPdf={exportPlanPdf}
       />
 
       {/* APP GRID */}
@@ -374,7 +376,7 @@ export default function App() {
         style={{
           flex: 1,
           display: 'grid',
-          gridTemplateColumns: '280px 1fr 320px',
+          gridTemplateColumns: '20% 70% 10%',
           minHeight: 0,
         }}
       >
@@ -450,6 +452,7 @@ export default function App() {
             {/* PANEL */}
             <LeftPanel
               section={leftSection}
+              threeApiRef={threeApiRef}
               readOnly={readOnly}
               catalogItems={catalogItems}
               country={country}
@@ -622,30 +625,7 @@ export default function App() {
         </div>
 
         {/* RIGHT */}
-        <div
-          style={{
-            borderLeft: '1px solid #e5e5e5',
-            background: '#fff',
-            overflow: 'auto',
-            minHeight: 0,
-          }}
-        >
-          <WallsPanel
-            wallMode={wallMode}
-            setWallMode={setWallMode}
-            wallHeight={wallHeight}
-            setWallHeight={setWallHeight}
-            wallThickness={wallThickness}
-            setWallThickness={setWallThickness}
-            wallsCount={walls.length}
-            onUndoLastWall={() => setWalls((prev) => prev.slice(0, -1))}
-            onClearWalls={() => setWalls([])}
-            onExportSvg={exportPlanSvg}
-            onExportPng={exportPlanPng}
-            onExportPdf={exportPlanPdf}
-            readOnly={readOnly}
-          />
-
+        <div style={{}}>
           <PropertiesPanel
             part={selectedPart}
             partAcabado={materialsForPanel}

@@ -8,6 +8,11 @@ export default function LeftRail({ active, onChange }) {
     { id: 'materials', label: 'Materiales', icon: '🎨' },
     { id: 'plans', label: 'Planos', icon: '🗺️' },
     { id: 'sillas', label: 'Sillas', icon: '🗺️' },
+    {
+      id: 'koncisaPlus',
+      label: 'Koncisa Plus',
+      icon: '🪑',
+    },
   ];
 
   return (
