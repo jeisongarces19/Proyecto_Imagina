@@ -154,7 +154,9 @@ export default function BOMView({ items = [] }) {
             justifyContent: 'space-between',
           }}
         >
-          <div style={{ fontWeight: 800, fontSize: 14, color: 'rgba(0,0,0,0.78)' }}>BOM</div>
+          <div style={{ fontWeight: 800, fontSize: 14, color: 'rgba(0,0,0,0.78)' }}>
+            INVENTARIO BOM
+          </div>
 
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
             <input
@@ -196,7 +198,7 @@ export default function BOMView({ items = [] }) {
                     Descripción
                   </th>
                   <th style={{ ...thStyle, textAlign: 'right' }} onClick={() => setSort('qty')}>
-                    Qty
+                    Cantidad
                   </th>
                   <th
                     style={{ ...thStyle, textAlign: 'right' }}

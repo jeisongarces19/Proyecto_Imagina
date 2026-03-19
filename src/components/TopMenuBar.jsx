@@ -248,8 +248,8 @@ export default function TopMenuBar({
       <div style={{ fontSize: 12, opacity: 0.8, fontWeight: 800 }}>
         {labelUser}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <button onClick={onOpenBom}>Abrir BOM</button>
-          <button onClick={onCloseBom}>Cerrar BOM</button>
+          <button onClick={onOpenBom}>Abrir Inventario(BOM)</button>
+          <button onClick={onCloseBom}>Cerrar Inventario(BOM)</button>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 export default function BOMWindow({
   open,
-  title = 'BOM',
+  title = 'Inventario BOM',
   onClose,
   children,
   features = 'width=720,height=520,left=80,top=80',
