@@ -17,6 +17,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000000927</Codigo>
+          <Descripcion>RETAPIZADO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>125</Precio>
+          <Fecha_iart_vigencia>29-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000001001</Codigo>
           <Descripcion>DESINSTALAR PUESTO TRABAJO</Descripcion>
           <UDM>und</UDM>
@@ -145,11 +153,27 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000001146</Codigo>
+          <Descripcion>MANTENIMIENTO Y ENGRASE DE RODAMIENTOS ARCHIVO RODANTE</Descripcion>
+          <UDM>und</UDM>
+          <Precio>35</Precio>
+          <Fecha_iart_vigencia>10-NOV-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000001160</Codigo>
           <Descripcion>MANO DE OBRA MANTENIMIENTO DE ELEMENTOS</Descripcion>
           <UDM>und</UDM>
           <Precio>10</Precio>
           <Fecha_iart_vigencia>08-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000001167</Codigo>
+          <Descripcion>MANO DE OBRA VALOR HORA/HOMBRE INSTALADOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>20</Precio>
+          <Fecha_iart_vigencia>01-MAY-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
@@ -1921,6 +1945,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000005418</Codigo>
+          <Descripcion>SERVICIO RETAPIZADO ASIENTO SILLA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>75</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000005697</Codigo>
           <Descripcion>PUPITRE TRAPEZOIDAL CLASE 2 61CM LICEO CERVANTES ACES030207</Descripcion>
           <UDM>und</UDM>
@@ -1943,6 +1975,14 @@
           <Precio>236</Precio>
           <Fecha_iart_vigencia>22-OCT-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>01-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000006007</Codigo>
+          <Descripcion>TRANSPORTE METRO3 UIO -ORIENTE</Descripcion>
+          <UDM>und</UDM>
+          <Precio>50</Precio>
+          <Fecha_iart_vigencia>12-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-28</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000006207</Codigo>
@@ -2561,6 +2601,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000010034</Codigo>
+          <Descripcion>VALOR POR GASTOS DE VIAJE</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1500</Precio>
+          <Fecha_iart_vigencia>10-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>30-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000010417</Codigo>
           <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS RECTAS 240X60X3CM FORMICA KUO KUSU370000</Descripcion>
           <UDM>und</UDM>
@@ -3177,12 +3225,44 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000014517</Codigo>
+          <Descripcion>SERVICIO RETAPIZADO DE POLTRONA EN TELA SIN CAMBIO DE ESPUMA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>225</Precio>
+          <Fecha_iart_vigencia>12-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000014675</Codigo>
+          <Descripcion>ALMACENAMIENTO MODULAR H2 ANCHO 75CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>446</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000015337</Codigo>
           <Descripcion>JUEGO SOPORTE PANTALLA LATERAL ACCESORIO LINK LKAC051000</Descripcion>
           <UDM>und</UDM>
           <Precio>56</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000015471</Codigo>
+          <Descripcion>PAR BRAZOS PARA SILLA GENERICO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>36</Precio>
+          <Fecha_iart_vigencia>16-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000016490</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR EN MELAMINICO 60X150X2.5CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>190</Precio>
+          <Fecha_iart_vigencia>13-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000016752</Codigo>
@@ -3391,6 +3471,14 @@
           <Precio>664</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000018110</Codigo>
+          <Descripcion>POLTRONA CURVA FIJA TAPIZADA EN TELA CON NIVELADOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>845</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000020025</Codigo>
@@ -3945,6 +4033,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000021597</Codigo>
+          <Descripcion>SILLA BRAVO BR-250C GIRATORIA ESPALDAR MALLA GRIS ASIENTO TAPIZADO COLOR NEGRO CON BRAZOS AJUSTABLES</Descripcion>
+          <UDM>und</UDM>
+          <Precio>780</Precio>
+          <Fecha_iart_vigencia>23-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000021837</Codigo>
           <Descripcion>SUPERFICIE PPCUADRADA 80X80X3CM FEDEX SES010113</Descripcion>
           <UDM>und</UDM>
@@ -4055,6 +4151,14 @@
           <Precio>140</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000022169</Codigo>
+          <Descripcion>POLTRONA BEETLE LOW BACK 5001-4LBT INFINITI BASE ALUMINIO PULIDO 00L TAPIZ TIPO C</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1488</Precio>
+          <Fecha_iart_vigencia>05-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000022912</Codigo>
@@ -4183,6 +4287,14 @@
           <Precio>67</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000023785</Codigo>
+          <Descripcion>SILLA GIRATORIA BRAVO BR250M ESPALDAR MALLA GRIS ASIENTO MALLA NEGRA BRAZOS AJUSTABLES SOPORTE LUMBAR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>846</Precio>
+          <Fecha_iart_vigencia>01-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000024318</Codigo>
@@ -4497,12 +4609,28 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000028583</Codigo>
+          <Descripcion>KIT PRENSA PANTALLAS EN VIDRIO H:7.2 A:16.4 P:3.2 CM LINK LKAC281000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>12</Precio>
+          <Fecha_iart_vigencia>02-JUL-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000028997</Codigo>
           <Descripcion>FALDA (PP) AGLOMERADO 180X30X1.8CM ARQ E INT LKES020635</Descripcion>
           <UDM>und</UDM>
           <Precio>172</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000029325</Codigo>
+          <Descripcion>SERVICIOS RE-LACADO SILLAS DE MADERA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>32</Precio>
+          <Fecha_iart_vigencia>20-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000029457</Codigo>
@@ -4713,6 +4841,22 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000029984</Codigo>
+          <Descripcion>SILLA REPLAY 4 PATAS ESTRUCTURA NEGRA SIN BRAZOS CONCHA NEGRA TAPIZ ASIENTO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>170</Precio>
+          <Fecha_iart_vigencia>20-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>30-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000030244</Codigo>
+          <Descripcion>PAD ASIENTO TAPIZADO REPLAY-REWIND</Descripcion>
+          <UDM>und</UDM>
+          <Precio>31</Precio>
+          <Fecha_iart_vigencia>23-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000030258</Codigo>
           <Descripcion>SOPORTE 3 TOMAS 45X15X5CM PINTADO ACCESORIO LINK LKAC360000</Descripcion>
           <UDM>und</UDM>
@@ -4785,12 +4929,28 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000031668</Codigo>
+          <Descripcion>ALMACENAMIENTO MODULAR H2 MELAMINICO MDP MELAMINICO H:83 A:90 P:90 CM MULTIPLE COMPENDIO ECUADOR ECU-020-052</Descripcion>
+          <UDM>und</UDM>
+          <Precio>658</Precio>
+          <Fecha_iart_vigencia>06-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000031697</Codigo>
           <Descripcion>KIT CERRADURA ARCHIVADOR LATERAL ALMACENAMIENTO ZEN ALM1153020</Descripcion>
           <UDM>und</UDM>
           <Precio>33</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000031811</Codigo>
+          <Descripcion>SILLA GIRATORIA BRAVO BR200C ESPALDAR MALLA GRIS ASIENTO TAPIZADO NEGRO BRAZOS AJUSTABLES SOPORTE LUMBAR APOYACABEZAS</Descripcion>
+          <UDM>und</UDM>
+          <Precio>819</Precio>
+          <Fecha_iart_vigencia>20-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000032435</Codigo>
@@ -5049,6 +5209,22 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000032775</Codigo>
+          <Descripcion>ALMACENAMIENTO LOCAL H2 1 ENTREPAÑO MELAMINA BLANCA 18MM CANTO DURO 81X90X46CM TAQUILLAS METÁLICAS</Descripcion>
+          <UDM>und</UDM>
+          <Precio>403</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000032777</Codigo>
+          <Descripcion>ALMACENAMIENTO LOCAL H2 1 ENTREPAÑO MELAMINA BLANCA 15MM CANTO SUAVE 81X90X46CM CON NIVELADORES</Descripcion>
+          <UDM>und</UDM>
+          <Precio>466</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000032909</Codigo>
           <Descripcion>NAVE PUERTA DOBLE CON RECIBIDOR Y CERRADURA VIDRIO 180CM VETRO H MENOR=204CM VETRO VTPT030000</Descripcion>
           <UDM>und</UDM>
@@ -5103,6 +5279,14 @@
           <Precio>345</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000034098</Codigo>
+          <Descripcion>DIVISIONES DE ALUMINIO Y VIDRIO, ALUMINIO ANODIZADO NATURAL PULIDO, VIDRIO FLOTADO DE 8MM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>238</Precio>
+          <Fecha_iart_vigencia>20-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>30-JUN-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000034396</Codigo>
@@ -5217,12 +5401,28 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000035888</Codigo>
-          <Descripcion>SUPERFICIE PP RETORNO AGLOMERADO 100X60X3CM ECUADOR LKES240296</Descripcion>
+          <Codigo>22000035780</Codigo>
+          <Descripcion>SOFA KET 1 PUESTO TAPIZADO EN CUERO SINTETICO O TELA LOCAL</Descripcion>
           <UDM>und</UDM>
-          <Precio>116</Precio>
-          <Fecha_iart_vigencia>07-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>788</Precio>
+          <Fecha_iart_vigencia>29-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000035781</Codigo>
+          <Descripcion>SOFA KET 2 PUESTOS TAPIZADO EN CUERO SINTETICO O TELA LOCAL</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1050</Precio>
+          <Fecha_iart_vigencia>29-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000035782</Codigo>
+          <Descripcion>SOFA KET 3 PUESTOS TAPIZADO EN CUERO SINTETICO O TELA LOCAL</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1325</Precio>
+          <Fecha_iart_vigencia>29-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000035909</Codigo>
@@ -5529,6 +5729,38 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000037815</Codigo>
+          <Descripcion>BASE PP TRAPEZOIDAL 30X30X71CM MESA MEETING SABMILLER CLES040025</Descripcion>
+          <UDM>und</UDM>
+          <Precio>201</Precio>
+          <Fecha_iart_vigencia>26-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000037936</Codigo>
+          <Descripcion>SILLA REPLAY 4 PATAS ESTRUCTURA GRIS ALUMINIO SIN BRAZOS CONCHA GRIS TAPIZ ASIENTO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>175</Precio>
+          <Fecha_iart_vigencia>10-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000037937</Codigo>
+          <Descripcion>TANDEM REPLAY GRIS 2 PUESTOS TAPIZ ASIENTO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>620</Precio>
+          <Fecha_iart_vigencia>01-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000038206</Codigo>
+          <Descripcion>CODIGO INACTIVO-PANTALLA FRONTAL FORMICA 58X150X1.5CM LINK LKAC300000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>191</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000038545</Codigo>
           <Descripcion>BANCA PROFUNDIDAD 55CM TAPIZADA TELA GENERICO GAMA 2 DE 43X60X55CM CLAK CLSI010000</Descripcion>
           <UDM>und</UDM>
@@ -5753,12 +5985,44 @@
           <Fecha_fart_vigencia>01-JUN-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000040793</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR  EN FORMICA DE 240 X 75 X 3CM</Descripcion>
+          <Codigo>22000040397</Codigo>
+          <Descripcion>TANDEM REPLAY GRIS 3 PUESTOS TAPIZ ASIENTO</Descripcion>
           <UDM>und</UDM>
-          <Precio>366</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>814</Precio>
+          <Fecha_iart_vigencia>01-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000040798</Codigo>
+          <Descripcion>SUPERFICIE TERMINAL LINK MELAMINICO CON PERFORACIÓN GROMMET MEDIDAS 120X60CM ESPESOR 25MM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>142</Precio>
+          <Fecha_iart_vigencia>13-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000040799</Codigo>
+          <Descripcion>SUPERFICIE EN MELAMINICO PRINCIPAL TERMINAL  DE 60 X 150 CM ESPESOR 25MM TEK TKSU030000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>108</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000040819</Codigo>
+          <Descripcion>SUPERFICIE EN MELAMINICO PRINCIPAL INDIVIDUAL  PERFORACION BAHIA DE 60 X 150 CM ESPESOR 25MM TEK TKSU130000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>112</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000040859</Codigo>
+          <Descripcion>DUCTO BAJANTE PASACABLES   METALICO BLANCO H:69.4 A:22.2 P:10.2 CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>90</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000040874</Codigo>
@@ -5767,6 +6031,38 @@
           <Precio>1</Precio>
           <Fecha_iart_vigencia>05-ABR-21</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000040902</Codigo>
+          <Descripcion>NAVE PUERTA VIDRIO SIN TRAVESAÑOS CON CERRADURA DE 196 X 86.3 CM ACTIVO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>775</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000040934</Codigo>
+          <Descripcion>VIGA REFUERZO METALICA DE 135CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>60</Precio>
+          <Fecha_iart_vigencia>02-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000040963</Codigo>
+          <Descripcion>COSTADO METALICO SENCILLO TERMINAL TEK DE 75 X 71 CM  ECU-060-090</Descripcion>
+          <UDM>und</UDM>
+          <Precio>135</Precio>
+          <Fecha_iart_vigencia>02-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000040969</Codigo>
+          <Descripcion>VIGA PP REFUERZO 120CM METALICA PINTADO TEK ECUADOR ECU060080</Descripcion>
+          <UDM>und</UDM>
+          <Precio>65</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000041589</Codigo>
@@ -5913,6 +6209,22 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000042982</Codigo>
+          <Descripcion>TABLERO A PARED 120X120CM EDUK EDKAC080000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>362</Precio>
+          <Fecha_iart_vigencia>12-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000042983</Codigo>
+          <Descripcion>TABLERO A PARED 120X240CM EDUK EDKAC080000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>619</Precio>
+          <Fecha_iart_vigencia>12-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000042988</Codigo>
           <Descripcion>CART CAFETERIA 80X100X40CM EDUK EDKME230000</Descripcion>
           <UDM>und</UDM>
@@ -5935,14 +6247,6 @@
           <Precio>423</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
-        </Articulo>
-        <Articulo>
-          <Codigo>22000043634</Codigo>
-          <Descripcion>VIGA METALICA CONECTORA REFUERZO DE 170 CM TEK</Descripcion>
-          <UDM>und</UDM>
-          <Precio>213</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000044143</Codigo>
@@ -6145,6 +6449,22 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000100499</Codigo>
+          <Descripcion>SUPERFICIE PP RECTANGULAR FORMICA 160X100X3CM SES010253</Descripcion>
+          <UDM>und</UDM>
+          <Precio>192</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000100513</Codigo>
+          <Descripcion>MESA PP CENTRO SUPERFICIE FORMICA 70CM KTES010117</Descripcion>
+          <UDM>und</UDM>
+          <Precio>25</Precio>
+          <Fecha_iart_vigencia>13-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000100715</Codigo>
           <Descripcion>CREDENZA 2 GAVETAS SENCILLAS 1 ARCHIVO FORMICA  71X90X50CM ALMACENAMIENTO KONCISA PYM100268</Descripcion>
           <UDM>und</UDM>
@@ -6193,12 +6513,44 @@
           <Fecha_fart_vigencia>01-JUN-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000102243</Codigo>
-          <Descripcion>VIGA METALICA CONECTORA A CREDENZA 180</Descripcion>
+          <Codigo>22000101555</Codigo>
+          <Descripcion>ACCESORIO MECANISMO PARA SILLA BRAVO SYNCHRO CON TENSIÓN Y EL AJUSTE DE ÁNGULO DEL ESPALDAR EN 3 POSICIONES</Descripcion>
           <UDM>und</UDM>
-          <Precio>225</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>353</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000102248</Codigo>
+          <Descripcion>COSTADO METALICO INTERMEDIO SENCILLO TEK DE 80 X 71 CM ECU-PP0-090</Descripcion>
+          <UDM>und</UDM>
+          <Precio>120</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000102282</Codigo>
+          <Descripcion>ALMACENAMIENTO MODULAR MADECOR H5 4 ENTREPAÑOS 196X90X46CM (MCAL 090-000) CON PROVISION</Descripcion>
+          <UDM>und</UDM>
+          <Precio>771</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000102295</Codigo>
+          <Descripcion>MESA DE JUNTAS DE 400 X 160 CM TEK NESTLE</Descripcion>
+          <UDM>und</UDM>
+          <Precio>3411</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000102304</Codigo>
+          <Descripcion>DUCTO BAJANTE ESPECIAL PARA MESA CUADRADA TEK</Descripcion>
+          <UDM>und</UDM>
+          <Precio>100</Precio>
+          <Fecha_iart_vigencia>02-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000102455</Codigo>
@@ -7361,22 +7713,6 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000105320</Codigo>
-          <Descripcion>MESA AUXILIAR SALA DE ESPERA  60 X 60 ESPESOR 25MM GOB</Descripcion>
-          <UDM>und</UDM>
-          <Precio>209</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
-        </Articulo>
-        <Articulo>
-          <Codigo>22000105376</Codigo>
-          <Descripcion>VIGA METALICA CONECTORA DE 132.5 CM XIY TEK</Descripcion>
-          <UDM>und</UDM>
-          <Precio>150</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
-        </Articulo>
-        <Articulo>
           <Codigo>22000105653</Codigo>
           <Descripcion>ARCHIVADOR  LATERAL METALICO 4H FRENTE MANIJA EMBEBIDA 121X47.5X50CM ALMACENAMIENTO KONCISA PYM100125</Descripcion>
           <UDM>und</UDM>
@@ -7417,12 +7753,44 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000106458</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR CON PERFORACION  GROMMETT DE 200X70 CM ESPESOR 25MM ECU-PP0-141</Descripcion>
+          <Codigo>22000106401</Codigo>
+          <Descripcion>MESA CAFETERIA DE 200 X 122 CM CONTRALORIA ECU-PP0-174</Descripcion>
           <UDM>und</UDM>
-          <Precio>350</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>1265</Precio>
+          <Fecha_iart_vigencia>24-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000106440</Codigo>
+          <Descripcion>ALMACENAMIENTO ESPECIAL M39B DE 185X85X60 CM TELEFONICA ECU-PP0-194</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1522</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000106444</Codigo>
+          <Descripcion>PANTALLA LOCAL SIN HERRAJE VIDRIO LAMINADO COLOR 120CM ESPESOR 6~8MM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>180</Precio>
+          <Fecha_iart_vigencia>08-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000106446</Codigo>
+          <Descripcion>PANTALLA LOCAL SIN HERRAJE VIDRIO LAMINADO COLOR 150CM ESPESOR 6~8MM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>210</Precio>
+          <Fecha_iart_vigencia>01-ENE-24</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000106456</Codigo>
+          <Descripcion>VIGA REFUERZO 230CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>225</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000106546</Codigo>
@@ -7785,6 +8153,22 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000107488</Codigo>
+          <Descripcion>PAR BRAZOS FIJOS PARA SILLA VIDA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>22</Precio>
+          <Fecha_iart_vigencia>28-MAR-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>30-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000107489</Codigo>
+          <Descripcion>PAR BRAZOS GRADUABLES PARA SILLA VIDA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>43</Precio>
+          <Fecha_iart_vigencia>13-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000107579</Codigo>
           <Descripcion>COSTADO SENCILLO TERMINAL DE 71X60X12CM METALICO PINTADO KUO ELSO640000</Descripcion>
           <UDM>und</UDM>
@@ -7849,12 +8233,60 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000107623</Codigo>
-          <Descripcion>SUPERFICIE INDIVIDUAL LINK MELAMINICO CON PERFORACIÓN GROMMET MEDIDAS 155X60CM ESPESOR 25MM</Descripcion>
+          <Codigo>22000107625</Codigo>
+          <Descripcion>SUPERFICIE LOCAL MELAMINA MADEREADA SIN PERFORACIONES 75X90CM ESPESOR 25MM CANTO DURO</Descripcion>
           <UDM>und</UDM>
-          <Precio>127</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>145</Precio>
+          <Fecha_iart_vigencia>13-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000107661</Codigo>
+          <Descripcion>ALMACENAMIENTO ESPECIAL H4 METALICO DE 90X160X48 CM URIANA ECU-PP0-195</Descripcion>
+          <UDM>und</UDM>
+          <Precio>647</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000107671</Codigo>
+          <Descripcion>SUPERFICIE LOCAL MELAMINA MADEREADA SIN PERFORACIONES 60X90CM ESPESOR 25MM CANTO DURO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>95</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000107703</Codigo>
+          <Descripcion>TAPA METALICA INFERIOR DUCTO MESA REUNIONES DE 64 X 11 CM TEK BUSINESS ECU-PP0-215</Descripcion>
+          <UDM>und</UDM>
+          <Precio>108</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000107712</Codigo>
+          <Descripcion>SILLA BAKHITA SIN BRAZOS MOCONONCHA PLÁSTICA 4 PATAS COD.370.--/A</Descripcion>
+          <UDM>und</UDM>
+          <Precio>160</Precio>
+          <Fecha_iart_vigencia>01-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000107718</Codigo>
+          <Descripcion>BANCO BAKHITA H:76 MOCONCONCHA PLÁSTICA 4 PATAS COD.372.--/76A</Descripcion>
+          <UDM>und</UDM>
+          <Precio>181</Precio>
+          <Fecha_iart_vigencia>25-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000107786</Codigo>
+          <Descripcion>BANCO BAKHITA H:66 MOCONCONCHA PLÁSTICA 4 PATAS COD.372.--/66A</Descripcion>
+          <UDM>und</UDM>
+          <Precio>199</Precio>
+          <Fecha_iart_vigencia>01-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000107866</Codigo>
@@ -8129,12 +8561,20 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000108693</Codigo>
-          <Descripcion>CREDENZA ESPECIAL EN MELAMINICO DE 70X90X55 CM ECU-PP0-312 METAIN</Descripcion>
+          <Codigo>22000108523</Codigo>
+          <Descripcion>FALDA EN MELAMINICO EXPRESS DE 150X35CM ESPESOR 15MM FARMAENLACE ECU-PP0-260</Descripcion>
           <UDM>und</UDM>
-          <Precio>1489</Precio>
-          <Fecha_iart_vigencia>07-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>136</Precio>
+          <Fecha_iart_vigencia>06-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000108624</Codigo>
+          <Descripcion>BIBLIOTECA ESPECIAL PUERTAS EN FORMICA DE 55X198X47 CM ECU-PP0-288 XIY</Descripcion>
+          <UDM>und</UDM>
+          <Precio>388</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000108705</Codigo>
@@ -8145,12 +8585,36 @@
           <Fecha_fart_vigencia>28-FEB-28</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000108794</Codigo>
+          <Descripcion>FALDA ESPECIAL EN MELAMINICO DE 122X30 CM ESPESOR 18 MM ECU-PP0-335 SCORPIONS</Descripcion>
+          <UDM>und</UDM>
+          <Precio>95</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000108799</Codigo>
+          <Descripcion>SOFA DOS PUESTOS ESTRUCTURA CROMADA EN TELA LOCAL</Descripcion>
+          <UDM>und</UDM>
+          <Precio>875</Precio>
+          <Fecha_iart_vigencia>24-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000108968</Codigo>
           <Descripcion>SUPERFICIE EN MELAMINICO RECTANGULAR PERFORACION ESPECIAL LATERAL DE 140X80 CM ESPESOR 25MM TEK CHUBB ECU-PP0-373</Descripcion>
           <UDM>und</UDM>
           <Precio>249</Precio>
           <Fecha_iart_vigencia>27-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>30-ABR-30</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000108992</Codigo>
+          <Descripcion>SUPERFICIE EN MELAMINA ELIPSE DE 140 X 80 CM ESPESOR 25MM ECU-PP0-367 CHUBB</Descripcion>
+          <UDM>und</UDM>
+          <Precio>158</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000109307</Codigo>
@@ -9129,6 +9593,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000111232</Codigo>
+          <Descripcion>SILLA SYNC 2 GIRATORIA ESPALDAR EN MALLA ASIENTO TAPIZADO CON BRAZOS GRADUABLES BASE DE NYLON NEGRO RODACHINAS PISO DURO REF. SN6402</Descripcion>
+          <UDM>und</UDM>
+          <Precio>442</Precio>
+          <Fecha_iart_vigencia>01-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>30-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000111290</Codigo>
           <Descripcion>COSTADO PP METALICO PINTADO ANCHO 150CM MESA DE REUNIONES LITOPLAS LKES2401105</Descripcion>
           <UDM>und</UDM>
@@ -9361,6 +9833,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000111860</Codigo>
+          <Descripcion>SUPERFICIE PP RECTA 90X90X2,5CM MELAMINICO A DOS CARAS ALIANZA SES010257</Descripcion>
+          <UDM>und</UDM>
+          <Precio>114</Precio>
+          <Fecha_iart_vigencia>13-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000112057</Codigo>
           <Descripcion>PUESTO PP DE TRABAJO MELAMINICO 60X140CM ERGOMATIC ACES0301247</Descripcion>
           <UDM>und</UDM>
@@ -9374,7 +9854,15 @@
           <UDM>und</UDM>
           <Precio>251</Precio>
           <Fecha_iart_vigencia>01-ENE-25</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000112328</Codigo>
+          <Descripcion>SILLA REPLAY 4 PATAS ESTRUCTURA GRIS ALUMINIO CON BRAZOS INTEGRALES CONCHA GRIS TAPIZ ASIENTO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>202</Precio>
+          <Fecha_iart_vigencia>20-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000112427</Codigo>
@@ -9383,6 +9871,38 @@
           <Precio>506</Precio>
           <Fecha_iart_vigencia>01-ENE-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>30-ABR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000112429</Codigo>
+          <Descripcion>SILLA PORTONE STANDAR BASE GRIS ESPALDAR MALLA GRIS ASIENTO TAPIZADO GRIS BRAZOS 3D</Descripcion>
+          <UDM>und</UDM>
+          <Precio>580</Precio>
+          <Fecha_iart_vigencia>20-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000112463</Codigo>
+          <Descripcion>CUERPO DE ALMACENAMIENTO MODULAR H2 DE 900 X 856 X 450 MM CON PUERTAS Y TOP EN MELAMINA LOCAL ECU-HS-004 LICORAM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>678</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000112470</Codigo>
+          <Descripcion>KIT CERRADURA ALMACENAMIENTO (CILINDRO+2 LLAVES/ANILLO/CUERPO CERRADURA)</Descripcion>
+          <UDM>und</UDM>
+          <Precio>27</Precio>
+          <Fecha_iart_vigencia>01-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000112561</Codigo>
+          <Descripcion>CUERPO DE ALMACENAMIENTO MODULAR H2 DE 900 X 856 X 450 EN 19 MM CON PUERTAS Y TOP  EN FORMICA 1 ENTREPAÑO LOCAL ECU-H2 HOLCIM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>644</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000112681</Codigo>
@@ -9881,12 +10401,36 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000113669</Codigo>
+          <Descripcion>SILLA CONTESSA SECONDA CCJ1MR-FPG1 ESTRUCTURA NEGRA MALLA MALLA NEGRA BASE PINTURA NEGRA CON BRAZOS 4D SIN APOYO LUMBAR RODACHINAS PISO DURO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>2360</Precio>
+          <Fecha_iart_vigencia>17-MAY-24</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000113670</Codigo>
+          <Descripcion>APOYO LUMBAR CC519W-G721 CONTESSA SECONDA COLOR NEGRO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>140</Precio>
+          <Fecha_iart_vigencia>17-MAY-24</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000113680</Codigo>
           <Descripcion>MESA AUXILIAR MOVIL 64X38X53CM BASE METALICA SUPERFICIE FORMICA MOREA HSME020000</Descripcion>
           <UDM>und</UDM>
           <Precio>303</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000113787</Codigo>
+          <Descripcion>APOYACABEZA AMPLIO FIJO EN MALLA NEGRO ESTRUCTURA NEGRA PARA SILLA CONTESSA SECONDA CC502Z FSP1</Descripcion>
+          <UDM>und</UDM>
+          <Precio>364</Precio>
+          <Fecha_iart_vigencia>17-MAY-24</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000113923</Codigo>
@@ -9953,12 +10497,28 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000114026</Codigo>
+          <Descripcion>BASE PP UNITARIA ALTURA 71CM METALICA PINTADA TEK ECUADOR ECU060129</Descripcion>
+          <UDM>und</UDM>
+          <Precio>37</Precio>
+          <Fecha_iart_vigencia>30-ABR-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000114096</Codigo>
           <Descripcion>CAJA PP METALICA ALEM CON TOMAS METALICA PINTADA DE 13X39CM TEK ECUADOR ECUPP05143</Descripcion>
           <UDM>und</UDM>
           <Precio>57</Precio>
           <Fecha_iart_vigencia>06-NOV-24</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000114098</Codigo>
+          <Descripcion>CAJA PP METALICA ALEM CON TOMAS METALICA PINTADA DE 13X56CM TEK ECUADOR ECUPP05142</Descripcion>
+          <UDM>und</UDM>
+          <Precio>60</Precio>
+          <Fecha_iart_vigencia>05-MAY-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>30-JUN-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000114126</Codigo>
@@ -10089,6 +10649,22 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000114433</Codigo>
+          <Descripcion>LINK SUPERFICIE PRINCIPAL TERMINAL MELAMINA 120X60X3CM LKSU010030</Descripcion>
+          <UDM>und</UDM>
+          <Precio>130</Precio>
+          <Fecha_iart_vigencia>26-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000114435</Codigo>
+          <Descripcion>LINK SUPERFICIE PRINCIPAL TERMINAL MELAMINA 150X60X3CM LKSU010030</Descripcion>
+          <UDM>und</UDM>
+          <Precio>134</Precio>
+          <Fecha_iart_vigencia>26-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000114437</Codigo>
           <Descripcion>LINK SUPERFICIE PRINCIPAL TERMINAL MELAMINA 180X60X3CM LKSU010030</Descripcion>
           <UDM>und</UDM>
@@ -10183,6 +10759,14 @@
           <Precio>52</Precio>
           <Fecha_iart_vigencia>24-ABR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000114694</Codigo>
+          <Descripcion>CANALETA METALICA PASACABLES 120 X 17 ECUADOR ECU060131</Descripcion>
+          <UDM>und</UDM>
+          <Precio>53</Precio>
+          <Fecha_iart_vigencia>18-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000114695</Codigo>
@@ -10433,6 +11017,22 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000115603</Codigo>
+          <Descripcion>SILLA ISIDORA SIN BRAZOS 4 PATAS COLOR GRIS COD.380.14/A</Descripcion>
+          <UDM>und</UDM>
+          <Precio>180</Precio>
+          <Fecha_iart_vigencia>01-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000115604</Codigo>
+          <Descripcion>BANCO ALTO ISIDORO H.76 COD. 382.--/76A</Descripcion>
+          <UDM>und</UDM>
+          <Precio>215</Precio>
+          <Fecha_iart_vigencia>01-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000115653</Codigo>
           <Descripcion>RACK CONTENEDOR 67.9X95.5X52CM  EDUK EDKAC130000</Descripcion>
           <UDM>und</UDM>
@@ -10495,6 +11095,14 @@
           <Precio>217</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000116019</Codigo>
+          <Descripcion>POLTRONA LUNA GIRATORIA COLUMNA NEUMATICA BASE MADERA INZA 710</Descripcion>
+          <UDM>und</UDM>
+          <Precio>593</Precio>
+          <Fecha_iart_vigencia>26-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000116078</Codigo>
@@ -11297,12 +11905,44 @@
           <Fecha_fart_vigencia>01-MAR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000117631</Codigo>
+          <Descripcion>SILLA REPLAY 4 PATAS ESTRUCTURA NEGRA CON BRAZOS INTEGRALES CONCHA NEGRA TAPIZ ASIENTO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>201</Precio>
+          <Fecha_iart_vigencia>20-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000117654</Codigo>
+          <Descripcion>MESA REUNIONES 12 PUESTOS TEKNION</Descripcion>
+          <UDM>und</UDM>
+          <Precio>4322</Precio>
+          <Fecha_iart_vigencia>25-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000117684</Codigo>
           <Descripcion>SILLA SWING SWG36KPN ESTRUCTURA 4 PATAS GRIS CON RUEDAS ESPALDAR MALLA GRIS ASIENTO TAPIZADO GRIS BRAZOS FIJOS</Descripcion>
           <UDM>und</UDM>
           <Precio>289</Precio>
           <Fecha_iart_vigencia>26-SEP-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>01-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000117686</Codigo>
+          <Descripcion>DIVISIÓN TEILEN ALUMINIO Y VIDRIO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>300</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000117707</Codigo>
+          <Descripcion>SILLÓN SMALL PLACE ESTRUCTURA NEGRA, TAPIZ TELA KING COD. 282.--/IKAN</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1233</Precio>
+          <Fecha_iart_vigencia>25-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000117878</Codigo>
@@ -11351,6 +11991,14 @@
           <Precio>172</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000118020</Codigo>
+          <Descripcion>COSTADO PP SENCILLO TERMINAL 60X100X13CM BARRA ALTA LINK 24/7 LKES040524</Descripcion>
+          <UDM>und</UDM>
+          <Precio>90</Precio>
+          <Fecha_iart_vigencia>26-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-MAR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000118022</Codigo>
@@ -11543,6 +12191,14 @@
           <Precio>102</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000118261</Codigo>
+          <Descripcion>BASE PP 4 APOYOS METALICA PINTADA 71X71CM UBER LKES2407397</Descripcion>
+          <UDM>und</UDM>
+          <Precio>115</Precio>
+          <Fecha_iart_vigencia>26-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-MAR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000118337</Codigo>
@@ -11913,14 +12569,6 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000119929</Codigo>
-          <Descripcion>SUPERFICIE PP PRINCIPAL TRAPEZOIDAL FORMICA 180X137X2.5CM ECUADOR-PRODUBANCO KUES010784</Descripcion>
-          <UDM>und</UDM>
-          <Precio>750</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
-        </Articulo>
-        <Articulo>
           <Codigo>22000120017</Codigo>
           <Descripcion>FACTURACION OFICINAS ANTICIPADO MANUFACTURADO</Descripcion>
           <UDM>und</UDM>
@@ -12193,6 +12841,30 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000120941</Codigo>
+          <Descripcion>CREDENZA GERENCIA 715X1140X600</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1232</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000120945</Codigo>
+          <Descripcion>MESA REUNIONES PRESIDENCIA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>3987</Precio>
+          <Fecha_iart_vigencia>11-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000120948</Codigo>
+          <Descripcion>MESA REUNIONES GERENCIA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>3637</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000121163</Codigo>
           <Descripcion>MESA ABATIBLE OHM CONTEMPORANEO SIN TOMA 60X120CM H-74CM SUPERFICIE MELAMINICO COSTADOS CURVOS CON RODACHINAS EDUK EDKME350000</Descripcion>
           <UDM>und</UDM>
@@ -12265,6 +12937,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000121381</Codigo>
+          <Descripcion>APOYACABEZAS PARA SILLA SYNC 2 ESTRUCTURA NEGRA CON PAD TAPIZADO EN POLYESTER COLOR NEGRO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>121</Precio>
+          <Fecha_iart_vigencia>05-MAY-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-28</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000121436</Codigo>
           <Descripcion>MATERA 24X140X50CM AGLOMERADO RH + FORMICA ALMACENAMIENTO ALM3176000</Descripcion>
           <UDM>und</UDM>
@@ -12297,12 +12977,36 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000121682</Codigo>
+          <Descripcion>CAJA TAPA TOMAS  ESPECIAL INVERNEG</Descripcion>
+          <UDM>und</UDM>
+          <Precio>105</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121692</Codigo>
+          <Descripcion>SILLA MOEMA BP ESTRUCTURA 4 PATAS Y CONCHA TECNOPOLIMERO COD.69.__/BP</Descripcion>
+          <UDM>und</UDM>
+          <Precio>325</Precio>
+          <Fecha_iart_vigencia>29-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121696</Codigo>
+          <Descripcion>APOYACABEZAS AJUSTABLE PORTONE NEGRA COD. COEZHB FSL1</Descripcion>
+          <UDM>und</UDM>
+          <Precio>47</Precio>
+          <Fecha_iart_vigencia>01-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000121710</Codigo>
           <Descripcion>SILLA SWING SWG36KPN ESTRUCTURA 4 PATAS GRIS CON RUEDAS ESPALDAR MALLA AZUL ASIENTO TAPIZADO GRIS BRAZOS FIJOS</Descripcion>
           <UDM>und</UDM>
-          <Precio>289</Precio>
-          <Fecha_iart_vigencia>26-SEP-25</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>01-JUN-26</Fecha_fart_vigencia>
+          <Precio>359</Precio>
+          <Fecha_iart_vigencia>05-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000121711</Codigo>
@@ -12311,6 +13015,62 @@
           <Precio>289</Precio>
           <Fecha_iart_vigencia>26-SEP-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>01-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121723</Codigo>
+          <Descripcion>MESA CIRCULAR LOUNGE TEKNION BASE UNITARIA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>377</Precio>
+          <Fecha_iart_vigencia>02-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121744</Codigo>
+          <Descripcion>MUEBLE ESPECIAL EN MELAMINICO 210 X 50 CM CON ALMACENAMIENTO MEPAL 08 TEJEIRA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>2063</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121793</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR 25MM MELAMINA ROBLE EDIMCA 200X120 PRODUBANCO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>261</Precio>
+          <Fecha_iart_vigencia>12-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-28</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121794</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR 25MM MELAMINA ROBLE EDIMCA 190X70 PRODUBANCO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>195</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121797</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR 25MM MELAMINA ROBLE EDIMCA 220X90 PRODUBANCO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>174</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121798</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR 25MM MELAMINA ROBLE EDIMCA 180X65 PRODUBANCO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>163</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121801</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR 25MM MELAMINA ROBLE EDIMCA 160X70 PRODUBANCO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>100</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000121806</Codigo>
@@ -12327,6 +13087,94 @@
           <Precio>106</Precio>
           <Fecha_iart_vigencia>30-DIC-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121827</Codigo>
+          <Descripcion>SUPERFICIE EN MELAMINICO DE 1400X706 CON PERFORACION GROMMET ML03B ESPESOR 25MM G.SUPERIOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>122</Precio>
+          <Fecha_iart_vigencia>16-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121830</Codigo>
+          <Descripcion>SUPERFICIE EN MELAMINICO DE 1400X706 CON PERFORACION GROMMET LATERAL ML20 ESPESOR 25MM G.SUPERIOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>80</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121832</Codigo>
+          <Descripcion>SUPERFICIE TRAPEZOIDAL EN MELAMINICO DE  1600 ESPESOR 25MM G.SUPERIOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>620</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121834</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR EN MELAMINICO DE 1500X800 ESPESOR 25MM G.SUPERIOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>246</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121836</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR EN MELAMINICO DE 1200X600 CON PERFORACION GROMMET ESPESOR 25MM G.SUPERIOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>111</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121838</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR EN MELAMINICO DE 1500X700 CON PERFORACION GROMMET ESPESOR 25MM G. SUPERIOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>163</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121839</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR EN MELAMINICO DE 1400X700 PERFORACION GROMMET LATERAL ESPESOR 25MM G.SUPERIOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>189</Precio>
+          <Fecha_iart_vigencia>21-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121845</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR EN MELAMINCIO DE 1400X710 CON PERFORACION GROMMET ESPESOR 25MM G.SUPERIOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>258</Precio>
+          <Fecha_iart_vigencia>06-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121847</Codigo>
+          <Descripcion>SUPERFICIE TERMINAL EN MELAMINICO DE 1102X600 CON PERFORACION GROMMET ESPESOR 25MM G SUPERIOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>82</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121873</Codigo>
+          <Descripcion>SUPERFICIE PP TRAPEZOIDAL FORMICA DE 152.4 X 76.2 X 76.2 X 60 ESPESOR 25MM BG</Descripcion>
+          <UDM>und</UDM>
+          <Precio>242</Precio>
+          <Fecha_iart_vigencia>21-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000121874</Codigo>
+          <Descripcion>SUPERFICIE PP TRAPEZOIDAL FORMICA DE 180 X 118.2 X 92.3 ESPESOR 25MM BG</Descripcion>
+          <UDM>und</UDM>
+          <Precio>465</Precio>
+          <Fecha_iart_vigencia>13-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000121912</Codigo>
@@ -12793,6 +13641,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000123161</Codigo>
+          <Descripcion>BASE PP PLATO DIAM. 60CM ALTURA 74CM PINTURA HORNEABLE MESA COLABORATIVA M5A ECUADOR-PRODUBANCO CLES0402715</Descripcion>
+          <UDM>und</UDM>
+          <Precio>367</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000123278</Codigo>
           <Descripcion>CAJA PP 3 TOMAS METALICA GRUPO SUPERIOR ECUADOR LKES4103657</Descripcion>
           <UDM>und</UDM>
@@ -12831,6 +13687,22 @@
           <Precio>224</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000123419</Codigo>
+          <Descripcion>BIOMBO ACUSTICO FIELTRO ACUSTICO 200X80X2.5CM PINTADO KUO-GO KUPN030000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>777</Precio>
+          <Fecha_iart_vigencia>20-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000123425</Codigo>
+          <Descripcion>BIOMBO ACUSTICO FIELTRO ACUSTICO 160X80X2.5CM PINTADO KUO-GO KUPN030000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>777</Precio>
+          <Fecha_iart_vigencia>20-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000123427</Codigo>
@@ -13641,6 +14513,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000123716</Codigo>
+          <Descripcion>ESTRUCTURA MESA FACETEADA CUELLO ANCHO H=74CM DIAMETRO 60CM PINTURA HORNEABLE KUO-GO KUME220000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>299.2</Precio>
+          <Fecha_iart_vigencia>26-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000123717</Codigo>
           <Descripcion>ESTRUCTURA MESA FACETEADA CUELLO ANCHO H=74CM DIAMETRO 70CM PINTURA HORNEABLE KUO-GO KUME230000</Descripcion>
           <UDM>und</UDM>
@@ -13858,7 +14738,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123759</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 120X60X2.5CM BISELADA FORMICA KUO-GO KUSU170000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 120X60X2.5CM FORMICA KUO KUSU170000</Descripcion>
           <UDM>und</UDM>
           <Precio>196</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -13866,7 +14746,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123760</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 150X60X2.5CM BISELADA FORMICA KUO-GO KUSU170000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 150X60X2.5CM FORMICA KUO KUSU170000</Descripcion>
           <UDM>und</UDM>
           <Precio>234</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -13874,7 +14754,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123761</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 165X60X2.5CM BISELADA FORMICA KUO-GO KUSU170000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 165X60X2.5CM FORMICA KUO KUSU170000</Descripcion>
           <UDM>und</UDM>
           <Precio>282</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -13882,7 +14762,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123762</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 120X80X2.5CM BISELADA FORMICA KUO-GO KUSU170000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 120X80X2.5CM FORMICA KUO KUSU170000</Descripcion>
           <UDM>und</UDM>
           <Precio>249</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -13890,7 +14770,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123763</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 150X80X2.5CM BISELADA FORMICA KUO-GO KUSU170000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 150X80X2.5CM FORMICA KUO KUSU170000</Descripcion>
           <UDM>und</UDM>
           <Precio>316</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -13898,7 +14778,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123764</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 165X80X2.5CM BISELADA FORMICA KUO-GO KUSU170000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS RECTAS 165X80X2.5CM FORMICA KUO KUSU170000</Descripcion>
           <UDM>und</UDM>
           <Precio>423</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14098,7 +14978,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123795</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 120X60X2.5CM BISELADA FORMICA KUO-GO KUSU190000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 120X60X2.5CM FORMICA KUO KUSU190000</Descripcion>
           <UDM>und</UDM>
           <Precio>217</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14106,7 +14986,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123796</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 150X60X2.5CM BISELADA FORMICA KUO-GO KUSU190000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 150X60X2.5CM FORMICA KUO KUSU190000</Descripcion>
           <UDM>und</UDM>
           <Precio>254</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14114,7 +14994,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123797</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 165X60X2.5CM BISELADA FORMICA KUO-GO KUSU190000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 165X60X2.5CM FORMICA KUO KUSU190000</Descripcion>
           <UDM>und</UDM>
           <Precio>304</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14122,7 +15002,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123798</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 120X90X2.5CM BISELADA FORMICA KUO KUSU190000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 120X90X2.5CM FORMICA KUO KUSU190000</Descripcion>
           <UDM>und</UDM>
           <Precio>283</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14130,7 +15010,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123799</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 150X90X2.5CM BISELADA FORMICA KUO KUSU190000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 150X90X2.5CM FORMICA KUO KUSU190000</Descripcion>
           <UDM>und</UDM>
           <Precio>352</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14138,7 +15018,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123800</Codigo>
-          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 165X90X2.5CM BISELADA FORMICA KUO KUSU190000</Descripcion>
+          <Descripcion>SUPERFICIE TRABAJO RECTANGULAR ESQUINAS CURVAS 165X90X2.5CM FORMICA KUO KUSU190000</Descripcion>
           <UDM>und</UDM>
           <Precio>449</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14210,7 +15090,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123815</Codigo>
-          <Descripcion>SUPERFICIE CUADRADA ESQUINAS RECTAS 90X90X2.5CM BISELADA FORMICA KUO KUSU250000</Descripcion>
+          <Descripcion>SUPERFICIE CUADRADA ESQUINAS RECTAS 90X90X2.5CM FORMICA KUO KUSU250000</Descripcion>
           <UDM>und</UDM>
           <Precio>256</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14218,7 +15098,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123816</Codigo>
-          <Descripcion>SUPERFICIE CUADRADA ESQUINAS RECTAS 120X120X2.5CM BISELADA FORMICA KUO KUSU250000</Descripcion>
+          <Descripcion>SUPERFICIE CUADRADA ESQUINAS RECTAS 120X120X2.5CM FORMICA KUO KUSU250000</Descripcion>
           <UDM>und</UDM>
           <Precio>302</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14322,7 +15202,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123831</Codigo>
-          <Descripcion>SUPERFICIE CUADRADA ESQUINAS CURVAS 90X90X2.5CM BISELADA FORMICA KUO KUSU290000</Descripcion>
+          <Descripcion>SUPERFICIE CUADRADA ESQUINAS CURVAS 90X90X2.5CM FORMICA KUO KUSU290000</Descripcion>
           <UDM>und</UDM>
           <Precio>277</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14330,7 +15210,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123832</Codigo>
-          <Descripcion>SUPERFICIE CUADRADA ESQUINAS CURVAS 120X120X2.5CM BISELADA FORMICA KUO KUSU290000</Descripcion>
+          <Descripcion>SUPERFICIE CUADRADA ESQUINAS CURVAS 120X120X2.5CM FORMICA KUO KUSU290000</Descripcion>
           <UDM>und</UDM>
           <Precio>328</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14418,7 +15298,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123847</Codigo>
-          <Descripcion>SUPERFICIE ARK 90X90X2.5CM BISELADA FORMICA KUO KUSU330000</Descripcion>
+          <Descripcion>SUPERFICIE ARK 90X90X2.5CM FORMICA KUO KUSU330000</Descripcion>
           <UDM>und</UDM>
           <Precio>277</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14426,7 +15306,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123848</Codigo>
-          <Descripcion>SUPERFICIE ARK 120X120X2.5CM BISELADA FORMICA KUO KUSU330000</Descripcion>
+          <Descripcion>SUPERFICIE ARK 120X120X2.5CM FORMICA KUO KUSU330000</Descripcion>
           <UDM>und</UDM>
           <Precio>339</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14498,7 +15378,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123861</Codigo>
-          <Descripcion>SUPERFICIE CIRCULAR BISELADA DIAMETRO 60CM FORMICA 2.5CM KUO KUSU210000</Descripcion>
+          <Descripcion>SUPERFICIE CIRCULAR DIAMETRO 60CM FORMICA 2.5CM KUO KUSU210000</Descripcion>
           <UDM>und</UDM>
           <Precio>149</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14506,7 +15386,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123862</Codigo>
-          <Descripcion>SUPERFICIE CIRCULAR BISELADA DIAMETRO 90CM FORMICA 2.5CM KUO KUSU210000</Descripcion>
+          <Descripcion>SUPERFICIE CIRCULAR DIAMETRO 90CM FORMICA 2.5CM KUO KUSU210000</Descripcion>
           <UDM>und</UDM>
           <Precio>301</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14514,7 +15394,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123863</Codigo>
-          <Descripcion>SUPERFICIE CIRCULAR BISELADA DIAMETRO 120CM FORMICA 2.5CM KUO KUSU210000</Descripcion>
+          <Descripcion>SUPERFICIE CIRCULAR DIAMETRO 120CM FORMICA 2.5CM KUO KUSU210000</Descripcion>
           <UDM>und</UDM>
           <Precio>381</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14586,7 +15466,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123878</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS RECTAS 180X60X2.5CM FORMICA KUO KUSU370000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS RECTAS 180X60X2.5CM FORMICA KUO KUSU370000</Descripcion>
           <UDM>und</UDM>
           <Precio>302</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14594,7 +15474,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123879</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS RECTAS 240X60X2.5CM FORMICA KUO KUSU370000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS RECTAS 240X60X2.5CM FORMICA KUO KUSU370000</Descripcion>
           <UDM>und</UDM>
           <Precio>310</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14666,7 +15546,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123890</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS CURVAS 180X60X2.5CM FORMICA KUO KUSU390000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS CURVAS 180X60X2.5CM FORMICA KUO KUSU390000</Descripcion>
           <UDM>und</UDM>
           <Precio>328</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14674,7 +15554,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123891</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS CURVAS 240X60X2.5CM FORMICA KUO KUSU390000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS CURVAS 240X60X2.5CM FORMICA KUO KUSU390000</Descripcion>
           <UDM>und</UDM>
           <Precio>339</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14778,7 +15658,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123906</Codigo>
-          <Descripcion>SUPERFICIE DOBLE P BISELADA 120X60X2.5CM FORMICA KUO KUSU410000</Descripcion>
+          <Descripcion>SUPERFICIE DOBLE P 120X60X2.5CM FORMICA KUO KUSU410000</Descripcion>
           <UDM>und</UDM>
           <Precio>218</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14786,7 +15666,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123907</Codigo>
-          <Descripcion>SUPERFICIE DOBLE P BISELADA 180X60X2.5CM FORMICA KUO KUSU410000</Descripcion>
+          <Descripcion>SUPERFICIE DOBLE P 180X60X2.5CM FORMICA KUO KUSU410000</Descripcion>
           <UDM>und</UDM>
           <Precio>329</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14794,11 +15674,83 @@
         </Articulo>
         <Articulo>
           <Codigo>22000123908</Codigo>
-          <Descripcion>SUPERFICIE DOBLE P BISELADA 240X60X2.5CM FORMICA KUO KUSU410000</Descripcion>
+          <Descripcion>SUPERFICIE DOBLE P 240X60X2.5CM FORMICA KUO KUSU410000</Descripcion>
           <UDM>und</UDM>
           <Precio>340</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000123946</Codigo>
+          <Descripcion>FALDA EN MELAMINICO DE 110 X 30 ESPESOR 15MM SIN PERFORACION  ML04F SCHLUMBERGER</Descripcion>
+          <UDM>und</UDM>
+          <Precio>109</Precio>
+          <Fecha_iart_vigencia>13-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000123948</Codigo>
+          <Descripcion>FALDA EN MELAMINICO DE 100 X 30 ESPESOR 15MM SIN PERFORACION  ML04F SCHLUMBERGER</Descripcion>
+          <UDM>und</UDM>
+          <Precio>78</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000123955</Codigo>
+          <Descripcion>FALDA MELAMINICO 140X30CM ESPESOR 18MM INC. ÁNGULOS DE SUJECCIÓN</Descripcion>
+          <UDM>und</UDM>
+          <Precio>126</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000123963</Codigo>
+          <Descripcion>SUPERFICIE TOP RECTANGULAR EN MELAMINICO DE 180 X 48 ESPESOR 18MM ML12AT SCHLUMBERGER</Descripcion>
+          <UDM>und</UDM>
+          <Precio>157</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000123969</Codigo>
+          <Descripcion>SUPERFICIE TOP RECTANGULAR EN MELAMINICO DE 120 X 48 ESPESOR 18MM ML13T SCHLUMBERGER</Descripcion>
+          <UDM>und</UDM>
+          <Precio>38</Precio>
+          <Fecha_iart_vigencia>21-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124022</Codigo>
+          <Descripcion>BANCO ALTO KANVAS ST 66 COD. 362.--/66STN ESTRUCTURA PINTADA NEGRO H.66CM CONCHA TECNOPOLIMERO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>336</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124028</Codigo>
+          <Descripcion>SUPERFICIE PP RECTANGULAR MELAMINICO EDUK 40X40X1.5CM AMC-ECUADOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>30</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124029</Codigo>
+          <Descripcion>SUPERFICIE CIRCULAR EN MELAMINICO DE 60 ESPESOR 15MM AMC- ECUADOR</Descripcion>
+          <UDM>und</UDM>
+          <Precio>82</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124036</Codigo>
+          <Descripcion>LISTONES PARA PARED DIVISORA ALTURA 240 OLANDSEGUROS</Descripcion>
+          <UDM>und</UDM>
+          <Precio>2106</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000124056</Codigo>
@@ -14817,20 +15769,52 @@
           <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000124100</Codigo>
-          <Descripcion>SUPERFICIE PRINCIPAL INDIVIDUAL LINK 150 X 75 X ESPESOR 25mm AMAENERGY</Descripcion>
+          <Codigo>22000124069</Codigo>
+          <Descripcion>RECEPCION COUNTER DE 1800 X 2180 ESPESOR 25MM ILIANZA</Descripcion>
           <UDM>und</UDM>
-          <Precio>123</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>957</Precio>
+          <Fecha_iart_vigencia>28-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000124108</Codigo>
-          <Descripcion>SUPERFICIE PRINCIPAL RECTANGULAR DE 135 X 60 ESPESOR 25MM AMAENRGY</Descripcion>
+          <Codigo>22000124086</Codigo>
+          <Descripcion>SUPERFICIE CIRCULAR DIAMETRO 90 - ESPESOR 25mm AMAENERGY</Descripcion>
           <UDM>und</UDM>
-          <Precio>156</Precio>
-          <Fecha_iart_vigencia>07-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>195</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124105</Codigo>
+          <Descripcion>MESA CIRCULAR DIAMETRO 75 ESPESOR 25mm AMAENERGY</Descripcion>
+          <UDM>und</UDM>
+          <Precio>379</Precio>
+          <Fecha_iart_vigencia>02-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124106</Codigo>
+          <Descripcion>MESA CIRCULAR DIAMETRO 75 ESPESOR 25mm AMAENERGY</Descripcion>
+          <UDM>und</UDM>
+          <Precio>450</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124109</Codigo>
+          <Descripcion>SUPERFICIE PRINCIPAL RECTANGULAR DE 130 X 50 ESPESOR 25MM AMAENRGY</Descripcion>
+          <UDM>und</UDM>
+          <Precio>79</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124128</Codigo>
+          <Descripcion>ESTANTERIA METALICA CON  REPISAS Y MATERA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>225</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000124288</Codigo>
@@ -14850,7 +15834,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124290</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS RECTAS 120X60X2.5CM FORMICA KUO KUSU370000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS RECTAS 120X60X2.5CM FORMICA KUO KUSU370000</Descripcion>
           <UDM>und</UDM>
           <Precio>196</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14890,7 +15874,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124296</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS CURVAS 120X60X2.5CM FORMICA KUO KUSU390000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS CURVAS 120X60X2.5CM FORMICA KUO KUSU390000</Descripcion>
           <UDM>und</UDM>
           <Precio>217</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -14913,12 +15897,28 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000124396</Codigo>
+          <Descripcion>POLTRONA LUNA GIRATORIA COLUMNA NEUMATICA BASE PIRAMIDAL METALICA FURA 700 TELA TIPO 3</Descripcion>
+          <UDM>und</UDM>
+          <Precio>500</Precio>
+          <Fecha_iart_vigencia>16-SEP-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-MAY-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000124478</Codigo>
           <Descripcion>ALFOMBRA MODULAR COLOR FIELD PATINA ACABADO: DARK STEEL MODULO EN FORMATO DE 1.00 X 0.25M</Descripcion>
           <UDM>m2</UDM>
           <Precio>93</Precio>
           <Fecha_iart_vigencia>22-MAY-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>20-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124590</Codigo>
+          <Descripcion>BANDEJA PP DOCUMENTOS DOBLE 24X31X13CM ECUADOR-FACES LKES010984</Descripcion>
+          <UDM>und</UDM>
+          <Precio>57</Precio>
+          <Fecha_iart_vigencia>24-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000124649</Codigo>
@@ -14959,6 +15959,14 @@
           <Precio>607</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000124661</Codigo>
+          <Descripcion>PORTA PP LAPICES SOBRE ESCRITORIO FACES-ECUADOR MCES400518</Descripcion>
+          <UDM>und</UDM>
+          <Precio>15</Precio>
+          <Fecha_iart_vigencia>24-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000124666</Codigo>
@@ -15010,7 +16018,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124672</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS RECTAS 120X80X2.5CM FORMICA KUO-GO KUSU370000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS RECTAS 120X80X2.5CM FORMICA KUO KUSU370000</Descripcion>
           <UDM>und</UDM>
           <Precio>249</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -15018,7 +16026,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124673</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS RECTAS 180X80X2.5CM FORMICA KUO-GO KUSU370000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS RECTAS 180X80X2.5CM FORMICA KUO KUSU370000</Descripcion>
           <UDM>und</UDM>
           <Precio>406</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -15026,7 +16034,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124674</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS RECTAS 240X80X2.5CM FORMICA KUO-GO KUSU370000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS RECTAS 240X80X2.5CM FORMICA KUO KUSU370000</Descripcion>
           <UDM>und</UDM>
           <Precio>414</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -15130,7 +16138,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124690</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS CURVAS 120X80X2.5CM FORMICA KUO-GO KUSU390000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS CURVAS 120X80X2.5CM FORMICA KUO KUSU390000</Descripcion>
           <UDM>und</UDM>
           <Precio>269</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -15138,7 +16146,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124691</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS CURVAS 180X80X2.5CM FORMICA KUO-GO KUSU390000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS CURVAS 180X80X2.5CM FORMICA KUO KUSU390000</Descripcion>
           <UDM>und</UDM>
           <Precio>433</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -15146,7 +16154,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124692</Codigo>
-          <Descripcion>SUPERFICIE RECTANGULAR BISELADA ESQUINAS CURVAS 240X80X2.5CM FORMICA KUO-GO KUSU390000</Descripcion>
+          <Descripcion>SUPERFICIE RECTANGULAR ESQUINAS CURVAS 240X80X2.5CM FORMICA KUO KUSU390000</Descripcion>
           <UDM>und</UDM>
           <Precio>443</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -15250,7 +16258,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124708</Codigo>
-          <Descripcion>SUPERFICIE DOBLE P BISELADA 120X80X2.5CM FORMICA KUO-GO KUSU410000</Descripcion>
+          <Descripcion>SUPERFICIE DOBLE P 120X80X2.5CM FORMICA KUO KUSU410000</Descripcion>
           <UDM>und</UDM>
           <Precio>272</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -15258,7 +16266,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124709</Codigo>
-          <Descripcion>SUPERFICIE DOBLE P BISELADA 180X80X2.5CM FORMICA KUO-GO KUSU410000</Descripcion>
+          <Descripcion>SUPERFICIE DOBLE P 180X80X2.5CM FORMICA KUO KUSU410000</Descripcion>
           <UDM>und</UDM>
           <Precio>434</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -15266,7 +16274,7 @@
         </Articulo>
         <Articulo>
           <Codigo>22000124710</Codigo>
-          <Descripcion>SUPERFICIE DOBLE P BISELADA 240X80X2.5CM FORMICA KUO-GO KUSU410000</Descripcion>
+          <Descripcion>SUPERFICIE DOBLE P 240X80X2.5CM FORMICA KUO KUSU410000</Descripcion>
           <UDM>und</UDM>
           <Precio>445</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
@@ -15497,6 +16505,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000125574</Codigo>
+          <Descripcion>SILLA BARU ESPALDAR PLASTICO ASIENTO TAPIZADO ESTRUCTURA 4 PATAS PINTURA GRIS O NEGRA CON BRAZOS BARU NEGROS (ECUADOR)</Descripcion>
+          <UDM>und</UDM>
+          <Precio>212</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000125687</Codigo>
           <Descripcion>JUMPER ELECTRICO 15CM ACEG180000</Descripcion>
           <UDM>und</UDM>
@@ -15505,12 +16521,28 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000126495</Codigo>
-          <Descripcion>ESCRITORIO GERENCIAL CON CREDENZA EN MELAMINICO CABANILLA</Descripcion>
+          <Codigo>22000125850</Codigo>
+          <Descripcion>GAVETA PP 6 PULGADAS PEDESTAL FIJO ZEN GECELCA ALM1003000</Descripcion>
           <UDM>und</UDM>
-          <Precio>1362</Precio>
-          <Fecha_iart_vigencia>30-DIC-25</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>100</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000125858</Codigo>
+          <Descripcion>SOPORTE PP PANTALLA INDIVIDUAL PULIDO CONFIAMED ECUADOR MCES400519</Descripcion>
+          <UDM>und</UDM>
+          <Precio>29</Precio>
+          <Fecha_iart_vigencia>28-MAY-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000126518</Codigo>
+          <Descripcion>SUPERFICIE RETORNO DERECHA EN MELAMINA DE 90 X 60 ESPESOR 25MM GLOBAL</Descripcion>
+          <UDM>und</UDM>
+          <Precio>65</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000126583</Codigo>
@@ -16065,6 +17097,22 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000127286</Codigo>
+          <Descripcion>SUPERFICIE TERMINAL 1425X700 ACABADO MELAMINA ROVERE MATE PELIKANO CANTO LOCAL EKRON</Descripcion>
+          <UDM>und</UDM>
+          <Precio>128</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127287</Codigo>
+          <Descripcion>SUPERFICIE INTERMEDIA 1400X700 ACABADO MELAMINA ROVERE MATE PELIKANO CANTO ROVERE LOCAL EKRON</Descripcion>
+          <UDM>und</UDM>
+          <Precio>126</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000127299</Codigo>
           <Descripcion>DIVISIÓN TEILEN ALUMINIO Y VIDRIO 1</Descripcion>
           <UDM>und</UDM>
@@ -16081,20 +17129,44 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000127379</Codigo>
-          <Descripcion>FALDA EN MELAMINICO CON HERRAJES DE 149,5 X 30 ESPESOR 15MM EKRON</Descripcion>
+          <Codigo>22000127356</Codigo>
+          <Descripcion>SUPERFICIE RECTANGULAR MELAMINICO DE 60 X 70 ESPESOR 25MM EL REY</Descripcion>
           <UDM>und</UDM>
-          <Precio>75</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>26</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000127437</Codigo>
-          <Descripcion>SUPERFICIE RETORNO DE 1590 X 600 ESPESOR 25MM FIDUCIA</Descripcion>
+          <Codigo>22000127368</Codigo>
+          <Descripcion>ALMACENAMIENTO MODULAR MADECOR H5 4 ENTREPAÑOS 205X90X48CM  OMACA</Descripcion>
           <UDM>und</UDM>
-          <Precio>74</Precio>
-          <Fecha_iart_vigencia>06-ENE-26</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>1214</Precio>
+          <Fecha_iart_vigencia>23-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127387</Codigo>
+          <Descripcion>SILLA GIRATORIA SQUARE SQ-050CA ESTRUCTURA NEGRA ESPALDAR MALLA GRIS ASIENTO TAPIZADO GRIS BASE ALUMINIO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>482</Precio>
+          <Fecha_iart_vigencia>20-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127388</Codigo>
+          <Descripcion>SILLA KLC 720 EDUCATIONAL, ESTRUCTURA PORTAMOCHILA ANTRACITA CONCHA PLÁSTICA CON TABLERO DE ESCRITURA TRIPLEX DERECHO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>529</Precio>
+          <Fecha_iart_vigencia>06-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127409</Codigo>
+          <Descripcion>MESA DE CENTRO TEKNION H.42' SUPERFICIE LAMINADA 42'X78'</Descripcion>
+          <UDM>und</UDM>
+          <Precio>450</Precio>
+          <Fecha_iart_vigencia>02-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000127465</Codigo>
@@ -16113,12 +17185,84 @@
           <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22000127616</Codigo>
-          <Descripcion>SILLA TULIP INDUSTRIAL CAJERO ASIENTO Y ESPALDAR EN POLIURETANO MEC PLATINA FIJA APOYAPIES METALICO PINTADO BASE NYLON IRLANDA CON DESLIZADORES</Descripcion>
+          <Codigo>22000127468</Codigo>
+          <Descripcion>ASIENTO TAPIZADO PARA SILLA BRAVO-SPONGE SEATPAN NEW VERSION</Descripcion>
           <UDM>und</UDM>
-          <Precio>389</Precio>
-          <Fecha_iart_vigencia>09-DIC-25</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>118</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127469</Codigo>
+          <Descripcion>BRAVO ARMREST LEFT NEW VERSION</Descripcion>
+          <UDM>und</UDM>
+          <Precio>74</Precio>
+          <Fecha_iart_vigencia>05-FEB-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127470</Codigo>
+          <Descripcion>BRAVO ARMERST RIGHT NEW VERSION</Descripcion>
+          <UDM>und</UDM>
+          <Precio>74</Precio>
+          <Fecha_iart_vigencia>05-FEB-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127497</Codigo>
+          <Descripcion>SILLA VIDA 2 ESTRUCTURA GRIS ESPALDAR EN MALLA GRIS ASIENTO TAPIZADO GRIS CON BRAZOS AJUSTABLES</Descripcion>
+          <UDM>und</UDM>
+          <Precio>281</Precio>
+          <Fecha_iart_vigencia>01-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127514</Codigo>
+          <Descripcion>SILLA GIRATORIA RADIUS ESTRUCTURA NEGRA ESPALDAR MALLA NEGRA ASIENTO TAPIZADO NEGRO MECANISMO SYNCRO 1B BASE NYLON BRAZOS AJUSTABLES 1D</Descripcion>
+          <UDM>und</UDM>
+          <Precio>183</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127539</Codigo>
+          <Descripcion>KIT PATA AVE ALTURA 41.0 CM COLOR GRIS-NEGRO BLANCO LOCAL</Descripcion>
+          <UDM>und</UDM>
+          <Precio>32</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127556</Codigo>
+          <Descripcion>SILLA KANVAS LOUNGE L BASE GIRATORIA 4 APOYOS CROMADA TAPIZ TELA ECOLEATHER COD. 368.__/IEL</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1337</Precio>
+          <Fecha_iart_vigencia>25-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127557</Codigo>
+          <Descripcion>SILLA KANVAS LOUNGE ST SLED FRAME PINTURA NEGRA TAPIZ TELA KING COD. 368.__/IKSTN</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1210</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127593</Codigo>
+          <Descripcion>SILLA GIRATORIA INDEED APOYACABEZAS ESPALDAR TAPIZADO NEGRO ASIENTO TAPIZADO NEGRO ESTRUCTURA NEGRA MECANISMO SYNCRO-EVOLUTION SOPORTE LUMBAR BRAZOS AJUSTABLE 2D</Descripcion>
+          <UDM>und</UDM>
+          <Precio>704</Precio>
+          <Fecha_iart_vigencia>02-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127603</Codigo>
+          <Descripcion>MUEBLE ESPECIAL MATERA CON MUEBLES BAJOS EN MELAMINA Y FORMICA  DE 202  X 202  X 52 ESPESOR 18MM NICOVITA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>401</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000127639</Codigo>
@@ -16129,6 +17273,22 @@
           <Fecha_fart_vigencia>30-ABR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000127640</Codigo>
+          <Descripcion>SILLA GIRATORIA V1 APOYACABEZAS ESTRUCTURA GRIS ESPALDAR MALLA GRIS CLARO ASIENTO TAPIZADO GRIS CLARO BRAZOS AJUSTABLES 3D</Descripcion>
+          <UDM>und</UDM>
+          <Precio>345</Precio>
+          <Fecha_iart_vigencia>22-JUL-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127669</Codigo>
+          <Descripcion>SILLA QL4 ESTRUCTURA 4 PATAS NEGRA 2 DESLIZADORES 2 RUEDAS DELANTERAS ESPALDAR PLÁSTICO NEGRO ASIENTO TAPIZADO BRAZOS FIJOS</Descripcion>
+          <UDM>und</UDM>
+          <Precio>224</Precio>
+          <Fecha_iart_vigencia>23-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000127670</Codigo>
           <Descripcion>APOYACABEZAS MALLA NEGRA PARA SILLA ZUHÉ</Descripcion>
           <UDM>und</UDM>
@@ -16137,12 +17297,108 @@
           <Fecha_fart_vigencia>01-JUN-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000127676</Codigo>
+          <Descripcion>BANCA-MATERA PP INKELT DIÁM. 230CM H. 70CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>10484</Precio>
+          <Fecha_iart_vigencia>16-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127677</Codigo>
+          <Descripcion>BANCA-MESA STEIN 80 INKELT 107X87CM H. 40CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1334</Precio>
+          <Fecha_iart_vigencia>16-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127678</Codigo>
+          <Descripcion>BANCA-MESA STEIN 100 INKELT 90X70CM H. 40CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1423</Precio>
+          <Fecha_iart_vigencia>16-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127679</Codigo>
+          <Descripcion>BANCA-MESA STEIN 45 INKELT 44X39CM H. 40CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>386</Precio>
+          <Fecha_iart_vigencia>16-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000127680</Codigo>
           <Descripcion>SETTESUSETTE KITCHEN STOOL INFINITI ESTRUCTURA MADERA HAYA CONCHA POLIPROPILENO</Descripcion>
           <UDM>und</UDM>
           <Precio>629</Precio>
           <Fecha_iart_vigencia>09-ENE-26</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127681</Codigo>
+          <Descripcion>SILLA KLC 720 ESTRUCTURA GIRATORIA BASE METÁLICA PINTADA NEGRO CONCHA PLÁSTICA ANTRACITA S011</Descripcion>
+          <UDM>und</UDM>
+          <Precio>393</Precio>
+          <Fecha_iart_vigencia>05-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127682</Codigo>
+          <Descripcion>SILLA KLC 720 ESTRUCTURA GIRATORIA BASE METÁLICA PINTADA NEGRO CONCHA PLÁSTICA NARANJA R2001</Descripcion>
+          <UDM>und</UDM>
+          <Precio>393</Precio>
+          <Fecha_iart_vigencia>05-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127683</Codigo>
+          <Descripcion>SILLA KLC 720 ESTRUCTURA GIRATORIA BASE METÁLICA PINTADA NEGRO CONCHA PLÁSTICA GRIS CLARO S021</Descripcion>
+          <UDM>und</UDM>
+          <Precio>393</Precio>
+          <Fecha_iart_vigencia>05-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127684</Codigo>
+          <Descripcion>ESTRUCTURA LOCAL MESA RECTANGULAR CON RODACHINAS DE 60X150CM H-74CM EDUK EDKME466000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>328</Precio>
+          <Fecha_iart_vigencia>04-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127685</Codigo>
+          <Descripcion>SILLA WEB ESTRUCTURA CROMADA BASE PATÍN CON ENCHANCHE SOLDADO ESPALDAR Y ASIENTO TAPIZADOS BRAZOS ARENA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>413</Precio>
+          <Fecha_iart_vigencia>05-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127686</Codigo>
+          <Descripcion>ALFOMBRA MODULAR MILLIKEN EDGE LIT COLOR EDG138-249 ULTRAVIOLET MEDIDAS:100X25CM</Descripcion>
+          <UDM>m2</UDM>
+          <Precio>158</Precio>
+          <Fecha_iart_vigencia>11-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127687</Codigo>
+          <Descripcion>ESPALDAR MALLA NEGRA PARA SILLA V1</Descripcion>
+          <UDM>und</UDM>
+          <Precio>63</Precio>
+          <Fecha_iart_vigencia>20-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127688</Codigo>
+          <Descripcion>POLTRONA CURVA 90 GRADOS SIN ESPALDAR TAPIZADA CLAK CLSI250000 LOCAL</Descripcion>
+          <UDM>und</UDM>
+          <Precio>895</Precio>
+          <Fecha_iart_vigencia>24-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000127783</Codigo>
@@ -16207,6 +17463,14 @@
           <Precio>116</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000127821</Codigo>
+          <Descripcion>COSTADO PP TERMINAL SENCILLO CON CAJA 4 TOMAS 70X71CM EKRON ECUADOR LKES0101094</Descripcion>
+          <UDM>und</UDM>
+          <Precio>198</Precio>
+          <Fecha_iart_vigencia>16-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000127825</Codigo>
@@ -16929,12 +18193,28 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000128170</Codigo>
+          <Descripcion>COSTADO PP TERMINAL METALICO PINTADO 75X71X13CM COOPIDROGAS LKES2407345</Descripcion>
+          <UDM>und</UDM>
+          <Precio>96</Precio>
+          <Fecha_iart_vigencia>16-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000128196</Codigo>
           <Descripcion>ESPALDAR POLTRONA DOBLE EN TELA 62X50X38CM MOREA HSI060000</Descripcion>
           <UDM>und</UDM>
           <Precio>621</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000128334</Codigo>
+          <Descripcion>POLTRONA MUSA GIRATORIA TAPIZADA TELA TIPO 3 COLUMNA NEUMATICA BASE PIRAMIDAL METALICA FURA 700 NEGRA - GRIS O BLANCO CON RODACHINAS NEGRA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>636</Precio>
+          <Fecha_iart_vigencia>21-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000128396</Codigo>
@@ -19985,6 +21265,14 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000130189</Codigo>
+          <Descripcion>VIGA DE 180CM MESA DE REUNIONES LINK LKAC825000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>45</Precio>
+          <Fecha_iart_vigencia>26-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000130190</Codigo>
           <Descripcion>VIGA DE 240CM MESA DE REUNIONES LINK LKAC825000</Descripcion>
           <UDM>und</UDM>
@@ -20070,6 +21358,14 @@
           <UDM>und</UDM>
           <Precio>193</Precio>
           <Fecha_iart_vigencia>05-MAY-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000130215</Codigo>
+          <Descripcion>COSTADO INTERMEDIO MESA DE REUNIONES LINK LKSO626000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>226</Precio>
+          <Fecha_iart_vigencia>26-ENE-26</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
@@ -20271,6 +21567,14 @@
           <Precio>95</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000130304</Codigo>
+          <Descripcion>COSTADO PP TERMINAL CAJA 4 TOMAS 60X71X30CM LKES4106831</Descripcion>
+          <UDM>und</UDM>
+          <Precio>203</Precio>
+          <Fecha_iart_vigencia>28-ENE-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000130309</Codigo>
@@ -21615,6 +22919,14 @@
           <Precio>79</Precio>
           <Fecha_iart_vigencia>15-MAY-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000131316</Codigo>
+          <Descripcion>DUCTO BAJANTE DOBLE SLIM LINK LKAC840000</Descripcion>
+          <UDM>und</UDM>
+          <Precio>86</Precio>
+          <Fecha_iart_vigencia>10-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22000131327</Codigo>
@@ -28985,6 +30297,30 @@
           <Fecha_fart_vigencia>01-JUN-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22000136462</Codigo>
+          <Descripcion>PANEL PP MODULO EN L 160X120X4CM UDLA CLES050729</Descripcion>
+          <UDM>und</UDM>
+          <Precio>765</Precio>
+          <Fecha_iart_vigencia>15-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000136463</Codigo>
+          <Descripcion>PANEL PP MODULO EN L 250X120X4CM UDLA CLES050748</Descripcion>
+          <UDM>und</UDM>
+          <Precio>1104</Precio>
+          <Fecha_iart_vigencia>15-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22000136464</Codigo>
+          <Descripcion>COLUMNA PP ANCLAJE METALICO 32X7X4CM UDLA CLES050766</Descripcion>
+          <UDM>und</UDM>
+          <Precio>32</Precio>
+          <Fecha_iart_vigencia>15-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22000136545</Codigo>
           <Descripcion>PEDESTAL PP 1 GAVETA 1 PUERTA 45X50CM H75CM PINTURA HORNEABLE UDLA ALE7605014</Descripcion>
           <UDM>und</UDM>
@@ -29153,12 +30489,12 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
-          <Codigo>22001924</Codigo>
-          <Descripcion>BSPL600- BASE 5 PUNTAS</Descripcion>
+          <Codigo>22001923</Codigo>
+          <Descripcion>GNRDT-MDJ MDI GAS LIFT</Descripcion>
           <UDM>und</UDM>
-          <Precio>50</Precio>
-          <Fecha_iart_vigencia>16-OCT-25</Fecha_iart_vigencia>
-          <Fecha_fart_vigencia>31-ENE-26</Fecha_fart_vigencia>
+          <Precio>19</Precio>
+          <Fecha_iart_vigencia>01-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22002524</Codigo>
@@ -29217,12 +30553,44 @@
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
+          <Codigo>22009835</Codigo>
+          <Descripcion>BR550/G BRAZO MOVIE (PAR) GRIS</Descripcion>
+          <UDM>und</UDM>
+          <Precio>23</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22009867</Codigo>
+          <Descripcion>DESLIZADOR ESTANDAR 38MM P.11 0.535</Descripcion>
+          <UDM>und</UDM>
+          <Precio>2</Precio>
+          <Fecha_iart_vigencia>10-FEB-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>30-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
           <Codigo>22009953</Codigo>
           <Descripcion>KIT CAJERO CON APOYAPIES PLASTICO NEGRO</Descripcion>
           <UDM>und</UDM>
           <Precio>47</Precio>
           <Fecha_iart_vigencia>10-FEB-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia>30-ABR-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22010132</Codigo>
+          <Descripcion>CARTON CORRUGADO NACIONAL POR KILOGRAMO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>6</Precio>
+          <Fecha_iart_vigencia>26-FEB-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22010143</Codigo>
+          <Descripcion>CINTA PLASTICA PELEX DE 25 CM</Descripcion>
+          <UDM>und</UDM>
+          <Precio>14</Precio>
+          <Fecha_iart_vigencia>26-FEB-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22012276</Codigo>
@@ -29255,6 +30623,14 @@
           <Precio>584</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22021240</Codigo>
+          <Descripcion>P020-01595 PLAY ESTRUCTURA METÁLICA 4 PATAS PINTURA NEGRA</Descripcion>
+          <UDM>und</UDM>
+          <Precio>78.83</Precio>
+          <Fecha_iart_vigencia>27-MAR-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22021296</Codigo>
@@ -29327,6 +30703,22 @@
           <Precio>179</Precio>
           <Fecha_iart_vigencia>29-JUL-24</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22025239</Codigo>
+          <Descripcion>P016-00218 TABLERO DE ESCRITURA PLÁSTICO DERECHO+NUDO+PALA REPLAY KSA570TV-D</Descripcion>
+          <UDM>und</UDM>
+          <Precio>102</Precio>
+          <Fecha_iart_vigencia>01-ENE-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22025480</Codigo>
+          <Descripcion>TELA LAFAYETTE FIDENZA COLOR AZUL REF. 183929 STOCK 26614</Descripcion>
+          <UDM>m</UDM>
+          <Precio>27</Precio>
+          <Fecha_iart_vigencia>26-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22094061904</Codigo>
@@ -29679,6 +31071,30 @@
           <Precio>15</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22179612694</Codigo>
+          <Descripcion>SILLA TULIP INDUSTRIAL ASIENTO Y ESPALDAR EN POLIURETANO MEC PLATINA FIJA BASE NYLON IRLANDA RODACHINAS PISO DURO</Descripcion>
+          <UDM>und</UDM>
+          <Precio>337</Precio>
+          <Fecha_iart_vigencia>09-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>30-JUN-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22179612760</Codigo>
+          <Descripcion>CARRO PORTA SILLAS</Descripcion>
+          <UDM>und</UDM>
+          <Precio>778</Precio>
+          <Fecha_iart_vigencia>10-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-DIC-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22179613527</Codigo>
+          <Descripcion>SILLA TULIP INDUSTRIAL CAJERO ASIENTO Y ESPALDAR EN POLIURETANO MEC PLATINA FIJA ARO APOYAPIES NYLON BASE NYLON IRLANDA CON DESLIZADORES</Descripcion>
+          <UDM>und</UDM>
+          <Precio>297</Precio>
+          <Fecha_iart_vigencia>09-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>30-JUN-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22179615592</Codigo>
@@ -32303,6 +33719,14 @@
           <Precio>89</Precio>
           <Fecha_iart_vigencia>18-MAR-25</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>22191402150</Codigo>
+          <Descripcion>KIT CERRADURA PEDESTAL (CILINDRO+2 LLAVES/ANILLO/CUERPO CERRADURA)</Descripcion>
+          <UDM>und</UDM>
+          <Precio>22</Precio>
+          <Fecha_iart_vigencia>09-MAY-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>31-JUL-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>22191402405</Codigo>
@@ -37175,6 +38599,30 @@
           <Precio>68</Precio>
           <Fecha_iart_vigencia>19-SEP-19</Fecha_iart_vigencia>
           <Fecha_fart_vigencia></Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>23703357</Codigo>
+          <Descripcion>ASIENTO - L051 SEAT</Descripcion>
+          <UDM>und</UDM>
+          <Precio>109</Precio>
+          <Fecha_iart_vigencia>24-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>25068652</Codigo>
+          <Descripcion>PARTE-TAPA TOP MELAMINA DE 40 X 50 CM ESPESOR 15MM CHUBB</Descripcion>
+          <UDM>und</UDM>
+          <Precio>68</Precio>
+          <Fecha_iart_vigencia>14-OCT-25</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>28-FEB-26</Fecha_fart_vigencia>
+        </Articulo>
+        <Articulo>
+          <Codigo>25077889</Codigo>
+          <Descripcion>PARTE-KIT DE PUERTAS INFERIOR EN MELAMINICO MUEBLES ESPECIAL ARCHIVADOR  DE 546X767 MM ESPESOR 19MM ECU-PP0-507</Descripcion>
+          <UDM>und</UDM>
+          <Precio>310</Precio>
+          <Fecha_iart_vigencia>19-FEB-26</Fecha_iart_vigencia>
+          <Fecha_fart_vigencia>15-MAR-26</Fecha_fart_vigencia>
         </Articulo>
         <Articulo>
           <Codigo>77112108</Codigo>
