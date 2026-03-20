@@ -120,31 +120,45 @@ export default function BOMView({ items = [] }) {
   };
 
   const thStyle = {
-    padding: '10px 12px',
-    fontSize: 12,
-    fontWeight: 700,
-    color: 'rgba(0,0,0,0.72)',
-    background: '#f2f6f9',
-    borderBottom: '1px solid rgba(0,0,0,0.08)',
+    padding: '9px 12px',
+    fontSize: 11.5,
+    fontWeight: 600,
+    color: 'rgba(15,23,42,0.78)',
+    background: '#f8fafc',
+    borderBottom: '1px solid rgba(15,23,42,0.10)',
     userSelect: 'none',
     cursor: 'pointer',
     whiteSpace: 'nowrap',
   };
 
   const tdStyle = {
-    padding: '10px 12px',
-    fontSize: 12.5,
-    borderBottom: '1px solid rgba(0,0,0,0.06)',
+    padding: '9px 12px',
+    fontSize: 12,
+    color: 'rgba(15,23,42,0.86)',
+    borderBottom: '1px solid rgba(15,23,42,0.08)',
     verticalAlign: 'top',
   };
 
   const numTd = { ...tdStyle, textAlign: 'right', whiteSpace: 'nowrap' };
+  const colSep = { borderRight: '1px solid rgba(15,23,42,0.08)' };
 
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        background: '#f3f5f7',
+        fontFamily: 'Segoe UI, Inter, Roboto, Helvetica, Arial, sans-serif',
+      }}
+    >
       {/* Header tipo CET */}
       <div
-        style={{ padding: 12, background: '#ffffff', borderBottom: '1px solid rgba(0,0,0,0.08)' }}
+        style={{
+          padding: '10px 12px',
+          background: '#ffffff',
+          borderBottom: '1px solid rgba(15,23,42,0.08)',
+        }}
       >
         <div
           style={{
@@ -154,7 +168,16 @@ export default function BOMView({ items = [] }) {
             justifyContent: 'space-between',
           }}
         >
-          <div style={{ fontWeight: 800, fontSize: 14, color: 'rgba(0,0,0,0.78)' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              fontWeight: 700,
+              fontSize: 13,
+              letterSpacing: 0.2,
+              color: 'rgba(15,23,42,0.86)',
+            }}
+          >
             INVENTARIO BOM
           </div>
 
@@ -165,43 +188,51 @@ export default function BOMView({ items = [] }) {
               placeholder="Buscar código o descripción…"
               style={{
                 width: 320,
-                padding: '8px 10px',
-                borderRadius: 10,
-                border: '1px solid rgba(0,0,0,0.12)',
+                padding: '7px 10px',
+                borderRadius: 8,
+                border: '1px solid rgba(15,23,42,0.16)',
                 outline: 'none',
-                fontSize: 12.5,
+                fontSize: 12,
+                background: '#ffffff',
+                color: 'rgba(15,23,42,0.88)',
               }}
             />
-            <div style={{ fontSize: 12, color: 'rgba(0,0,0,0.55)' }}>{totalItems} ítem(s)</div>
+            <div style={{ fontSize: 11.5, color: 'rgba(15,23,42,0.56)' }}>{totalItems} ítem(s)</div>
           </div>
         </div>
       </div>
 
       {/* Tabla */}
-      <div style={{ flex: 1, overflow: 'auto', background: '#f7f7f7' }}>
+      <div style={{ flex: 1, overflow: 'auto', background: '#f3f5f7' }}>
         <div style={{ padding: 12 }}>
           <div
             style={{
               background: '#fff',
-              borderRadius: 12,
+              borderRadius: 10,
               overflow: 'hidden',
-              border: '1px solid rgba(0,0,0,0.08)',
+              border: '1px solid rgba(15,23,42,0.10)',
+              boxShadow: '0 1px 2px rgba(15,23,42,0.04)',
             }}
           >
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr>
-                  <th style={thStyle} onClick={() => setSort('code')}>
+                  {/* Columna numeradora */}
+                  <th style={{ ...thStyle, ...colSep, textAlign: 'center', width: 38 }}>#</th>
+                  <th style={{ ...thStyle, ...colSep }} onClick={() => setSort('code')}>
                     Código
                   </th>
-                  <th style={thStyle} onClick={() => setSort('description')}>
+                  <th style={{ ...thStyle, ...colSep }} onClick={() => setSort('description')}>
                     Descripción
                   </th>
-                  <th style={{ ...thStyle, textAlign: 'right' }} onClick={() => setSort('qty')}>
+                  <th
+                    style={{ ...thStyle, ...colSep, textAlign: 'right' }}
+                    onClick={() => setSort('qty')}
+                  >
                     Cantidad
                   </th>
                   <th
-                    style={{ ...thStyle, textAlign: 'right' }}
+                    style={{ ...thStyle, ...colSep, textAlign: 'right' }}
                     onClick={() => setSort('unitPrice')}
                   >
                     Precio
@@ -213,65 +244,158 @@ export default function BOMView({ items = [] }) {
               </thead>
 
               <tbody>
-                {groups.map((g) => (
+                {(() => {
+                  // Contador global de filas BOM
+                  let rowIdx = 0;
+                  return groups.map((g) => (
                   <React.Fragment key={g.key}>
                     {/* Header de grupo */}
                     <tr>
                       <td
-                        colSpan={5}
+                        colSpan={6}
                         style={{
-                          padding: '10px 12px',
-                          background: '#eef4f8',
-                          fontWeight: 900,
+                          padding: '8px 12px',
+                          background: '#f1f5f9',
+                          borderBottom: '1px solid rgba(15,23,42,0.10)',
+                          color: 'rgba(15,23,42,0.82)',
+                          fontSize: 12,
+                          fontWeight: 700,
                         }}
                       >
                         {g.label}
                       </td>
                     </tr>
 
-                    {/* Filas del grupo */}
-                    {g.items.map((r) => (
-                      <tr key={`${g.key}__${r.code}`}>
-                        <td
-                          style={{
-                            ...tdStyle,
-                            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
-                          }}
-                        >
-                          {r.code}
-                        </td>
-                        <td style={tdStyle}>{r.description}</td>
-                        <td style={numTd}>{r.qty}</td>
-                        <td style={numTd}>{moneyCOP(r.unitPrice)}</td>
-                        <td style={{ ...numTd, fontWeight: 800 }}>{moneyCOP(r.total)}</td>
-                      </tr>
-                    ))}
+                    {/* Filas del grupo con separador/título por ítem */}
+                    {g.items.map((r, i) => {
+                      rowIdx += 1;
+                      const currentIdx = rowIdx;
+                      // Primeras 2 palabras descripción como mini-título
+                      const shortDesc = r.description.split(' ').slice(0, 2).join(' ');
+                      // Color alternado suave por fila
+                      const rowBg = i % 2 === 0 ? '#ffffff' : '#f9fbfc';
+                      const titleBg = i % 2 === 0 ? '#f4f8ff' : '#f1f5fb';
+
+                      return (
+                        <React.Fragment key={`${g.key}__${r.code}`}>
+                          <tr>
+                            <td
+                              colSpan={6}
+                              style={{
+                                padding: '4px 10px 3px',
+                                fontSize: 10,
+                                fontWeight: 800,
+                                letterSpacing: 0.5,
+                                textTransform: 'uppercase',
+                                color: 'rgba(30, 41, 59, 0.94)',
+                                background: titleBg,
+                                borderBottom: 'none',
+                                borderLeft: '3px solid rgba(59,95,192,0.6)',
+                              }}
+                              title={r.description}
+                            >
+                              {shortDesc || 'Ítem'}
+                            </td>
+                          </tr>
+
+                          <tr style={{ background: rowBg }}>
+                            {/* Celda numeradora */}
+                            <td
+                              style={{
+                                ...tdStyle,
+                                ...colSep,
+                                textAlign: 'center',
+                                verticalAlign: 'middle',
+                                padding: '7px 5px',
+                                minWidth: 38,
+                                background: rowBg,
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  width: 20,
+                                  height: 20,
+                                  borderRadius: 5,
+                                  background: '#e8f0fe',
+                                  color: '#3b5fc0',
+                                  fontSize: 10.5,
+                                  fontWeight: 700,
+                                  lineHeight: 1,
+                                }}
+                              >
+                                {currentIdx}
+                              </div>
+                            </td>
+                            <td
+                              style={{
+                                ...tdStyle,
+                                ...colSep,
+                                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+                                fontSize: 11.5,
+                                background: rowBg,
+                              }}
+                            >
+                              {r.code}
+                            </td>
+                            <td style={{ ...tdStyle, ...colSep, background: rowBg }}>{r.description}</td>
+                            <td style={{ ...numTd, ...colSep, background: rowBg }}>{r.qty}</td>
+                            <td style={{ ...numTd, ...colSep, background: rowBg }}>
+                              {moneyCOP(r.unitPrice)}
+                            </td>
+                            <td style={{ ...numTd, fontWeight: 700, background: rowBg }}>
+                              {moneyCOP(r.total)}
+                            </td>
+                          </tr>
+
+                          {/* Separador con border después de cada ítem */}
+                          <tr style={{ background: rowBg, height: 12 }}>
+                            <td colSpan={6} style={{ height: 12, padding: 0, border: 'none', background: rowBg, borderBottom: '1px solid rgba(15,23,42,0.12)' }} />
+                          </tr>
+                        </React.Fragment>
+                      );
+                    })}
 
                     {/* Subtotal del grupo */}
                     <tr>
                       <td
-                        colSpan={4}
+                        colSpan={5}
                         style={{
                           ...tdStyle,
                           textAlign: 'right',
-                          fontWeight: 800,
-                          background: '#fbfdff',
+                          fontWeight: 600,
+                          background: '#f8fafc',
+                          color: 'rgba(15,23,42,0.70)',
                         }}
                       >
                         Subtotal
                       </td>
-                      <td style={{ ...numTd, fontWeight: 900, background: '#fbfdff' }}>
+                      <td
+                        style={{
+                          ...numTd,
+                          fontWeight: 700,
+                          background: '#f8fafc',
+                        }}
+                      >
                         {moneyCOP(g.subtotal)}
                       </td>
                     </tr>
                   </React.Fragment>
-                ))}
+                  ));
+                })()}
 
                 {!groups.length && (
                   <tr>
                     <td
-                      colSpan={5}
-                      style={{ padding: 18, textAlign: 'center', color: 'rgba(0,0,0,0.55)' }}
+                      colSpan={6}
+                      style={{
+                        padding: 18,
+                        textAlign: 'center',
+                        color: 'rgba(15,23,42,0.55)',
+                        fontSize: 12,
+                      }}
                     >
                       No hay ítems para mostrar.
                     </td>
@@ -287,13 +411,13 @@ export default function BOMView({ items = [] }) {
                 justifyContent: 'flex-end',
                 gap: 14,
                 padding: '10px 12px',
-                background: '#fbfdff',
-                borderTop: '1px solid rgba(0,0,0,0.08)',
-                fontSize: 13,
+                background: '#f8fafc',
+                borderTop: '1px solid rgba(15,23,42,0.10)',
+                fontSize: 12.5,
               }}
             >
-              <div style={{ color: 'rgba(0,0,0,0.60)' }}>Total:</div>
-              <div style={{ fontWeight: 900 }}>{moneyCOP(grandTotal)}</div>
+              <div style={{ color: 'rgba(15,23,42,0.62)', fontWeight: 600 }}>Total:</div>
+              <div style={{ fontWeight: 800, color: 'rgba(15,23,42,0.90)' }}>{moneyCOP(grandTotal)}</div>
             </div>
           </div>
         </div>

@@ -1,6 +1,15 @@
 // src/components/TopMenuBar.jsx
 import { useMemo, useRef, useState } from 'react';
 
+function moneyCOP(v) {
+  const n = Number(v || 0);
+  return n.toLocaleString('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0,
+  });
+}
+
 export default function TopMenuBar({
   user,
   perms,
@@ -14,6 +23,8 @@ export default function TopMenuBar({
   debugSaveAlert = false,
   onOpenBom,
   onCloseBom,
+  bomOpen = false,
+  bomTotal = 0,
   onExportSvg,
   onExportPng,
   onExportPdf,
@@ -23,6 +34,8 @@ export default function TopMenuBar({
   const fileRef = useRef(null);
 
   const canLoadSave = !!perms?.canLoadSave;
+
+  const bomShowText = bomOpen ? 'Cerrar Inventario (BOM)' : 'Abrir Inventario (BOM)';
 
   const labelUser = useMemo(() => {
     const ses = user?.label || user?.role || '—';
@@ -248,8 +261,41 @@ export default function TopMenuBar({
       <div style={{ fontSize: 12, opacity: 0.8, fontWeight: 800 }}>
         {labelUser}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <button onClick={onOpenBom}>Abrir Inventario(BOM)</button>
-          <button onClick={onCloseBom}>Cerrar Inventario(BOM)</button>
+          <button
+            onClick={bomOpen ? onCloseBom : onOpenBom}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '6px 12px',
+              border: '1px solid rgba(15,23,42,0.20)',
+              borderRadius: 8,
+              background: '#fff',
+              cursor: 'pointer',
+              fontWeight: 700,
+              fontSize: 12,
+              color: 'rgba(15,23,42,0.86)',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = '#f8fafc';
+              e.target.style.borderColor = 'rgba(15,23,42,0.30)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = '#fff';
+              e.target.style.borderColor = 'rgba(15,23,42,0.20)';
+            }}
+          >
+            <span>{bomShowText}</span>
+            <div
+              style={{
+                width: '1px',
+                height: '16px',
+                background: 'rgba(15,23,42,0.15)',
+              }}
+            />
+            <span>{moneyCOP(bomTotal)}</span>
+          </button>
         </div>
       </div>
     </div>

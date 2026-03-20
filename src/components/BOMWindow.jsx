@@ -9,8 +9,12 @@ export default function BOMWindow({
   features = 'width=720,height=520,left=80,top=80',
 }) {
   const winRef = useRef(null);
-  const containerRef = useRef(null);
-  const [ready, setReady] = useState(false);
+  const onCloseRef = useRef(onClose);
+  const [portalContainer, setPortalContainer] = useState(null);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   useEffect(() => {
     if (!open) return;
@@ -38,26 +42,23 @@ export default function BOMWindow({
     div.style.height = '100vh';
     w.document.body.appendChild(div);
 
-    containerRef.current = div;
-    setReady(true);
+    queueMicrotask(() => setPortalContainer(div));
 
     // Si el usuario cierra la ventana manualmente
     const timer = setInterval(() => {
       if (!winRef.current || winRef.current.closed) {
         clearInterval(timer);
-        setReady(false);
-        containerRef.current = null;
+        setPortalContainer(null);
         winRef.current = null;
-        onClose?.();
+        onCloseRef.current?.();
       }
     }, 300);
 
     // También escuchar beforeunload
     const handleUnload = () => {
-      setReady(false);
-      containerRef.current = null;
+      setPortalContainer(null);
       winRef.current = null;
-      onClose?.();
+      onCloseRef.current?.();
     };
 
     w.addEventListener('beforeunload', handleUnload);
@@ -66,18 +67,21 @@ export default function BOMWindow({
       clearInterval(timer);
       try {
         w.removeEventListener('beforeunload', handleUnload);
-      } catch {}
+      } catch (err) {
+        void err;
+      }
       try {
         // si el padre decide cerrar
         if (winRef.current && !winRef.current.closed) winRef.current.close();
-      } catch {}
-      setReady(false);
-      containerRef.current = null;
+      } catch (err) {
+        void err;
+      }
+      setPortalContainer(null);
       winRef.current = null;
     };
-  }, [open, title, features, onClose]);
+  }, [open, title, features]);
 
-  if (!open || !ready || !containerRef.current) return null;
+  if (!open || !portalContainer) return null;
 
-  return createPortal(children, containerRef.current);
+  return createPortal(children, portalContainer);
 }

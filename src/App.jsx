@@ -163,6 +163,15 @@ export default function App() {
   const [bomItems, setBomItems] = useState([]);
   const [bomOpen, setBomOpen] = useState(false);
 
+  const bomTotal = useMemo(() => {
+    return (bomItems || []).reduce((acc, it) => {
+      const qty = Number(it?.qty || 0);
+      const unitPrice = Number(it?.unitPrice ?? it?.price ?? 0);
+      const lineTotal = Number(it?.total ?? qty * unitPrice);
+      return acc + (Number.isFinite(lineTotal) ? lineTotal : 0);
+    }, 0);
+  }, [bomItems]);
+
   const handleBOMChange = (items) => {
     //console.log('BOM rows:', items);
     setBomItems(items || []);
@@ -366,6 +375,8 @@ export default function App() {
         debugSaveAlert={false}
         onOpenBom={() => setBomOpen(true)}
         onCloseBom={() => setBomOpen(false)}
+        bomOpen={bomOpen}
+        bomTotal={bomTotal}
         onExportSvg={exportPlanSvg}
         onExportPng={exportPlanPng}
         onExportPdf={exportPlanPdf}
