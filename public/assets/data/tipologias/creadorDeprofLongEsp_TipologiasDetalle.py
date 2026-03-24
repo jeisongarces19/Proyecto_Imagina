@@ -5,8 +5,8 @@ from pathlib import Path
 # =========================
 # CONFIGURACIÓN
 # =========================
-INPUT_FILE = r"tipologias-detalle.json"
-OUTPUT_FILE = r"tipologias-detalle-con-medidas.json"
+INPUT_FILE = r"tipologias-detalle_Distribuidores.json"
+OUTPUT_FILE = r"tipologias-detalle-con-medidas_Colombia.json"
 OUTPUT_SIN_MEDIDAS = r"tipologias-sin-medidas.json"
 
 # =========================

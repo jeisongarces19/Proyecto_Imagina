@@ -80,44 +80,40 @@ export default function CatalogPanel({
   useEffect(() => {
     let alive = true;
 
+    setTipologiasReady(false);
+    setTipologias([]);
+
     (async () => {
       try {
-        const map = await loadTipologiasDetalle();
+        console.log('[CatalogPanel] country recibido:', country);
 
-        // convertir Map -> array "item-like"
+        const map = await loadTipologiasDetalle(country);
+
         const arr = Array.from(map.values()).map((t) => {
           const hijos = t?.hijos || [];
-
-          // ✅ total = suma de precio_acumulado
           const total = Number(hijos.reduce((acc, h) => acc + Number(h?.precio_acumulado || 0), 0));
-
-          // ✅ unitPrice "estimado": total / suma cantidades (si quieres mostrar algo útil)
           const totalQty = hijos.reduce((acc, h) => acc + Number(h?.cantidad || 0), 0) || 1;
 
           const unitPrice = totalQty ? total / totalQty : 0;
 
           return {
-            // mimetizamos shape del catálogo (para UI)
             codigoPT: String(t.codigo),
             ui: {
               title: t.descripcion || String(t.codigo),
               subtitle: 'Tipología',
+              lista: t.lista || '',
             },
             prices: {
-              // puedes mostrar unitPrice o total; yo dejo unitPrice para tener "precio unitario"
               [country]: Math.round(unitPrice),
-              CO: Math.round(unitPrice),
             },
-            // para permitir agregar
             model: { kind: 'TYPOLOGY' },
-
-            // guardamos raw completo (incluye hijos)
             raw: t,
-
-            // si luego quieres mostrar total real en la card:
             __total: total,
           };
         });
+
+        console.log('[CatalogPanel] tipologías cargadas:', arr.length);
+        console.log('[CatalogPanel] primera tipología:', arr[0]);
 
         if (alive) {
           setTipologias(arr);

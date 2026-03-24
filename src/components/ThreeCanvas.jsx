@@ -43,6 +43,14 @@ export default function ThreeCanvas({
   const [pendingProject, setPendingProject] = useState(null);
   const materialsByCodeRef = useRef(new Map());
 
+  const countryRef = useRef(country);
+  const emitBOMRef = useRef(null);
+
+  useEffect(() => {
+    countryRef.current = country;
+    emitBOMRef.current?.();
+  }, [country]);
+
   useEffect(() => {
     materialsByCodeRef.current = materialsByCode || new Map();
     console.log('[ThreeCanvas] materialsByCodeRef size:', materialsByCodeRef.current.size);
@@ -311,9 +319,8 @@ export default function ThreeCanvas({
     }
 
     function emitBOM() {
-      const rows = new Map(); // code -> row
+      const rows = new Map();
 
-      // ✅ Mantengo compatibilidad: sigue funcionando aunque BOMView espere `price`
       function addRow(code, qtyToAdd, forcedDescription, forcedUnitPrice, groupId, groupName) {
         if (!code) return;
 
@@ -322,25 +329,21 @@ export default function ThreeCanvas({
         const description =
           forcedDescription || item?.ui?.title || item?.ui?.subtitle || String(code);
 
-        const rawPrice = forcedUnitPrice ?? item?.prices?.[country] ?? 0;
+        const rawPrice = forcedUnitPrice ?? item?.prices?.[countryRef.current] ?? 0;
         const unit = Number(rawPrice || 0);
 
         const prev = rows.get(code) || {
           code: String(code),
           description,
           qty: 0,
-          // ✅ dejamos ambos campos por compatibilidad
           unitPrice: unit,
           price: unit,
           total: 0,
-          // grouping
           groupId: groupId || null,
           groupName: groupName || null,
         };
 
-        // ✅ si antes no tenía precio y ahora sí, actualiza
         const finalUnit = Number(prev.unitPrice || prev.price || 0) || unit;
-
         const qty = Number(prev.qty || 0) + Number(qtyToAdd || 0);
         const total = finalUnit * qty;
 
@@ -349,7 +352,7 @@ export default function ThreeCanvas({
           description,
           qty,
           unitPrice: finalUnit,
-          price: finalUnit, // 👈 compat
+          price: finalUnit,
           total,
           groupId: groupId || prev.groupId || null,
           groupName: groupName || prev.groupName || null,
@@ -360,8 +363,6 @@ export default function ThreeCanvas({
         const obj = p.obj;
         if (!obj) continue;
 
-        // ✅ TIPOGRAFÍA / TIPOLOGÍA
-        // OJO: tu userData muestra kind: "TYPOLOGY" (inglés)
         if (obj.userData?.kind === 'TYPOLOGY') {
           const parentCode = String(obj.userData?.codigoPT || obj.userData?.code || p.code || '');
           const label =
@@ -369,11 +370,7 @@ export default function ThreeCanvas({
             obj.userData?.tipologiaMeta?.descripcion ||
             `Tipología ${parentCode}`;
 
-          const list =
-            obj.userData?.typologyParts ||
-            obj.userData?.bomChildren ||
-            obj.userData?.typology_parts || // por si alguna vez lo nombraste diferente
-            [];
+          const list = obj.userData?.typologyParts || [];
 
           if (Array.isArray(list) && list.length) {
             for (const it of list) {
@@ -382,24 +379,24 @@ export default function ThreeCanvas({
                 Number(it.qty || 0),
                 it.description,
                 it.unitPrice,
-                parentCode, // ✅ groupId único
-                label // ✅ nombre visible del grupo
+                parentCode,
+                label
               );
             }
           } else {
-            // fallback: no rompe nada
             if (parentCode) addRow(parentCode, 1, label, 0, parentCode, label);
           }
           continue;
         }
 
-        // ✅ PIEZA NORMAL
         const code = obj.userData?.codigoPT || obj.userData?.code || p.code;
         addRow(String(code), 1);
       }
 
       onBOMChange?.(Array.from(rows.values()));
     }
+
+    emitBOMRef.current = emitBOM;
 
     // Subir por padres hasta encontrar el objeto que tiene userData.code
     function getRootPartObject(intersectObj) {
@@ -625,7 +622,7 @@ export default function ThreeCanvas({
       const codigo = String(codigoTipologia);
 
       // 1) trae detalle desde JSON
-      const det = await getTipologiaDetalle(codigo);
+      const det = await getTipologiaDetalle(codigo, countryRef.current);
       if (!det) {
         console.error('Tipología no encontrada en tipologias-detalle.json:', codigo);
         return;
@@ -697,7 +694,7 @@ export default function ThreeCanvas({
       // ✅ 0) si el código es una tipología (existe en tipologias-detalle.json), úsala como tipología
       // (esto evita mezclarla con catalogData normal)
       try {
-        const det = await getTipologiaDetalle(codigo);
+        const det = await getTipologiaDetalle(codigo, countryRef.current);
         if (det) {
           await addTypology(codigo);
           return;

@@ -126,7 +126,7 @@ export default function LeftPanel({
     let alive = true;
     (async () => {
       try {
-        const map = await loadTipologiasDetalle();
+        const map = await loadTipologiasDetalle(country);
 
         const arr = Array.from(map.values()).map((t) => {
           const hijos = t?.hijos || [];
@@ -409,6 +409,11 @@ export default function LeftPanel({
               >
                 <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
                 <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
+
+                {it.raw?.lista ? (
+                  <div style={{ fontSize: 11, opacity: 0.7 }}>{it.raw.lista}</div>
+                ) : null}
+
                 {it.ui?.subtitle ? (
                   <div style={{ fontSize: 11, opacity: 0.65 }}>{it.ui.subtitle}</div>
                 ) : null}
