@@ -537,6 +537,7 @@ export default function App() {
             walls={walls}
             readOnly={readOnly}
             materialsByCode={materialsByCode}
+            country={country}
             onApiReady={(api) => {
               threeApiRef.current = api;
               setIsReady(true);
@@ -565,7 +566,12 @@ export default function App() {
           />
 
           <BOMWindow open={bomOpen} title="BOM - Proyecto" onClose={() => setBomOpen(false)}>
-            <BOMView items={bomItems} />
+            <BOMView
+              items={bomItems}
+              country={country}
+              onCountryChange={setCountry}
+              catalogCountries={CATALOG_COUNTRIES}
+            />
           </BOMWindow>
 
           {/* Help + PPT */}

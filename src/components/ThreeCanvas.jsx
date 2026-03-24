@@ -30,6 +30,7 @@ export default function ThreeCanvas({
   walls = [],
   readOnly = false,
   materialsByCode,
+  country = 'CO',
 }) {
   const mountRef = useRef(null);
 
@@ -321,7 +322,7 @@ export default function ThreeCanvas({
         const description =
           forcedDescription || item?.ui?.title || item?.ui?.subtitle || String(code);
 
-        const rawPrice = forcedUnitPrice ?? item?.prices?.CO ?? 0;
+        const rawPrice = forcedUnitPrice ?? item?.prices?.[country] ?? 0;
         const unit = Number(rawPrice || 0);
 
         const prev = rows.get(code) || {

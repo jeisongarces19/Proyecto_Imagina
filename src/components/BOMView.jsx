@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import * as XLSX from 'xlsx';
 
 function moneyCOP(v) {
   const n = Number(v || 0);
@@ -13,10 +14,27 @@ function safeStr(v) {
   return (v ?? '').toString();
 }
 
-export default function BOMView({ items = [] }) {
+export default function BOMView({
+  items = [],
+  country = 'CO',
+  onCountryChange = () => {},
+  catalogCountries = ['CO', 'EUC', 'USD'],
+}) {
   const [q, setQ] = useState('');
+  const [localCountry, setLocalCountry] = useState(country);
   const [sortKey, setSortKey] = useState('code'); // code | description | qty | unitPrice | total
   const [sortDir, setSortDir] = useState('asc'); // asc | desc
+
+  // Sincronizar localCountry cuando cambia el country global
+  React.useEffect(() => {
+    setLocalCountry(country);
+  }, [country]);
+
+  const handleCountryChange = (e) => {
+    const newCountry = e.target.value;
+    setLocalCountry(newCountry);
+    onCountryChange(newCountry);
+  };
 
   const groups = useMemo(() => {
     const norm = (s) => safeStr(s).toLowerCase();
@@ -111,6 +129,99 @@ export default function BOMView({ items = [] }) {
 
   const totalItems = useMemo(() => groups.reduce((acc, g) => acc + g.items.length, 0), [groups]);
 
+  const exportToExcel = () => {
+    const data = [];
+    let rowNumber = 1;
+
+    const bomTitle = groups.find((g) => g.label && g.label !== 'SUELTOS')?.label || 'INVENTARIO BOM';
+    let mainTitleSkippedInTable = false;
+
+    // Procesar los grupos con la misma lógica que el render
+    for (const g of groups) {
+      const isMainTitleGroup =
+        !mainTitleSkippedInTable &&
+        String(g.label || '').trim().toLowerCase() === String(bomTitle || '').trim().toLowerCase();
+
+      // Fila de encabezado de grupo (excepto el título principal, que va solo arriba)
+      if (!isMainTitleGroup) {
+        data.push({
+          '#': '',
+          'Código': '',
+          'Descripción': g.label,
+          'Cantidad': '',
+          'Precio': '',
+          'Total': '',
+        });
+      } else {
+        mainTitleSkippedInTable = true;
+      }
+
+      // Filas de ítems
+      for (const r of g.items) {
+        data.push({
+          '#': rowNumber,
+          'Código': r.code,
+          'Descripción': r.description,
+          'Cantidad': r.qty,
+          'Precio': r.unitPrice,
+          'Total': r.total,
+        });
+        rowNumber++;
+      }
+
+      // Fila de subtotal
+      data.push({
+        '#': '',
+        'Código': '',
+        'Descripción': 'Subtotal',
+        'Cantidad': '',
+        'Precio': '',
+        'Total': g.subtotal,
+      });
+      data.push({}); // Fila vacía para separación
+    }
+
+    // Fila de total general
+    data.push({
+      '#': '',
+      'Código': '',
+      'Descripción': 'TOTAL',
+      'Cantidad': '',
+      'Precio': '',
+      'Total': grandTotal,
+    });
+
+    const headers = ['#', 'Código', 'Descripción', 'Cantidad', 'Precio', 'Total'];
+
+    const ws = XLSX.utils.aoa_to_sheet([[bomTitle], [], headers]);
+    XLSX.utils.sheet_add_json(ws, data, {
+      origin: 'A4',
+      skipHeader: true,
+      header: headers,
+    });
+
+    ws['!merges'] = [
+      {
+        s: { r: 0, c: 0 },
+        e: { r: 0, c: 5 },
+      },
+    ];
+
+    // Ajustar ancho de columnas
+    ws['!cols'] = [
+      { wch: 5 },  // #
+      { wch: 15 }, // Código
+      { wch: 50 }, // Descripción
+      { wch: 12 }, // Cantidad
+      { wch: 15 }, // Precio
+      { wch: 15 }, // Total
+    ];
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'BOM');
+    XLSX.writeFile(wb, `BOM_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  };
+
   const setSort = (key) => {
     if (sortKey === key) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
     else {
@@ -172,13 +283,56 @@ export default function BOMView({ items = [] }) {
             style={{
               display: 'flex',
               alignItems: 'center',
+              gap: 12,
               fontWeight: 700,
               fontSize: 13,
               letterSpacing: 0.2,
               color: 'rgba(15,23,42,0.86)',
             }}
           >
-            INVENTARIO BOM
+            <span>INVENTARIO BOM</span>
+            <select
+              value={localCountry}
+              onChange={handleCountryChange}
+              style={{
+                height: 34,
+                borderRadius: 8,
+                border: '1px solid #ddd',
+                padding: '0 8px',
+                background: '#fff',
+              }}
+            >
+              {catalogCountries.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={exportToExcel}
+              style={{
+                height: 34,
+                padding: '0 12px',
+                borderRadius: 8,
+                border: '1px solid rgba(15,23,42,0.20)',
+                background: '#fff',
+                color: 'rgba(15,23,42,0.86)',
+                fontWeight: 700,
+                fontSize: 12,
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#f8fafc';
+                e.target.style.borderColor = 'rgba(15,23,42,0.30)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = '#fff';
+                e.target.style.borderColor = 'rgba(15,23,42,0.20)';
+              }}
+            >
+              Exportar
+            </button>
           </div>
 
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
