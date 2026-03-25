@@ -241,8 +241,8 @@ export default function BOMView({
   };
 
   const thStyle = {
-    padding: '9px 12px',
-    fontSize: 11.5,
+    padding: '5px 8px',
+    fontSize: 11,
     fontWeight: 600,
     color: 'rgba(15,23,42,0.78)',
     background: '#f8fafc',
@@ -253,8 +253,8 @@ export default function BOMView({
   };
 
   const tdStyle = {
-    padding: '9px 12px',
-    fontSize: 12,
+    padding: '5px 8px',
+    fontSize: 11.5,
     color: 'rgba(15,23,42,0.86)',
     borderBottom: '1px solid rgba(15,23,42,0.08)',
     verticalAlign: 'top',
@@ -368,7 +368,7 @@ export default function BOMView({
 
       {/* Tabla */}
       <div style={{ flex: 1, overflow: 'auto', background: '#f3f5f7' }}>
-        <div style={{ padding: 12 }}>
+        <div style={{ padding: 4 }}>
           <div
             style={{
               background: '#fff',
@@ -418,7 +418,7 @@ export default function BOMView({
                       <td
                         colSpan={6}
                         style={{
-                          padding: '8px 12px',
+                          padding: '5px 8px',
                           background: '#f1f5f9',
                           borderBottom: '1px solid rgba(15,23,42,0.10)',
                           color: 'rgba(15,23,42,0.82)',
@@ -446,8 +446,8 @@ export default function BOMView({
                             <td
                               colSpan={6}
                               style={{
-                                padding: '4px 10px 3px',
-                                fontSize: 10,
+                                padding: '2px 8px 1px',
+                                fontSize: 9.5,
                                 fontWeight: 800,
                                 letterSpacing: 0.5,
                                 textTransform: 'uppercase',
@@ -470,7 +470,7 @@ export default function BOMView({
                                 ...colSep,
                                 textAlign: 'center',
                                 verticalAlign: 'middle',
-                                padding: '7px 5px',
+                                padding: '3px 4px',
                                 minWidth: 38,
                                 background: rowBg,
                               }}
@@ -480,12 +480,12 @@ export default function BOMView({
                                   display: 'inline-flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
-                                  width: 20,
-                                  height: 20,
-                                  borderRadius: 5,
+                                  width: 16,
+                                  height: 16,
+                                  borderRadius: 4,
                                   background: '#e8f0fe',
                                   color: '#3b5fc0',
-                                  fontSize: 10.5,
+                                  fontSize: 9,
                                   fontWeight: 700,
                                   lineHeight: 1,
                                 }}
@@ -512,11 +512,6 @@ export default function BOMView({
                             <td style={{ ...numTd, fontWeight: 700, background: rowBg }}>
                               {moneyByCountry(r.total, localCountry)}
                             </td>
-                          </tr>
-
-                          {/* Separador con border después de cada ítem */}
-                          <tr style={{ background: rowBg, height: 12 }}>
-                            <td colSpan={6} style={{ height: 12, padding: 0, border: 'none', background: rowBg, borderBottom: '1px solid rgba(15,23,42,0.12)' }} />
                           </tr>
                         </React.Fragment>
                       );
