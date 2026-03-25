@@ -1,13 +1,22 @@
 import React, { useMemo, useState } from 'react';
 import * as XLSX from 'xlsx';
 
-function moneyCOP(v) {
+function moneyByCountry(v, country = 'CO') {
   const n = Number(v || 0);
-  return n.toLocaleString('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    maximumFractionDigits: 0,
-  });
+  const isCO = country === 'CO';
+  const decimals = isCO ? 0 : 2;
+
+  const sign = n < 0 ? '-' : '';
+  const abs = Math.abs(n);
+  const fixed = abs.toFixed(decimals);
+  const [intPartRaw, decPart] = fixed.split('.');
+  const intPart = intPartRaw.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  if (decimals === 0) {
+    return `${sign}$ ${intPart}`;
+  }
+
+  return `${sign}$ ${intPart},${decPart}`;
 }
 
 function safeStr(v) {
@@ -16,24 +25,17 @@ function safeStr(v) {
 
 export default function BOMView({
   items = [],
-  country = 'CO',
-  onCountryChange = () => {},
+  defaultCountry = 'CO',
   catalogCountries = ['CO', 'EUC', 'USD'],
 }) {
   const [q, setQ] = useState('');
-  const [localCountry, setLocalCountry] = useState(country);
+  const [localCountry, setLocalCountry] = useState(defaultCountry);
   const [sortKey, setSortKey] = useState('code'); // code | description | qty | unitPrice | total
   const [sortDir, setSortDir] = useState('asc'); // asc | desc
-
-  // Sincronizar localCountry cuando cambia el country global
-  React.useEffect(() => {
-    setLocalCountry(country);
-  }, [country]);
 
   const handleCountryChange = (e) => {
     const newCountry = e.target.value;
     setLocalCountry(newCountry);
-    onCountryChange(newCountry);
   };
 
   const groups = useMemo(() => {
@@ -44,11 +46,18 @@ export default function BOMView({
     let list = (items || []).map((it) => {
       const qty = Number(it.qty || 0);
 
+      const prices = {
+        CO: Number(it?.prices?.CO ?? 0),
+        EUC: Number(it?.prices?.EUC ?? 0),
+        USD: Number(it?.prices?.USD ?? 0),
+      };
+
       // ✅ soporta unitPrice o price
-      const unitPrice = Number(it.unitPrice ?? it.price ?? 0);
+      const fallbackUnitPrice = Number(it.unitPrice ?? it.price ?? 0);
+      const unitPrice = Number(prices[localCountry] || fallbackUnitPrice);
 
       // ✅ soporta total explícito o qty*unitPrice
-      const total = Number(it.total ?? qty * unitPrice);
+      const total = Number(qty * unitPrice);
 
       // ✅ grouping compat:
       // - preferimos groupId/groupName (nuevo)
@@ -72,6 +81,7 @@ export default function BOMView({
         qty,
         unitPrice,
         total,
+        prices,
 
         // alias para no tocar tu render actual (si usabas r.price)
         price: unitPrice,
@@ -123,7 +133,7 @@ export default function BOMView({
     }
 
     return groupArr;
-  }, [items, q, sortKey, sortDir]);
+  }, [items, q, sortKey, sortDir, localCountry]);
 
   const grandTotal = useMemo(() => groups.reduce((acc, g) => acc + (g.subtotal || 0), 0), [groups]);
 
@@ -497,10 +507,10 @@ export default function BOMView({
                             <td style={{ ...tdStyle, ...colSep, background: rowBg }}>{r.description}</td>
                             <td style={{ ...numTd, ...colSep, background: rowBg }}>{r.qty}</td>
                             <td style={{ ...numTd, ...colSep, background: rowBg }}>
-                              {moneyCOP(r.unitPrice)}
+                              {moneyByCountry(r.unitPrice, localCountry)}
                             </td>
                             <td style={{ ...numTd, fontWeight: 700, background: rowBg }}>
-                              {moneyCOP(r.total)}
+                              {moneyByCountry(r.total, localCountry)}
                             </td>
                           </tr>
 
@@ -533,7 +543,7 @@ export default function BOMView({
                           background: '#f8fafc',
                         }}
                       >
-                        {moneyCOP(g.subtotal)}
+                        {moneyByCountry(g.subtotal, localCountry)}
                       </td>
                     </tr>
                   </React.Fragment>
@@ -571,7 +581,9 @@ export default function BOMView({
               }}
             >
               <div style={{ color: 'rgba(15,23,42,0.62)', fontWeight: 600 }}>Total:</div>
-              <div style={{ fontWeight: 800, color: 'rgba(15,23,42,0.90)' }}>{moneyCOP(grandTotal)}</div>
+              <div style={{ fontWeight: 800, color: 'rgba(15,23,42,0.90)' }}>
+                {moneyByCountry(grandTotal, localCountry)}
+              </div>
             </div>
           </div>
         </div>

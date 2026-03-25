@@ -40,7 +40,7 @@ function normalizeCode(code) {
   return String(code ?? '').trim();
 }
 
-function getCatalogItemByAnyKey(code) {
+function _getCatalogItemByAnyKey(code) {
   const k = normalizeCode(code);
 
   // intento 1: string
@@ -67,14 +67,14 @@ function getCatalogItemByAnyKey(code) {
   return null;
 }
 
-function getUnitPriceCO(item) {
+function _getUnitPriceCO(item) {
   const raw = item?.prices?.CO;
   if (typeof raw === 'number') return raw;
   const v = Number(raw?.value ?? raw ?? 0);
   return Number.isFinite(v) ? v : 0;
 }
 
-function unionAllowedCodes(genericos = [], ptCodesByGenerico) {
+function _unionAllowedCodes(genericos = [], ptCodesByGenerico) {
   const out = new Set();
   for (const gen of genericos) {
     const set = ptCodesByGenerico.get(String(gen));
@@ -90,10 +90,11 @@ export default function App() {
   const readOnly = !perms.canEdit;
 
   const threeApiRef = useRef(null);
+  const [threeApi, setThreeApi] = useState(null);
 
   const [isReady, setIsReady] = useState(false);
   const [selectedPart, setSelectedPart] = useState(null);
-  const [selectedPartAcabado, setSelectedPartAcabado] = useState(null);
+  const [selectedPartAcabado, _setSelectedPartAcabado] = useState(null);
 
   // Muros
   const [wallMode, setWallMode] = useState(false);
@@ -115,7 +116,7 @@ export default function App() {
   const [espesorFilter, setEspesorFilter] = useState('');
 
   //La Parte Superior o barra horizontal de opciones, archivo, etc
-  const handleSave = () => {
+  const _handleSave = () => {
     const data = threeApiRef.current?.exportProject?.();
     if (!data) return;
 
@@ -126,7 +127,7 @@ export default function App() {
     a.click();
   };
 
-  const handleOpenFile = async (file) => {
+  const _handleOpenFile = async (file) => {
     const text = await file.text();
     const json = JSON.parse(text);
 
@@ -140,7 +141,7 @@ export default function App() {
     // o resetea el estado del proyecto como lo tengas
   };
 
-  const handleExit = () => {
+  const _handleExit = () => {
     // en web no se puede “cerrar” la pestaña por seguridad
     // pero puedes ir a Home, limpiar, abrir modal, etc.
     handleNew();
@@ -150,11 +151,17 @@ export default function App() {
 
   // Si se elimina/deselecciona en 3D, limpiamos selección 2D para evitar IDs “fantasma”
   useEffect(() => {
-    if (!selectedPart) setSelectedIds([]);
+    if (!selectedPart) {
+      const timer = setTimeout(() => setSelectedIds([]), 0);
+      return () => clearTimeout(timer);
+    }
   }, [selectedPart]);
 
   useEffect(() => {
-    if (!selectedPartAcabado) setSelectedIds([]);
+    if (!selectedPartAcabado) {
+      const timer = setTimeout(() => setSelectedIds([]), 0);
+      return () => clearTimeout(timer);
+    }
   }, [selectedPartAcabado]);
 
   const [country, setCountry] = useState('CO');
@@ -215,7 +222,7 @@ export default function App() {
   };
 
   const [plan2DVisible, setPlan2DVisible] = useState(true);
-  const [plan2DSrc, setPlan2DSrc] = useState(null);
+  const [_plan2DSrc, setPlan2DSrc] = useState(null);
   const plan2DUrlRef = useRef(null);
 
   const handleLoadPlan2D = (file) => {
@@ -537,9 +544,11 @@ export default function App() {
             walls={walls}
             readOnly={readOnly}
             materialsByCode={materialsByCode}
+            catalogByCode={byCode}
             country={country}
             onApiReady={(api) => {
               threeApiRef.current = api;
+              setThreeApi(api);
               setIsReady(true);
             }}
             onSelectionChange={setSelectedPart}
@@ -568,8 +577,7 @@ export default function App() {
           <BOMWindow open={bomOpen} title="BOM - Proyecto" onClose={() => setBomOpen(false)}>
             <BOMView
               items={bomItems}
-              country={country}
-              onCountryChange={setCountry}
+              defaultCountry="CO"
               catalogCountries={CATALOG_COUNTRIES}
             />
           </BOMWindow>
@@ -649,7 +657,7 @@ export default function App() {
             bomItems={bomItems}
             country={country}
             byCode={byCode}
-            api={threeApiRef.current}
+            api={threeApi}
             materials={filteredMaterials}
             materialsAcabado={filteredMaterialsAcabado}
             materialsByCode={materialsByCode}

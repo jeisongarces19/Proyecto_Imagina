@@ -8,7 +8,7 @@ import * as THREE from 'three';
 import { OrbitControls, GLTFLoader } from 'three-stdlib';
 import { createSurfaceMesh, createSurfaceMeta } from '../factories/surfaceFactory';
 
-import { catalogByCodigoPT, MODEL_TYPES } from '../catalog/catalogData';
+import { MODEL_TYPES } from '../catalog/catalogData';
 
 //import { resolveSurfaceCodigoPTCeil } from '../factories/surfaceSkuResolver';
 import { resolveSurfaceCodigoPT } from '../rules/surfaceRules';
@@ -21,7 +21,6 @@ import { exportPlanToDXF } from '../utils/exportDXF';
 import { getTipologiaDetalle } from '../services/tipologiasDetalle';
 
 const MM_TO_M = 1 / 1000;
-const mmToM = (v) => new THREE.Vector3(v[0] * MM_TO_M, v[1] * MM_TO_M, v[2] * MM_TO_M);
 
 export default function ThreeCanvas({
   onApiReady,
@@ -30,6 +29,7 @@ export default function ThreeCanvas({
   walls = [],
   readOnly = false,
   materialsByCode,
+  catalogByCode,
   country = 'CO',
 }) {
   const mountRef = useRef(null);
@@ -42,6 +42,8 @@ export default function ThreeCanvas({
 
   const [pendingProject, setPendingProject] = useState(null);
   const materialsByCodeRef = useRef(new Map());
+  const catalogByCodeRef = useRef(catalogByCode || new Map());
+  const loadProjectRef = useRef(null);
 
   const countryRef = useRef(country);
   const emitBOMRef = useRef(null);
@@ -57,6 +59,10 @@ export default function ThreeCanvas({
   }, [materialsByCode]);
 
   useEffect(() => {
+    catalogByCodeRef.current = catalogByCode || new Map();
+  }, [catalogByCode]);
+
+  useEffect(() => {
     if (!pendingProject) return;
 
     const size = materialsByCodeRef.current?.size || 0;
@@ -65,8 +71,13 @@ export default function ThreeCanvas({
       return;
     }
 
+    if (typeof loadProjectRef.current !== 'function') {
+      console.log('⏳ Esperando loadProjectRef...');
+      return;
+    }
+
     console.log('✅ materialsByCodeRef listo, cargando proyecto...');
-    loadProject(pendingProject);
+    loadProjectRef.current(pendingProject);
     setPendingProject(null);
   }, [pendingProject]);
 
@@ -321,15 +332,45 @@ export default function ThreeCanvas({
     function emitBOM() {
       const rows = new Map();
 
-      function addRow(code, qtyToAdd, forcedDescription, forcedUnitPrice, groupId, groupName) {
+      function toFiniteNumber(v) {
+        const n = Number(v);
+        return Number.isFinite(n) ? n : 0;
+      }
+
+      function normalizePrices(prices = {}) {
+        return {
+          CO: toFiniteNumber(prices?.CO),
+          EUC: toFiniteNumber(prices?.EUC),
+          USD: toFiniteNumber(prices?.USD),
+        };
+      }
+
+      function addRow(
+        code,
+        qtyToAdd,
+        forcedDescription,
+        forcedUnitPrice,
+        groupId,
+        groupName,
+        forcedPrices
+      ) {
         if (!code) return;
 
-        const item = catalogByCodigoPT.get(code);
+        const item = catalogByCodeRef.current?.get?.(String(code));
 
         const description =
           forcedDescription || item?.ui?.title || item?.ui?.subtitle || String(code);
 
-        const rawPrice = forcedUnitPrice ?? item?.prices?.[countryRef.current] ?? 0;
+        const itemPrices = normalizePrices(item?.prices || {});
+        const incomingPrices = normalizePrices(forcedPrices || {});
+        const mergedIncomingPrices = {
+          CO: incomingPrices.CO || itemPrices.CO,
+          EUC: incomingPrices.EUC || itemPrices.EUC,
+          USD: incomingPrices.USD || itemPrices.USD,
+        };
+
+        const rawPrice =
+          forcedUnitPrice ?? mergedIncomingPrices[countryRef.current] ?? item?.prices?.[countryRef.current] ?? 0;
         const unit = Number(rawPrice || 0);
 
         const prev = rows.get(code) || {
@@ -339,11 +380,20 @@ export default function ThreeCanvas({
           unitPrice: unit,
           price: unit,
           total: 0,
+          prices: mergedIncomingPrices,
           groupId: groupId || null,
           groupName: groupName || null,
         };
 
-        const finalUnit = Number(prev.unitPrice || prev.price || 0) || unit;
+        const finalPrices = {
+          CO: toFiniteNumber(prev?.prices?.CO) || mergedIncomingPrices.CO,
+          EUC: toFiniteNumber(prev?.prices?.EUC) || mergedIncomingPrices.EUC,
+          USD: toFiniteNumber(prev?.prices?.USD) || mergedIncomingPrices.USD,
+        };
+
+        const prevUnit = Number(prev.unitPrice || prev.price || 0);
+        const unitBySelectedCountry = Number(finalPrices[countryRef.current] || 0);
+        const finalUnit = prevUnit || unitBySelectedCountry || unit;
         const qty = Number(prev.qty || 0) + Number(qtyToAdd || 0);
         const total = finalUnit * qty;
 
@@ -354,6 +404,7 @@ export default function ThreeCanvas({
           unitPrice: finalUnit,
           price: finalUnit,
           total,
+          prices: finalPrices,
           groupId: groupId || prev.groupId || null,
           groupName: groupName || prev.groupName || null,
         });
@@ -380,7 +431,8 @@ export default function ThreeCanvas({
                 it.description,
                 it.unitPrice,
                 parentCode,
-                label
+                label,
+                it.prices
               );
             }
           } else {
@@ -412,10 +464,6 @@ export default function ThreeCanvas({
       const rect = renderer.domElement.getBoundingClientRect();
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       mouse.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-    }
-
-    function snapToGrid(value, step) {
-      return Math.round(value / step) * step;
     }
 
     // ====== Helpers ======
@@ -621,8 +669,26 @@ export default function ThreeCanvas({
       if (readOnly) return;
       const codigo = String(codigoTipologia);
 
-      // 1) trae detalle desde JSON
-      const det = await getTipologiaDetalle(codigo, countryRef.current);
+      function getChildUnitPrice(hijo) {
+        const precio = Number(hijo?.precio);
+        if (Number.isFinite(precio) && precio > 0) return precio;
+        return 0;
+      }
+
+      // 1) trae detalle por lista para construir precios por país
+      const [detCO, detEUC, detUSD] = await Promise.all([
+        getTipologiaDetalle(codigo, 'CO'),
+        getTipologiaDetalle(codigo, 'EUC'),
+        getTipologiaDetalle(codigo, 'USD'),
+      ]);
+
+      const det =
+        (countryRef.current === 'EUC' && detEUC) ||
+        (countryRef.current === 'USD' && detUSD) ||
+        detCO ||
+        detEUC ||
+        detUSD;
+
       if (!det) {
         console.error('Tipología no encontrada en tipologias-detalle.json:', codigo);
         return;
@@ -640,17 +706,35 @@ export default function ThreeCanvas({
       // 3) (opcional) escala si aplica
       // obj.scale.setScalar(0.001);
 
-      // 4) construir hijos con unitPrice = precio_acumulado / cantidad
+      const indexByCode = (detalle) => {
+        const map = new Map();
+        for (const h of detalle?.hijos || []) {
+          const childCode = String(h?.producto?.codigo || '').trim();
+          if (childCode) map.set(childCode, h);
+        }
+        return map;
+      };
+
+      const hijosCO = indexByCode(detCO);
+      const hijosEUC = indexByCode(detEUC);
+      const hijosUSD = indexByCode(detUSD);
+
+      // 4) construir hijos con precios por país (precio unitario real de cada lista)
       const typologyParts = (det.hijos || [])
         .map((h) => {
           const code = String(h?.producto?.codigo || '');
           const description = h?.producto?.descripcion || '';
           const qty = Number(h?.cantidad || 0);
 
-          const totalAcum = Number(h?.precio_acumulado || 0);
-          const unitPrice = qty > 0 ? totalAcum / qty : 0;
+          const prices = {
+            CO: getChildUnitPrice(hijosCO.get(code) || h),
+            EUC: getChildUnitPrice(hijosEUC.get(code) || h),
+            USD: getChildUnitPrice(hijosUSD.get(code) || h),
+          };
 
-          return { code, description, qty, unitPrice };
+          const unitPrice = Number(prices[countryRef.current] || 0);
+
+          return { code, description, qty, unitPrice, prices };
         })
         .filter((x) => x.code && x.qty > 0);
 
@@ -705,7 +789,7 @@ export default function ThreeCanvas({
       }
 
       // ✅ 1) flujo normal de catálogo
-      const item = catalogByCodigoPT.get(codigo);
+      const item = catalogByCodeRef.current?.get?.(codigo);
 
       if (!item) {
         console.error('addCatalogItem: codigoPT no existe en catalogData:', codigo);
@@ -864,7 +948,9 @@ export default function ThreeCanvas({
       // quitar de escena
       try {
         scene.remove(obj);
-      } catch {}
+      } catch (err) {
+        void err;
+      }
 
       // quitar de arrays internos
       const idx = parts.findIndex((p) => p.obj === obj);
@@ -879,7 +965,9 @@ export default function ThreeCanvas({
         if (selectionHelper) {
           try {
             scene.remove(selectionHelper);
-          } catch {}
+          } catch (err) {
+            void err;
+          }
           selectionHelper = null;
         }
         onSelectionChange?.(null);
@@ -982,7 +1070,7 @@ export default function ThreeCanvas({
             const mesh = createSurfaceMesh({ widthM, depthM, thicknessM });
             const meta = createSurfaceMeta({ partCode: codigoPT, widthM, depthM, thicknessM });
 
-            const item = catalogByCodigoPT?.get?.(codigoPT);
+            const item = catalogByCodeRef.current?.get?.(codigoPT);
 
             mesh.userData = {
               code: codigoPT,
@@ -1103,6 +1191,8 @@ export default function ThreeCanvas({
       emitBOM();
     }
 
+    loadProjectRef.current = loadProject;
+
     // ====== API para el catálogo ======
     async function ensureLoaded(code) {
       if (catalogCache.has(code)) return;
@@ -1183,7 +1273,9 @@ export default function ThreeCanvas({
       if (pointerId != null) {
         try {
           renderer.domElement.releasePointerCapture(pointerId);
-        } catch {}
+        } catch (err) {
+          void err;
+        }
       }
     }
 
@@ -1343,7 +1435,9 @@ export default function ThreeCanvas({
         // en solo-lectura igual liberamos el capture si existiera
         try {
           renderer.domElement.releasePointerCapture?.(e.pointerId);
-        } catch {}
+        } catch (err) {
+          void err;
+        }
         isDragging = false;
         controls.enabled = true;
         return;
@@ -1353,7 +1447,9 @@ export default function ThreeCanvas({
       controls.enabled = true;
       try {
         renderer.domElement.releasePointerCapture?.(e.pointerId);
-      } catch {}
+      } catch (err) {
+        void err;
+      }
       snapActivePart();
     }
 
@@ -1723,7 +1819,10 @@ export default function ThreeCanvas({
       if (renderer.domElement?.parentNode === container) {
         container.removeChild(renderer.domElement);
       }
+
+      loadProjectRef.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ✅ AQUÍ está la mezcla correcta:
