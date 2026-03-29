@@ -370,7 +370,10 @@ export default function ThreeCanvas({
         };
 
         const rawPrice =
-          forcedUnitPrice ?? mergedIncomingPrices[countryRef.current] ?? item?.prices?.[countryRef.current] ?? 0;
+          forcedUnitPrice ??
+          mergedIncomingPrices[countryRef.current] ??
+          item?.prices?.[countryRef.current] ??
+          0;
         const unit = Number(rawPrice || 0);
 
         const prev = rows.get(code) || {
@@ -665,6 +668,39 @@ export default function ThreeCanvas({
       if (parts.length === 1) frameObject(obj);
     }
 
+    async function loadExistingGlb(possibleSrcs) {
+      for (const src of possibleSrcs) {
+        try {
+          const res = await fetch(src, { method: 'GET' });
+
+          if (!res.ok) {
+            console.warn('No existe:', src, res.status);
+            continue;
+          }
+
+          const contentType = res.headers.get('content-type') || '';
+          if (contentType.includes('text/html')) {
+            console.warn('La ruta devolvió HTML y no GLB:', src);
+            continue;
+          }
+
+          const arrayBuffer = await res.arrayBuffer();
+
+          const gltf = await new Promise((resolve, reject) => {
+            const loader = new GLTFLoader();
+            loader.parse(arrayBuffer, '', resolve, reject);
+          });
+
+          console.log('Modelo válido encontrado en:', src);
+          return gltf;
+        } catch (err) {
+          console.warn('Falló carga de:', src, err);
+        }
+      }
+
+      return null;
+    }
+
     async function addTypology(codigoTipologia) {
       if (readOnly) return;
       const codigo = String(codigoTipologia);
@@ -694,12 +730,20 @@ export default function ThreeCanvas({
         return;
       }
 
-      // 2) cargar GLB del bloque padre
-      const src = `/assets/models/koncisapluss_${codigo}.glb`;
+      // 2) cargar tipologias GLB del bloque padre
+      //const src = `/assets/models/koncisapluss_${codigo}.glb`;
 
-      const gltf = await new Promise((resolve, reject) => {
-        loader.load(src, resolve, undefined, reject);
-      });
+      const possibleSrcs = [
+        `/assets/models/koncisapluss_${codigo}.glb`,
+        `/assets/models/${codigo}.glb`,
+      ];
+
+      const gltf = await loadExistingGlb(possibleSrcs);
+
+      if (!gltf) {
+        console.error(`No se encontró un GLB válido para ${codigo}`);
+        return;
+      }
 
       const obj = gltf.scene;
 
