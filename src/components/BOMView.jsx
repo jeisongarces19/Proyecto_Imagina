@@ -140,82 +140,50 @@ export default function BOMView({
   const totalItems = useMemo(() => groups.reduce((acc, g) => acc + g.items.length, 0), [groups]);
 
   const exportToExcel = () => {
-    const data = [];
-    let rowNumber = 1;
-
-    const bomTitle = groups.find((g) => g.label && g.label !== 'SUELTOS')?.label || 'INVENTARIO BOM';
-    let mainTitleSkippedInTable = false;
-
-    // Procesar los grupos con la misma lógica que el render
-    for (const g of groups) {
-      const isMainTitleGroup =
-        !mainTitleSkippedInTable &&
-        String(g.label || '').trim().toLowerCase() === String(bomTitle || '').trim().toLowerCase();
-
-      // Fila de encabezado de grupo (excepto el título principal, que va solo arriba)
-      if (!isMainTitleGroup) {
-        data.push({
-          '#': '',
-          'Código': '',
-          'Descripción': g.label,
-          'Cantidad': '',
-          'Precio': '',
-          'Total': '',
-        });
-      } else {
-        mainTitleSkippedInTable = true;
-      }
-
-      // Filas de ítems
-      for (const r of g.items) {
-        data.push({
-          '#': rowNumber,
-          'Código': r.code,
-          'Descripción': r.description,
-          'Cantidad': r.qty,
-          'Precio': r.unitPrice,
-          'Total': r.total,
-        });
-        rowNumber++;
-      }
-
-      // Fila de subtotal
-      data.push({
-        '#': '',
-        'Código': '',
-        'Descripción': 'Subtotal',
-        'Cantidad': '',
-        'Precio': '',
-        'Total': g.subtotal,
-      });
-      data.push({}); // Fila vacía para separación
-    }
-
-    // Fila de total general
-    data.push({
-      '#': '',
-      'Código': '',
-      'Descripción': 'TOTAL',
-      'Cantidad': '',
-      'Precio': '',
-      'Total': grandTotal,
-    });
-
+    const sheetRows = [];
+    const bomTitle = 'INVENTARIO BOM';
     const headers = ['#', 'Código', 'Descripción', 'Cantidad', 'Precio', 'Total'];
-
-    const ws = XLSX.utils.aoa_to_sheet([[bomTitle], [], headers]);
-    XLSX.utils.sheet_add_json(ws, data, {
-      origin: 'A4',
-      skipHeader: true,
-      header: headers,
-    });
-
-    ws['!merges'] = [
+    const merges = [
       {
         s: { r: 0, c: 0 },
         e: { r: 0, c: 5 },
       },
     ];
+
+    sheetRows.push([bomTitle, '', '', '', '', '']);
+    sheetRows.push(['', '', '', '', '', '']);
+
+    // Procesar los grupos con la misma lógica que el render
+    for (const g of groups) {
+      let rowNumber = 1;
+
+      const groupHeaderRow = sheetRows.length;
+      sheetRows.push([safeStr(g.label), '', '', '', '', '']);
+      merges.push({
+        s: { r: groupHeaderRow, c: 0 },
+        e: { r: groupHeaderRow, c: 5 },
+      });
+
+      // Encabezados por tipología
+      sheetRows.push(headers);
+
+      // Filas de ítems
+      for (const r of g.items) {
+        sheetRows.push([rowNumber, r.code, r.description, r.qty, r.unitPrice, r.total]);
+        rowNumber++;
+      }
+
+      // Fila de subtotal
+      sheetRows.push(['', '', 'Subtotal', '', '', g.subtotal]);
+      sheetRows.push(['', '', '', '', '', '']); // Fila vacía para separación
+    }
+
+    // Fila de total general
+    sheetRows.push(['', '', 'TOTAL', '', '', grandTotal]);
+
+    const ws = XLSX.utils.aoa_to_sheet(sheetRows);
+
+    ws['!merges'] = merges;
 
     // Ajustar ancho de columnas
     ws['!cols'] = [
@@ -247,6 +215,9 @@ export default function BOMView({
     color: 'rgba(15,23,42,0.78)',
     background: '#f8fafc',
     borderBottom: '1px solid rgba(15,23,42,0.10)',
+    position: 'sticky',
+    top: 0,
+    zIndex: 3,
     userSelect: 'none',
     cursor: 'pointer',
     whiteSpace: 'nowrap',
@@ -373,7 +344,7 @@ export default function BOMView({
             style={{
               background: '#fff',
               borderRadius: 10,
-              overflow: 'hidden',
+              overflow: 'visible',
               border: '1px solid rgba(15,23,42,0.10)',
               boxShadow: '0 1px 2px rgba(15,23,42,0.04)',
             }}
@@ -408,10 +379,7 @@ export default function BOMView({
               </thead>
 
               <tbody>
-                {(() => {
-                  // Contador global de filas BOM
-                  let rowIdx = 0;
-                  return groups.map((g) => (
+                {groups.map((g) => (
                   <React.Fragment key={g.key}>
                     {/* Header de grupo */}
                     <tr>
@@ -432,8 +400,7 @@ export default function BOMView({
 
                     {/* Filas del grupo con separador/título por ítem */}
                     {g.items.map((r, i) => {
-                      rowIdx += 1;
-                      const currentIdx = rowIdx;
+                      const currentIdx = i + 1;
                       // Primeras 2 palabras descripción como mini-título
                       const shortDesc = r.description.split(' ').slice(0, 2).join(' ');
                       // Color alternado suave por fila
@@ -542,8 +509,7 @@ export default function BOMView({
                       </td>
                     </tr>
                   </React.Fragment>
-                  ));
-                })()}
+                ))}
 
                 {!groups.length && (
                   <tr>
@@ -573,6 +539,9 @@ export default function BOMView({
                 background: '#f8fafc',
                 borderTop: '1px solid rgba(15,23,42,0.10)',
                 fontSize: 12.5,
+                position: 'sticky',
+                bottom: 0,
+                zIndex: 2,
               }}
             >
               <div style={{ color: 'rgba(15,23,42,0.62)', fontWeight: 600 }}>Total:</div>
