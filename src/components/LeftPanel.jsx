@@ -433,7 +433,31 @@ export default function LeftPanel({
         <KoncisaPlusPanel
           onCreate={(config) => {
             const parts = buildKoncisaPlus(config);
-            console.log('PARTS KONCISA', parts);
+            const superficies = parts.filter((p) => p.type === 'superficie');
+
+            superficies.forEach((surface) => {
+              const { widthMm, depthMm, thickMm } = surface.dimMm || {};
+
+              threeApiRef.current?.addSurface?.({
+                line: surface.line,
+                codigoPT: surface.code,
+                widthM: (widthMm || 0) / 1000,
+                depthM: (depthMm || 0) / 1000,
+                thicknessM: (thickMm || 0) / 1000,
+                dim: {
+                  widthMm,
+                  depthMm,
+                  thickMm,
+                },
+                position: {
+                  x: (surface.position?.x || 0) / 1000,
+                  y: (surface.position?.y || 0) / 1000,
+                  z: (surface.position?.z || 0) / 1000,
+                },
+              });
+            });
+
+            console.log('SUPERFICIES KONCISA CREADAS', superficies);
           }}
         />
       )}

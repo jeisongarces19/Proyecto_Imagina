@@ -1543,7 +1543,7 @@ export default function ThreeCanvas({
 
     animate();
 
-    function addSurface({ widthM, depthM, thicknessM, line, codigoPT, dim } = {}, item) {
+    function addSurface({ widthM, depthM, thicknessM, line, codigoPT, dim, position } = {}, item) {
       if (readOnly) return;
       if (!codigoPT) {
         console.warn('No se crea superficie: no hay codigoPT real (regla faltante).');
@@ -1557,7 +1557,6 @@ export default function ThreeCanvas({
       const mesh = createSurfaceMesh({ widthM, depthM, thicknessM });
       const meta = createSurfaceMeta({ widthM, depthM, thicknessM });
 
-      // ✅ NUEVO: description + unitPrice (para que BOM no quede en 0)
       const code = String(codigoPT);
 
       const description =
@@ -1580,22 +1579,20 @@ export default function ThreeCanvas({
         meta,
         units: 'm',
         instanceId: `${code}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
-
-        // ✅ CLAVE (para filtro de acabados)
         generico: item?.generico || item?.raw?.generico || null,
-
-        // ✅ Fase D
         materialBase: item?.materialBase || item?.raw?.material || 'LAMINA',
         materialCode: item?.materialCode || null,
-
-        // ✅ BOM
         description,
         unitPrice,
       };
 
       mesh.name = code;
 
-      mesh.position.set(parts.length * 0.9, 0, 0);
+      if (position) {
+        mesh.position.set(position.x || 0, position.y || 0, position.z || 0);
+      } else {
+        mesh.position.set(parts.length * 0.9, 0, 0);
+      }
 
       scene.add(mesh);
       parts.push({ code, obj: mesh });

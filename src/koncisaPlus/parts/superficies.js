@@ -1,28 +1,37 @@
 // src/koncisaPlus/parts/superficies.js
-
-function buildSurfaceCode({ widthMm, depthMm, perforada, canto }) {
-  const perf = perforada ? 'PERF' : 'LISA';
-  const edge = canto ? `CANTO-${String(canto).toUpperCase()}` : 'SIN-CANTO';
-  return `KPL-SUP-${widthMm}x${depthMm}-${perf}-${edge}`;
-}
+import { resolveKoncisaSurfaceCodigoPT } from '../rules/koncisaSurfaceRules';
 
 export function createSuperficie({
   widthMm = 1200,
   depthMm = 600,
-  thickMm = 30,
+  thickMm = 25,
+  shape = 'RECT',
+  finishCode = '22008689',
+  variant = '',
   perforada = false,
   canto = 'PVC-2MM',
   x = 0,
   y = 720,
   z = 0,
   index = 0,
-  code,
 }) {
+  const resolved = resolveKoncisaSurfaceCodigoPT({
+    widthMm,
+    depthMm,
+    shape,
+    thicknessMm: thickMm,
+    finishCode,
+    variant,
+  });
+
   return {
     type: 'superficie',
     subtype: perforada ? 'con-perforacion' : 'sin-perforacion',
     line: 'KONCISA.PLUS',
-    code: code || buildSurfaceCode({ widthMm, depthMm, perforada, canto }),
+    code: resolved.codigoPT,
+    logicalCode: resolved.logicalCode,
+    existsInCatalog: resolved.exists,
+    rawCodigoPT: resolved.rawCodigoPT,
     name: `Superficie ${widthMm}x${depthMm}`,
     dimMm: {
       widthMm,
@@ -43,8 +52,22 @@ export function createSuperficie({
       index,
       perforada,
       canto,
+      shape,
+      finishCode,
+      variant,
       alturaTrabajoMm: y,
       category: 'superficies',
     },
   };
 }
+
+/*
+function redondearLargoSencillo(mm) {
+  const metros = mm / 1000;
+
+  if (metros <= 1) return 1000;
+  if (metros > 1 && metros <= 1.2) return 1200;
+  if (metros > 1.2 && metros <= 1.5) return 1500;
+  return 1200;
+}
+*/
