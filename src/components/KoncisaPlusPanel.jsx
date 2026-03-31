@@ -1,5 +1,3 @@
-import { useMemo, useState } from 'react';
-
 /*
 function redondearLargoSencillo(mm) {
   const metros = mm / 1000;
@@ -10,6 +8,8 @@ function redondearLargoSencillo(mm) {
   return 1200;
 }
 */
+import { useMemo, useState } from 'react';
+import { KONCISA_SURFACE_FINISH_OPTIONS } from '../koncisaPlus/rules/koncisaSurfaceFinishOptions';
 
 function redondearLargo(mm) {
   if (mm <= 1000) return 1000;
@@ -33,13 +33,22 @@ function redondearAnchoDoble(mm) {
 
 export default function KoncisaPlusPanel({ onCreate }) {
   const [puestos, setPuestos] = useState(1);
-  const [tipoPuesto, setTipoPuesto] = useState('sencillo'); // sencillo | doble
+  const [tipoPuesto, setTipoPuesto] = useState('sencillo');
   const [modoEspecial, setModoEspecial] = useState(false);
 
   const [largoRealMm, setLargoRealMm] = useState(1200);
   const [anchoRealMm, setAnchoRealMm] = useState(600);
 
   const [grommet, setGrommet] = useState(true);
+  const [tipoPasoCable, setTipoPasoCable] = useState('none');
+  const [selectedFinishId, setSelectedFinishId] = useState('FORMICA_30');
+
+  const selectedFinish = useMemo(() => {
+    return (
+      KONCISA_SURFACE_FINISH_OPTIONS.find((f) => f.id === selectedFinishId) ||
+      KONCISA_SURFACE_FINISH_OPTIONS[0]
+    );
+  }, [selectedFinishId]);
 
   const largoCobroMm = useMemo(() => {
     return redondearLargo(largoRealMm);
@@ -51,7 +60,7 @@ export default function KoncisaPlusPanel({ onCreate }) {
       : redondearAnchoDoble(anchoRealMm);
   }, [anchoRealMm, tipoPuesto]);
 
-  const opcionesLargoNormal = tipoPuesto === 'sencillo' ? [1000, 1200, 1500] : [1000, 1200, 1500];
+  const opcionesLargoNormal = [1000, 1200, 1500];
 
   const opcionesAnchoNormal = tipoPuesto === 'sencillo' ? [600, 750] : [1200, 1500];
 
@@ -81,8 +90,12 @@ export default function KoncisaPlusPanel({ onCreate }) {
       anchoRealMm,
       largoCobroMm,
       anchoCobroMm,
-      hasGrommet: grommet,
+      tipoPasoCable,
       hasDuct: true,
+      finishCode: selectedFinish.finishCode,
+      thickMm: selectedFinish.thickMm,
+      variant: selectedFinish.variant,
+      finishLabel: selectedFinish.label,
     });
   };
 
@@ -160,10 +173,31 @@ export default function KoncisaPlusPanel({ onCreate }) {
       </div>
 
       <div>
-        <label>
-          <input type="checkbox" checked={grommet} onChange={(e) => setGrommet(e.target.checked)} />{' '}
-          Grommet
-        </label>
+        <label>Acabado / tipo de superficie</label>
+        <select
+          value={selectedFinishId}
+          onChange={(e) => setSelectedFinishId(e.target.value)}
+          style={{ width: '100%' }}
+        >
+          {KONCISA_SURFACE_FINISH_OPTIONS.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label>Acceso para cableado</label>
+        <select
+          value={tipoPasoCable}
+          onChange={(e) => setTipoPasoCable(e.target.value)}
+          style={{ width: '100%' }}
+        >
+          <option value="none">Ninguno</option>
+          <option value="grommet">Grommet</option>
+          <option value="pasacable">Pasacable</option>
+        </select>
       </div>
 
       <div
@@ -182,6 +216,10 @@ export default function KoncisaPlusPanel({ onCreate }) {
         <div>Ancho real: {anchoRealMm} mm</div>
         <div>Largo de cobro/código: {largoCobroMm} mm</div>
         <div>Ancho de cobro/código: {anchoCobroMm} mm</div>
+        <div>Acabado: {selectedFinish.label}</div>
+        <div>Finish code: {selectedFinish.finishCode}</div>
+        <div>Espesor: {selectedFinish.thickMm} mm</div>
+        <div>Variante: {selectedFinish.variant || 'base'}</div>
       </div>
 
       <button onClick={handleCreate}>Crear puesto</button>

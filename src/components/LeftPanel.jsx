@@ -433,9 +433,16 @@ export default function LeftPanel({
         <KoncisaPlusPanel
           onCreate={(config) => {
             const parts = buildKoncisaPlus(config);
+
+            // SUPERFICIES
             const superficies = parts.filter((p) => p.type === 'superficie');
 
             superficies.forEach((surface) => {
+              if (!surface.code) {
+                alert(`No tenemos disponible esta superficie: ${surface.logicalCode}`);
+                return;
+              }
+
               const { widthMm, depthMm, thickMm } = surface.dimMm || {};
 
               threeApiRef.current?.addSurface?.({
@@ -457,7 +464,14 @@ export default function LeftPanel({
               });
             });
 
-            console.log('SUPERFICIES KONCISA CREADAS', superficies);
+            // GROMMETS
+            const grommets = parts.filter((p) => p.type === 'grommet');
+
+            grommets.forEach((grommet) => {
+              threeApiRef.current?.addExternalGlbPart?.(grommet);
+            });
+
+            console.log('PARTS KONCISA', parts);
           }}
         />
       )}

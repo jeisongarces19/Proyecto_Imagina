@@ -6,6 +6,7 @@ import {
   getVigasConfig,
   getDuctosConfig,
   getPedestalesConfig,
+  getPasacablesConfig,
 } from './rules/koncisaRules';
 
 import { createCostado } from './parts/costados';
@@ -15,15 +16,29 @@ import { createGrommet } from './parts/grommets';
 import { createViga } from './parts/vigas';
 import { createDucto } from './parts/ductos';
 import { createPedestal } from './parts/pedestales';
+import { createPasacable } from './parts/pasacables';
 
-export function buildKoncisaPlus(config) {
+export function buildKoncisaPlus(config = {}) {
   const {
     puestos = 1,
-    widthMm = 1200,
-    depthMm = 600,
-    hasGrommet = true,
+    tipoPuesto = 'sencillo',
+
+    // medidas reales
+    largoRealMm = 1200,
+    anchoRealMm = 600,
+
+    // medidas de cobro / código
+    largoCobroMm = 1200,
+    anchoCobroMm = 600,
+
+    tipoPasoCable = 'none',
     hasDuct = true,
     includePedestal = false,
+
+    // superficie
+    finishCode = '22008689',
+    thickMm = 25,
+    variant = '',
   } = config;
 
   const parts = [];
@@ -31,13 +46,24 @@ export function buildKoncisaPlus(config) {
   // ========================
   // COSTADOS
   // ========================
-  const costados = getCostadosConfig({ puestos });
+  const costados = getCostadosConfig({
+    puestos,
+    tipoPuesto,
+    largoRealMm,
+    anchoRealMm,
+  });
 
   costados.forEach((c) => {
     parts.push(
       createCostado({
         tipo: c.tipo,
-        x: c.index * widthMm,
+        variante: c.variante || 'base',
+        widthMm: c.widthMm,
+        depthMm: c.depthMm,
+        heightMm: c.heightMm,
+        x: c.x,
+        y: c.y ?? 0,
+        z: c.z ?? 0,
       })
     );
   });
@@ -45,13 +71,41 @@ export function buildKoncisaPlus(config) {
   // ========================
   // SUPERFICIES
   // ========================
-  const superficies = getSuperficiesConfig({ puestos, widthMm });
+  const superficies = getSuperficiesConfig({
+    puestos,
+    tipoPuesto,
+    largoRealMm,
+    anchoRealMm,
+    largoCobroMm,
+    anchoCobroMm,
+    thickMm,
+    finishCode,
+    variant,
+  });
 
   superficies.forEach((s) => {
     parts.push(
       createSuperficie({
+        // medidas reales
         widthMm: s.widthMm,
-        x: s.index * widthMm,
+        depthMm: s.depthMm,
+
+        // medidas de cobro
+        billingWidthMm: s.billingWidthMm,
+        billingDepthMm: s.billingDepthMm,
+
+        thickMm: s.thickMm,
+        shape: s.shape || 'RECT',
+        finishCode: s.finishCode,
+        variant: s.variant,
+
+        perforada: s.perforada ?? false,
+        canto: s.canto || 'PVC-2MM',
+
+        x: s.x,
+        y: s.y ?? 720,
+        z: s.z ?? 0,
+        index: s.index,
       })
     );
   });
@@ -59,40 +113,88 @@ export function buildKoncisaPlus(config) {
   // ========================
   // PANTALLAS
   // ========================
-  const pantallas = getPantallasConfig({ puestos, widthMm });
+  const pantallas = getPantallasConfig({
+    puestos,
+    tipoPuesto,
+    largoRealMm,
+    anchoRealMm,
+  });
 
   pantallas.forEach((p) => {
     parts.push(
       createPantalla({
+        tipo: p.tipo,
         widthMm: p.widthMm,
-        x: p.index * widthMm,
+        heightMm: p.heightMm,
+        thickMm: p.thickMm,
+        x: p.x,
+        y: p.y ?? 750,
+        z: p.z ?? 0,
       })
     );
   });
 
   // ========================
-  // GROMMETS
+  // GROMMETS / PASACABLES
   // ========================
-  const grommets = getGrommetsConfig({ puestos, hasGrommet });
+  if (tipoPasoCable === 'grommet') {
+    const grommets = getGrommetsConfig({
+      puestos,
+      tipoPuesto,
+      largoRealMm,
+      anchoRealMm,
+    });
 
-  grommets.forEach((g) => {
-    parts.push(
-      createGrommet({
-        x: g.index * widthMm + widthMm / 2,
-      })
-    );
-  });
+    grommets.forEach((g) => {
+      parts.push(
+        createGrommet({
+          diameterMm: g.diameterMm || 80,
+          x: g.x,
+          y: g.y ?? 735,
+          z: g.z ?? 0,
+        })
+      );
+    });
+  }
+
+  if (tipoPasoCable === 'pasacable') {
+    const pasacables = getPasacablesConfig({
+      puestos,
+      tipoPuesto,
+      largoRealMm,
+      anchoRealMm,
+    });
+
+    pasacables.forEach((p) => {
+      parts.push(
+        createPasacable({
+          diameterMm: p.diameterMm || 50,
+          x: p.x,
+          y: p.y ?? 735,
+          z: p.z ?? 0,
+        })
+      );
+    });
+  }
 
   // ========================
   // VIGAS
   // ========================
-  const vigas = getVigasConfig({ puestos, widthMm });
+  const vigas = getVigasConfig({
+    puestos,
+    tipoPuesto,
+    largoRealMm,
+  });
 
   vigas.forEach((v) => {
     parts.push(
       createViga({
         widthMm: v.widthMm,
-        x: v.index * widthMm,
+        heightMm: v.heightMm,
+        depthMm: v.depthMm,
+        x: v.x,
+        y: v.y ?? 650,
+        z: v.z ?? 0,
       })
     );
   });
@@ -100,12 +202,24 @@ export function buildKoncisaPlus(config) {
   // ========================
   // DUCTOS
   // ========================
-  const ductos = getDuctosConfig({ puestos, widthMm, hasDuct });
+  const ductos = getDuctosConfig({
+    puestos,
+    tipoPuesto,
+    largoRealMm,
+    anchoRealMm,
+    hasDuct,
+  });
 
   ductos.forEach((d) => {
     parts.push(
       createDucto({
-        widthMm: d.lengthMm,
+        tipo: d.tipo || 'individual',
+        widthMm: d.widthMm ?? d.lengthMm ?? largoRealMm,
+        heightMm: d.heightMm,
+        depthMm: d.depthMm,
+        x: d.x ?? 0,
+        y: d.y ?? 620,
+        z: d.z ?? 0,
       })
     );
   });
@@ -113,12 +227,23 @@ export function buildKoncisaPlus(config) {
   // ========================
   // PEDESTALES
   // ========================
-  const pedestales = getPedestalesConfig({ puestos, includePedestal });
+  const pedestales = getPedestalesConfig({
+    puestos,
+    tipoPuesto,
+    largoRealMm,
+    includePedestal,
+  });
 
   pedestales.forEach((p) => {
     parts.push(
       createPedestal({
-        x: p.index * widthMm + 100,
+        cajones: p.cajones || 2,
+        widthMm: p.widthMm,
+        depthMm: p.depthMm,
+        heightMm: p.heightMm,
+        x: p.x,
+        y: p.y ?? 0,
+        z: p.z ?? 0,
       })
     );
   });

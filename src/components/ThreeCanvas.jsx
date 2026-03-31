@@ -1331,6 +1331,7 @@ export default function ThreeCanvas({
       // superficies
       addSurface,
       addSurfaceFromRules,
+      addExternalGlbPart,
       // utilidades
       toggleSnap,
       exportProject,
@@ -1547,6 +1548,10 @@ export default function ThreeCanvas({
       if (readOnly) return;
       if (!codigoPT) {
         console.warn('No se crea superficie: no hay codigoPT real (regla faltante).');
+        alert(
+          'No tenemos esa superficie disponible para la medida, espesor y acabado seleccionados.'
+        );
+
         return;
       }
 
@@ -1602,6 +1607,53 @@ export default function ThreeCanvas({
 
       setActivePart(mesh);
       emitBOM();
+    }
+
+    async function addExternalGlbPart(part) {
+      if (readOnly) return;
+      if (!part?.model?.src) {
+        console.warn('No se puede cargar el GLB: falta model.src');
+        return;
+      }
+
+      try {
+        const loader = new GLTFLoader();
+        const gltf = await loader.loadAsync(part.model.src);
+
+        const obj = gltf.scene.clone(true);
+
+        obj.position.set(
+          (part.position?.x || 0) / 1000,
+          (part.position?.y || 0) / 1000,
+          (part.position?.z || 0) / 1000
+        );
+
+        obj.rotation.set(part.rotation?.x || 0, part.rotation?.y || 0, part.rotation?.z || 0);
+
+        obj.userData = {
+          code: part.code || null,
+          codigoPT: part.code || null,
+          kind: part.type || 'GLB_PART',
+          line: part.line || null,
+          dim: part.dimMm || null,
+          description: part.name || part.code || 'Pieza GLB',
+          unitPrice: 0,
+          meta: part.meta || {},
+          instanceId: `${part.code || 'glb'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
+        };
+
+        obj.name = part.code || part.name || 'GLB_PART';
+
+        scene.add(obj);
+        parts.push({ code: part.code || obj.name, obj });
+        pickables.push(obj);
+
+        setActivePart(obj);
+        emitBOM();
+      } catch (error) {
+        console.error('Error cargando GLB externo:', part.model.src, error);
+        alert(`No se pudo cargar el modelo 3D: ${part.model.src}`);
+      }
     }
 
     function looksLikeGuid(s) {
