@@ -345,6 +345,10 @@ export default function ThreeCanvas({
         };
       }
 
+      function normalizeText(value) {
+        return String(value ?? '').trim();
+      }
+
       function addRow(
         code,
         qtyToAdd,
@@ -352,14 +356,22 @@ export default function ThreeCanvas({
         forcedUnitPrice,
         groupId,
         groupName,
-        forcedPrices
+        forcedPrices,
+        groupCount,
+        groupInstanceId
       ) {
         if (!code) return;
 
-        const item = catalogByCodeRef.current?.get?.(String(code));
+        const normalizedCode = normalizeText(code);
+        const normalizedGroupId = normalizeText(groupId);
+        const rowKey = normalizedGroupId
+          ? `T:${normalizedGroupId}::${normalizedCode}`
+          : `S::${normalizedCode}`;
+
+        const item = catalogByCodeRef.current?.get?.(normalizedCode);
 
         const description =
-          forcedDescription || item?.ui?.title || item?.ui?.subtitle || String(code);
+          forcedDescription || item?.ui?.title || item?.ui?.subtitle || normalizedCode;
 
         const itemPrices = normalizePrices(item?.prices || {});
         const incomingPrices = normalizePrices(forcedPrices || {});
@@ -376,17 +388,22 @@ export default function ThreeCanvas({
           0;
         const unit = Number(rawPrice || 0);
 
-        const prev = rows.get(code) || {
-          code: String(code),
+        const prev = rows.get(rowKey) || {
+          code: normalizedCode,
           description,
           qty: 0,
           unitPrice: unit,
           price: unit,
           total: 0,
           prices: mergedIncomingPrices,
-          groupId: groupId || null,
+          groupId: normalizedGroupId || null,
           groupName: groupName || null,
+          groupCount: groupCount || null,
+          _groupInstanceIds: new Set(),
         };
+
+        const groupInstanceIds = prev._groupInstanceIds || new Set();
+        if (groupInstanceId) groupInstanceIds.add(String(groupInstanceId));
 
         const finalPrices = {
           CO: toFiniteNumber(prev?.prices?.CO) || mergedIncomingPrices.CO,
@@ -400,7 +417,7 @@ export default function ThreeCanvas({
         const qty = Number(prev.qty || 0) + Number(qtyToAdd || 0);
         const total = finalUnit * qty;
 
-        rows.set(code, {
+        rows.set(rowKey, {
           ...prev,
           description,
           qty,
@@ -408,8 +425,11 @@ export default function ThreeCanvas({
           price: finalUnit,
           total,
           prices: finalPrices,
-          groupId: groupId || prev.groupId || null,
+          groupId: normalizedGroupId || prev.groupId || null,
           groupName: groupName || prev.groupName || null,
+          groupCount:
+            Math.max(Number(groupCount || 0), Number(prev.groupCount || 0), groupInstanceIds.size) || null,
+          _groupInstanceIds: groupInstanceIds,
         });
       }
 
@@ -418,11 +438,12 @@ export default function ThreeCanvas({
         if (!obj) continue;
 
         if (obj.userData?.kind === 'TYPOLOGY') {
-          const parentCode = String(obj.userData?.codigoPT || obj.userData?.code || p.code || '');
+          const parentCode = normalizeText(obj.userData?.codigoPT || obj.userData?.code || p.code || '');
           const label =
             obj.userData?.name ||
             obj.userData?.tipologiaMeta?.descripcion ||
             `Tipología ${parentCode}`;
+          const groupInstanceId = obj.userData?.instanceId || obj.uuid || p.id;
 
           const list = obj.userData?.typologyParts || [];
 
@@ -435,11 +456,13 @@ export default function ThreeCanvas({
                 it.unitPrice,
                 parentCode,
                 label,
-                it.prices
+                it.prices,
+                null,
+                groupInstanceId
               );
             }
           } else {
-            if (parentCode) addRow(parentCode, 1, label, 0, parentCode, label);
+            if (parentCode) addRow(parentCode, 1, label, 0, parentCode, label, undefined, null, groupInstanceId);
           }
           continue;
         }
@@ -448,7 +471,12 @@ export default function ThreeCanvas({
         addRow(String(code), 1);
       }
 
-      onBOMChange?.(Array.from(rows.values()));
+      const bomRows = Array.from(rows.values()).map(({ _groupInstanceIds, ...row }) => ({
+        ...row,
+        groupCount: Number(row.groupCount || _groupInstanceIds?.size || 0) || null,
+      }));
+
+      onBOMChange?.(bomRows);
     }
 
     emitBOMRef.current = emitBOM;

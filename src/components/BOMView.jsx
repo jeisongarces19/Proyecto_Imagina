@@ -91,6 +91,7 @@ export default function BOMView({
         code: safeStr(it.code),
         description: safeStr(it.description),
         qty,
+        groupCount: Number(it.groupCount || 0),
         unitPrice,
         total,
         prices,
@@ -279,6 +280,15 @@ export default function BOMView({
     for (const g of groups) {
       const typologyCode = g.key?.startsWith('T:') ? g.key.slice(2).trim() : '';
       const typologyTitle = typologyCode ? `${typologyCode} - ${g.label}` : g.label;
+      const isTypologyGroup = !!typologyCode;
+      const typologyCount = isTypologyGroup
+        ? Math.max(
+            1,
+            Math.round(
+              g.items.reduce((maxCount, item) => Math.max(maxCount, Number(item.groupCount || 0)), 0)
+            ) || 1
+          )
+        : 0;
 
       if (typologyCode) {
         const typologyImage = await fetchImageAsset([
@@ -314,12 +324,28 @@ export default function BOMView({
       });
 
       for (const r of g.items) {
-        const row = ws.addRow([r.code, r.description, r.qty, '', '', r.unitPrice, r.total, '']);
+        const aggregatedQty = Number(r.qty || 0);
+        const quantityBaseRaw = isTypologyGroup && typologyCount > 0 ? aggregatedQty / typologyCount : aggregatedQty;
+        const quantityBase = Number.isInteger(quantityBaseRaw)
+          ? quantityBaseRaw
+          : Number(quantityBaseRaw.toFixed(4));
+        const quantityTotal = isTypologyGroup ? quantityBase * typologyCount : aggregatedQty;
+
+        const row = ws.addRow([
+          r.code,
+          r.description,
+          quantityBase,
+          isTypologyGroup ? typologyCount : '',
+          isTypologyGroup ? quantityTotal : '',
+          r.unitPrice,
+          r.total,
+          '',
+        ]);
         applyStyle(ws.getCell(`A${row.number}`), { alignment: { horizontal: 'left', vertical: 'middle' } });
         applyStyle(ws.getCell(`B${row.number}`), { alignment: { horizontal: 'left', vertical: 'middle' } });
         applyStyle(ws.getCell(`C${row.number}`), { alignment: { horizontal: 'center', vertical: 'middle' } });
-        applyStyle(ws.getCell(`D${row.number}`), { alignment: { horizontal: 'left', vertical: 'middle' } });
-        applyStyle(ws.getCell(`E${row.number}`), { alignment: { horizontal: 'left', vertical: 'middle' } });
+        applyStyle(ws.getCell(`D${row.number}`), { alignment: { horizontal: 'center', vertical: 'middle' } });
+        applyStyle(ws.getCell(`E${row.number}`), { alignment: { horizontal: 'center', vertical: 'middle' } });
         applyStyle(ws.getCell(`F${row.number}`), { alignment: { horizontal: 'right', vertical: 'middle' }, numFmt: '#,##0' });
         applyStyle(ws.getCell(`G${row.number}`), { alignment: { horizontal: 'right', vertical: 'middle' }, numFmt: '#,##0' });
         applyStyle(ws.getCell(`H${row.number}`), { alignment: { horizontal: 'left', vertical: 'middle' } });
