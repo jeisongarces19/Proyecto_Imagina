@@ -19,6 +19,8 @@ import { createPedestal } from './parts/pedestales';
 import { createPasacable } from './parts/pasacables';
 
 export function buildKoncisaPlus(config = {}) {
+  const groupId = `KONCISA_${Date.now()}_${Math.random().toString(16).slice(2, 8)}`;
+
   const {
     puestos = 1,
     tipoPuesto = 'sencillo',
@@ -32,6 +34,7 @@ export function buildKoncisaPlus(config = {}) {
     anchoCobroMm = 600,
 
     tipoPasoCable = 'none',
+    grommetFinish = 'ALUMINIUM',
     hasDuct = true,
     includePedestal = false,
 
@@ -56,6 +59,8 @@ export function buildKoncisaPlus(config = {}) {
   costados.forEach((c) => {
     parts.push(
       createCostado({
+        //grupo linea y padre
+        groupId,
         tipo: c.tipo,
         variante: c.variante || 'base',
         widthMm: c.widthMm,
@@ -86,6 +91,9 @@ export function buildKoncisaPlus(config = {}) {
   superficies.forEach((s) => {
     parts.push(
       createSuperficie({
+        //grupo linea y padre
+        groupId,
+
         // medidas reales
         widthMm: s.widthMm,
         depthMm: s.depthMm,
@@ -123,6 +131,8 @@ export function buildKoncisaPlus(config = {}) {
   pantallas.forEach((p) => {
     parts.push(
       createPantalla({
+        //grupo linea y padre
+        groupId,
         tipo: p.tipo,
         widthMm: p.widthMm,
         heightMm: p.heightMm,
@@ -148,6 +158,9 @@ export function buildKoncisaPlus(config = {}) {
     grommets.forEach((g) => {
       parts.push(
         createGrommet({
+          //grupo linea y padre
+          groupId,
+          finish: grommetFinish,
           diameterMm: g.diameterMm || 80,
           x: g.x,
           y: g.y ?? 735,
@@ -168,6 +181,8 @@ export function buildKoncisaPlus(config = {}) {
     pasacables.forEach((p) => {
       parts.push(
         createPasacable({
+          //grupo linea y padre
+          groupId,
           diameterMm: p.diameterMm || 50,
           x: p.x,
           y: p.y ?? 735,
@@ -189,6 +204,8 @@ export function buildKoncisaPlus(config = {}) {
   vigas.forEach((v) => {
     parts.push(
       createViga({
+        //grupo linea y padre
+        groupId,
         widthMm: v.widthMm,
         heightMm: v.heightMm,
         depthMm: v.depthMm,
@@ -213,6 +230,8 @@ export function buildKoncisaPlus(config = {}) {
   ductos.forEach((d) => {
     parts.push(
       createDucto({
+        //grupo linea y padre
+        groupId,
         tipo: d.tipo || 'individual',
         widthMm: d.widthMm ?? d.lengthMm ?? largoRealMm,
         heightMm: d.heightMm,
@@ -237,6 +256,8 @@ export function buildKoncisaPlus(config = {}) {
   pedestales.forEach((p) => {
     parts.push(
       createPedestal({
+        //grupo linea y padre
+        groupId,
         cajones: p.cajones || 2,
         widthMm: p.widthMm,
         depthMm: p.depthMm,
@@ -248,5 +269,8 @@ export function buildKoncisaPlus(config = {}) {
     );
   });
 
-  return parts;
+  return {
+    groupId,
+    parts,
+  };
 }

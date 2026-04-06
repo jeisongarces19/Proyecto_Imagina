@@ -428,7 +428,11 @@ export default function ThreeCanvas({
           groupId: normalizedGroupId || prev.groupId || null,
           groupName: groupName || prev.groupName || null,
           groupCount:
-            Math.max(Number(groupCount || 0), Number(prev.groupCount || 0), groupInstanceIds.size) || null,
+            Math.max(
+              Number(groupCount || 0),
+              Number(prev.groupCount || 0),
+              groupInstanceIds.size
+            ) || null,
           _groupInstanceIds: groupInstanceIds,
         });
       }
@@ -438,7 +442,9 @@ export default function ThreeCanvas({
         if (!obj) continue;
 
         if (obj.userData?.kind === 'TYPOLOGY') {
-          const parentCode = normalizeText(obj.userData?.codigoPT || obj.userData?.code || p.code || '');
+          const parentCode = normalizeText(
+            obj.userData?.codigoPT || obj.userData?.code || p.code || ''
+          );
           const label =
             obj.userData?.name ||
             obj.userData?.tipologiaMeta?.descripcion ||
@@ -462,7 +468,8 @@ export default function ThreeCanvas({
               );
             }
           } else {
-            if (parentCode) addRow(parentCode, 1, label, 0, parentCode, label, undefined, null, groupInstanceId);
+            if (parentCode)
+              addRow(parentCode, 1, label, 0, parentCode, label, undefined, null, groupInstanceId);
           }
           continue;
         }
@@ -1572,7 +1579,10 @@ export default function ThreeCanvas({
 
     animate();
 
-    function addSurface({ widthM, depthM, thicknessM, line, codigoPT, dim, position } = {}, item) {
+    function addSurface(
+      { widthM, depthM, thicknessM, line, codigoPT, dim, position, groupId, logicalCode } = {},
+      item
+    ) {
       if (readOnly) return;
       if (!codigoPT) {
         console.warn('No se crea superficie: no hay codigoPT real (regla faltante).');
@@ -1617,6 +1627,8 @@ export default function ThreeCanvas({
         materialCode: item?.materialCode || null,
         description,
         unitPrice,
+        groupId: groupId || null,
+        logicalCode: logicalCode || null,
       };
 
       mesh.name = code;
@@ -1668,6 +1680,8 @@ export default function ThreeCanvas({
           unitPrice: 0,
           meta: part.meta || {},
           instanceId: `${part.code || 'glb'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
+          groupId: part?.groupId || null,
+          logicalCode: part?.logicalCode || null,
         };
 
         obj.name = part.code || part.name || 'GLB_PART';

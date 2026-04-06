@@ -1,16 +1,23 @@
 // src/koncisaPlus/parts/grommets.js
+import { resolveKoncisaCableAccessCodigoPT } from '../rules/koncisaCableAccessRules';
 
-function buildGrommetCode({ diameterMm }) {
-  return `KPL-GROMMET-${diameterMm}`;
-}
+export function createGrommet({ finish = 'ALUMINIUM', diameterMm = 80, x = 0, y = 735, z = 0 }) {
+  const resolved = resolveKoncisaCableAccessCodigoPT({
+    tipo: 'grommet',
+    finish,
+  });
 
-export function createGrommet({ diameterMm = 80, x = 0, y = 735, z = 0, code = 'LKAC250000' }) {
   return {
     type: 'grommet',
-    subtype: 'pasacable-grande',
+    subtype: '4-tomas',
     line: 'KONCISA.PLUS',
-    code,
-    name: `Grommet Ø${diameterMm}`,
+
+    code: resolved.codigoPT,
+    logicalCode: resolved.logicalCode,
+    existsInCatalog: resolved.exists,
+    rawCodigoPT: resolved.rawCodigoPT,
+
+    name: `Grommet ${finish}`,
     dimMm: {
       diameterMm,
       widthMm: diameterMm,
@@ -25,6 +32,7 @@ export function createGrommet({ diameterMm = 80, x = 0, y = 735, z = 0, code = '
     },
     meta: {
       category: 'grommets',
+      finish,
     },
   };
 }

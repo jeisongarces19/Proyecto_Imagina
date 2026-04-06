@@ -7,11 +7,11 @@ export default function LeftRail({ active, onChange }) {
     { id: 'openings', label: 'Puertas/Ventanas', icon: '🚪' },
     { id: 'materials', label: 'Materiales', icon: '🎨' },
     { id: 'plans', label: 'Planos', icon: '🗺️' },
-    { id: 'sillas', label: 'Sillas', icon: '🗺️' },
+    { id: 'sillas', label: 'Sillas', icon: '🪑' },
     {
       id: 'koncisaPlus',
       label: 'Koncisa Plus',
-      icon: '🪑',
+      image: '/assets/iconos_imagen/koncisa2PlussLibrary.png',
     },
   ];
 
@@ -29,6 +29,7 @@ export default function LeftRail({ active, onChange }) {
     >
       {items.map((it) => {
         const isActive = active === it.id;
+
         return (
           <button
             key={it.id}
@@ -45,9 +46,22 @@ export default function LeftRail({ active, onChange }) {
               fontSize: 18,
               display: 'grid',
               placeItems: 'center',
+              overflow: 'hidden',
             }}
           >
-            {it.icon}
+            {it.image ? (
+              <img
+                src={it.image}
+                alt={it.label}
+                style={{
+                  width: 24,
+                  height: 24,
+                  objectFit: 'contain',
+                }}
+              />
+            ) : (
+              it.icon
+            )}
           </button>
         );
       })}

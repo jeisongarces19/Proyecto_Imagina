@@ -73,7 +73,8 @@ export function getGrommetsConfig({ puestos, largoRealMm }) {
   return Array.from({ length: puestos }).map((_, i) => ({
     index: i,
     diameterMm: 80,
-    x: i * largoRealMm + largoRealMm / 2,
+    //x: i * largoRealMm + largoRealMm / 2,
+    x: i * largoRealMm,
     y: 735,
     z: 0,
   }));
@@ -86,7 +87,8 @@ export function getPasacablesConfig({ puestos, largoRealMm }) {
   return Array.from({ length: puestos }).map((_, i) => ({
     index: i,
     diameterMm: 50,
-    x: i * largoRealMm + largoRealMm / 2,
+    //x: i * largoRealMm + largoRealMm / 2,
+    x: i * largoRealMm,
     y: 735,
     z: 0,
   }));

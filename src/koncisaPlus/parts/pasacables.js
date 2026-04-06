@@ -1,12 +1,22 @@
-//src / koncisaPlus / parts / pasacables.js;
+// src/koncisaPlus/parts/pasacables.js
+import { resolveKoncisaCableAccessCodigoPT } from '../rules/koncisaCableAccessRules';
 
-export function createPasacable({ diameterMm = 50, x = 0, y = 735, z = 0, code = null }) {
+export function createPasacable({ diameterMm = 50, x = 0, y = 735, z = 0 }) {
+  const resolved = resolveKoncisaCableAccessCodigoPT({
+    tipo: 'pasacable',
+  });
+
   return {
     type: 'pasacable',
     subtype: 'redondo-pequeno',
     line: 'KONCISA.PLUS',
-    code,
-    name: `Pasacable Ø${diameterMm}`,
+
+    code: resolved.codigoPT,
+    logicalCode: resolved.logicalCode,
+    existsInCatalog: resolved.exists,
+    rawCodigoPT: resolved.rawCodigoPT,
+
+    name: 'Pasacable',
     dimMm: {
       diameterMm,
       widthMm: diameterMm,
@@ -15,6 +25,10 @@ export function createPasacable({ diameterMm = 50, x = 0, y = 735, z = 0, code =
     },
     position: { x, y, z },
     rotation: { x: 0, y: 0, z: 0 },
+    model: {
+      kind: 'glb',
+      src: '/assets/models/koncisaPlus/MPR050004.glb',
+    },
     meta: {
       category: 'pasacables',
     },

@@ -432,7 +432,9 @@ export default function LeftPanel({
       {section === 'koncisaPlus' && (
         <KoncisaPlusPanel
           onCreate={(config) => {
-            const parts = buildKoncisaPlus(config);
+            //const parts = buildKoncisaPlus(config);
+            const result = buildKoncisaPlus(config);
+            const { groupId, parts } = result;
 
             // SUPERFICIES
             const superficies = parts.filter((p) => p.type === 'superficie');
@@ -461,6 +463,8 @@ export default function LeftPanel({
                   y: (surface.position?.y || 0) / 1000,
                   z: (surface.position?.z || 0) / 1000,
                 },
+                groupId: surface.groupId || groupId,
+                logicalCode: surface.logicalCode,
               });
             });
 
@@ -468,9 +472,33 @@ export default function LeftPanel({
             const grommets = parts.filter((p) => p.type === 'grommet');
 
             grommets.forEach((grommet) => {
-              threeApiRef.current?.addExternalGlbPart?.(grommet);
+              if (!grommet.code) {
+                alert(`No tenemos disponible este grommet: ${grommet.logicalCode}`);
+                return;
+              }
+
+              threeApiRef.current?.addExternalGlbPart?.({
+                ...grommet,
+                groupId: grommet.groupId || groupId,
+              });
             });
 
+            const pasacables = parts.filter((p) => p.type === 'pasacable');
+
+            pasacables.forEach((pasacable) => {
+              if (!pasacable.code) {
+                alert(`No tenemos disponible este pasacable: ${pasacable.logicalCode}`);
+                return;
+              }
+
+              threeApiRef.current?.addExternalGlbPart?.({
+                ...pasacable,
+                groupId: pasacable.groupId || groupId,
+              });
+            });
+
+            console.log('PARTS KONCISA', parts);
+            console.log('GROUP KONCISA', groupId);
             console.log('PARTS KONCISA', parts);
           }}
         />
@@ -788,6 +816,16 @@ export default function LeftPanel({
           >
             {plan2DVisible ? 'Ocultar plano' : 'Mostrar plano'}
           </button>
+        </>
+      )}
+
+      {/* ======================= PLANOS ======================= */}
+      {section === 'sillas' && (
+        <>
+          <h1 style={{ margin: '0 0 12px 0' }}>Sillas</h1>
+          <br></br>
+
+          <h3 style={{ margin: '0 0 12px 0' }}>Bases y Mesas</h3>
         </>
       )}
     </div>

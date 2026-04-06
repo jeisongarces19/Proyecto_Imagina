@@ -41,6 +41,7 @@ export default function KoncisaPlusPanel({ onCreate }) {
 
   const [grommet, setGrommet] = useState(true);
   const [tipoPasoCable, setTipoPasoCable] = useState('none');
+  const [grommetFinish, setGrommetFinish] = useState('ALUMINIUM');
   const [selectedFinishId, setSelectedFinishId] = useState('FORMICA_30');
 
   const selectedFinish = useMemo(() => {
@@ -91,6 +92,7 @@ export default function KoncisaPlusPanel({ onCreate }) {
       largoCobroMm,
       anchoCobroMm,
       tipoPasoCable,
+      grommetFinish,
       hasDuct: true,
       finishCode: selectedFinish.finishCode,
       thickMm: selectedFinish.thickMm,
@@ -199,6 +201,22 @@ export default function KoncisaPlusPanel({ onCreate }) {
           <option value="pasacable">Pasacable</option>
         </select>
       </div>
+
+      {tipoPasoCable === 'grommet' && (
+        <div>
+          <label>Acabado del grommet</label>
+          <select
+            value={grommetFinish}
+            onChange={(e) => setGrommetFinish(e.target.value)}
+            style={{ width: '100%' }}
+          >
+            <option value="ALUMINIUM">Aluminium</option>
+            <option value="PAINTED">Painted</option>
+            <option value="METALICO">Metálico</option>
+            <option value="ALUMINIUM_PINTADO">Aluminium pintado</option>
+          </select>
+        </div>
+      )}
 
       <div
         style={{
