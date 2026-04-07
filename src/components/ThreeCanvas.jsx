@@ -19,6 +19,7 @@ import { exportSceneToGLTF } from '../utils/exportGLTF';
 import { exportPlanToDXF } from '../utils/exportDXF';
 
 import { getTipologiaDetalle } from '../services/tipologiasDetalle';
+import { getChairDetail } from '../services/chairsLoader';
 
 const MM_TO_M = 1 / 1000;
 
@@ -474,6 +475,39 @@ export default function ThreeCanvas({
           continue;
         }
 
+        if (obj.userData?.kind === 'CHAIR') {
+          const parentCode = normalizeText(
+            obj.userData?.codigoPT || obj.userData?.code || p.code || ''
+          );
+          const label =
+            obj.userData?.name ||
+            obj.userData?.chairMeta?.descripcion ||
+            `Silla ${parentCode}`;
+          const groupInstanceId = obj.userData?.instanceId || obj.uuid || p.id;
+
+          const list = obj.userData?.chairParts || [];
+
+          if (Array.isArray(list) && list.length) {
+            for (const it of list) {
+              addRow(
+                String(it.code),
+                Number(it.qty || 0),
+                it.description,
+                it.unitPrice,
+                parentCode,
+                label,
+                it.prices,
+                null,
+                groupInstanceId
+              );
+            }
+          } else {
+            if (parentCode)
+              addRow(parentCode, 1, label, 0, parentCode, label, undefined, null, groupInstanceId);
+          }
+          continue;
+        }
+
         const code = obj.userData?.codigoPT || obj.userData?.code || p.code;
         addRow(String(code), 1);
       }
@@ -837,6 +871,93 @@ export default function ThreeCanvas({
       obj.name = `TYPOLOGY_${codigo}`;
 
       // 6) posición inicial (ajusta a tu lógica)
+      obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
+      obj.updateMatrixWorld(true);
+
+      scene.add(obj);
+      parts.push({ code: codigo, obj });
+      pickables.push(obj);
+
+      setActivePart(obj);
+      emitBOM();
+
+      if (parts.length === 1) frameObject(obj);
+    }
+
+    async function addChair(codigoSilla) {
+      if (readOnly) return;
+      const codigo = String(codigoSilla);
+
+      // 1) trae detalle de la silla desde el XML (precio e información)
+      const [detCO, detEUC, detUSD] = await Promise.all([
+        getChairDetail(codigo, 'CO'),
+        getChairDetail(codigo, 'EUC'),
+        getChairDetail(codigo, 'USD'),
+      ]);
+
+      const det =
+        (countryRef.current === 'EUC' && detEUC) ||
+        (countryRef.current === 'USD' && detUSD) ||
+        detCO ||
+        detEUC ||
+        detUSD;
+
+      if (!det) {
+        console.error('Silla no encontrada en PriceList:', codigo);
+        return;
+      }
+
+      // 2) cargar GLB de silla desde carpeta Sillas
+      const possibleSrcs = [
+        `/assets/models/Sillas/${codigo}.glb`,
+        `/assets/models/${codigo}.glb`,
+      ];
+
+      const gltf = await loadExistingGlb(possibleSrcs);
+
+      if (!gltf) {
+        console.error(`No se encontró un GLB válido para silla ${codigo}`);
+        return;
+      }
+
+      const obj = gltf.scene;
+
+      // 3) userData: similar al de tipologías pero para CHAIR
+      // Para sillas, creamos "chairParts" array con un solo items (la silla misma)
+      const chairParts = [
+        {
+          code: codigo,
+          description: det.descripcion,
+          qty: 1,
+          unitPrice: Number(det.precio || 0),
+          prices: {
+            CO: detCO?.precio || 0,
+            EUC: detEUC?.precio || 0,
+            USD: detUSD?.precio || 0,
+          },
+        },
+      ];
+
+      obj.userData = {
+        ...(obj.userData || {}),
+        kind: 'CHAIR', // ✅ Tipo CHAIR para que el BOM lo reconozca
+        codigoPT: codigo,
+        code: codigo,
+        name: det.descripcion || codigo,
+
+        // ✅ Array de partes (solo la silla en este caso)
+        chairParts,
+
+        chairMeta: {
+          descripcion: det.descripcion,
+          precio: det.precio,
+          udm: det.udm,
+        },
+      };
+
+      obj.name = `CHAIR_${codigo}`;
+
+      // 4) posición inicial
       obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
       obj.updateMatrixWorld(true);
 
@@ -1380,6 +1501,7 @@ export default function ThreeCanvas({
       getPartsSnapshot2D,
       selectPartById,
       addTypology,
+      addChair,
       exportGLTF: () => exportSceneToGLTF(scene, { filename: 'proyecto.glb' }),
       exportDXF: () => {
         const snap = getPartsSnapshot2D();

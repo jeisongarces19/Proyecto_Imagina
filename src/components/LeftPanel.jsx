@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useMemo, useState, useEffect } from 'react';
 import { loadTipologiasDetalle } from '../services/tipologiasDetalle';
+import { getChairDetail, loadChairsPriceList } from '../services/chairsLoader';
 import { getThreeMaterialFromDef } from '../materials/materialRegistry'; // Ajusta la ruta según tu estructura de carpetas
 
 import KoncisaPlusPanel from './KoncisaPlusPanel';
@@ -26,6 +27,7 @@ export default function LeftPanel({
   onApplyGlobalMaterial,
   onAddCatalogItem,
   onAddTypology,
+  onAddChair,
   onToggleSnap,
   // muros
   wallMode,
@@ -47,6 +49,10 @@ export default function LeftPanel({
   const [qTyp, setQTyp] = useState('');
   const [tipologias, setTipologias] = useState([]);
   const [tipologiasReady, setTipologiasReady] = useState(false);
+
+  const [qChairs, setQChairs] = useState('');
+  const [chairs, setChairs] = useState([]);
+  const [chairsReady, setChairsReady] = useState(false)
 
   //Materiales genericos
   const [qMaterials, setQMaterials] = useState('');
@@ -167,6 +173,46 @@ export default function LeftPanel({
   }, [country]);
 
   // ================================
+  // Cargar Sillas
+  // ================================
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const map = await loadChairsPriceList(country);
+
+        const arr = Array.from(map.values()).map((c) => {
+          return {
+            codigoPT: String(c.codigo),
+            ui: {
+              title: c.descripcion || String(c.codigo),
+              subtitle: 'Silla',
+            },
+            prices: {
+              [country]: Number(c.precio || 0),
+              CO: Number(c.precio || 0),
+            },
+            model: { kind: 'CHAIR' },
+            raw: c,
+          };
+        });
+
+        if (alive) {
+          setChairs(arr);
+          setChairsReady(true);
+        }
+      } catch (err) {
+        console.error('Error cargando sillas:', err);
+        if (alive) setChairsReady(true);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, [country]);
+
+  // ================================
   // Filtrado de Tipologías
   // ================================
   const typologiesFiltered = useMemo(() => {
@@ -242,6 +288,27 @@ export default function LeftPanel({
 
     return Array.from(vals).sort((a, b) => Number(a) - Number(b));
   }, [tipologias]);
+
+  // ================================
+  // Filtrado de Sillas
+  // ================================
+  const chairsFiltered = useMemo(() => {
+    const q = String(qChairs || '')
+      .trim()
+      .toLowerCase();
+
+    return (chairs || []).filter((it) => {
+      const code = String(it?.codigoPT ?? '').toLowerCase();
+      const title = String(it?.ui?.title ?? '').toLowerCase();
+      const subtitle = String(it?.ui?.subtitle ?? '').toLowerCase();
+      const tags = Array.isArray(it?.ui?.tags) ? it.ui.tags.join(' ').toLowerCase() : '';
+
+      const matchesSearch =
+        !q || code.includes(q) || title.includes(q) || subtitle.includes(q) || tags.includes(q);
+
+      return matchesSearch;
+    });
+  }, [chairs, qChairs]);
 
   return (
     <div
@@ -819,13 +886,58 @@ export default function LeftPanel({
         </>
       )}
 
-      {/* ======================= PLANOS ======================= */}
+      {/* ======================= SILLAS ======================= */}
       {section === 'sillas' && (
         <>
           <h1 style={{ margin: '0 0 12px 0' }}>Sillas</h1>
-          <br></br>
 
           <h3 style={{ margin: '0 0 12px 0' }}>Bases y Mesas</h3>
+
+          <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>
+            Busca y selecciona una silla para agregarla al proyecto.
+          </div>
+
+          <input
+            value={qChairs}
+            onChange={(e) => setQChairs(e.target.value)}
+            placeholder="Sillas 22000116019 (código o descripción)..."
+            style={{
+              width: '100%',
+              padding: 10,
+              borderRadius: 10,
+              border: '1px solid #e5e7eb',
+              marginBottom: 10,
+              outline: 'none',
+            }}
+          />
+
+          <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 10 }}>
+            Sillas encontradas: <b>{chairsFiltered.length}</b>
+          </div>
+
+          <div style={{ display: 'grid', gap: 8 }}>
+            {chairsFiltered.slice(0, 120).map((it) => (
+              <button
+                key={String(it.codigoPT)}
+                disabled={readOnly}
+                onClick={() => !readOnly && onAddChair(it.codigoPT)}
+                style={cardBtn(readOnly)}
+              >
+                <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
+                <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
+
+                {it.ui?.subtitle ? (
+                  <div style={{ fontSize: 11, opacity: 0.65 }}>{it.ui.subtitle}</div>
+                ) : null}
+              </button>
+            ))}
+          </div>
+
+          {chairsFiltered.length > 120 && (
+            <div style={{ marginTop: 10, fontSize: 12, opacity: 0.7 }}>
+              Mostrando 120 resultados. Refina la búsqueda para ver los demás.
+            </div>
+          )}
         </>
       )}
     </div>

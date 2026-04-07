@@ -488,6 +488,9 @@ export default function App() {
               onAddTypology={(codigoPT) =>
                 !readOnly && threeApiRef.current?.addTypology?.(codigoPT)
               }
+              onAddChair={(codigoSilla) =>
+                !readOnly && threeApiRef.current?.addChair?.(codigoSilla)
+              }
               onToggleSnap={() => !readOnly && threeApiRef.current?.toggleSnap?.()}
               onApplyGlobalMaterial={(code, scope = 'ALL') => {
                 if (readOnly) return;
