@@ -258,6 +258,76 @@ export default function TopMenuBar({
         </select>
       </div>
 
+      <div style={{ display: 'flex', gap: 8 }}>
+        <button
+          type="button"
+          onClick={() => {
+            threeApiRef.current?.setMoveAsGroup?.(true);
+            console.log('modo actual', threeApiRef.current?.getMoveAsGroup?.());
+          }}
+          style={{
+            border: '1px solid #ddd',
+            background: '#fff',
+            padding: '6px 10px',
+            borderRadius: 8,
+            cursor: 'pointer',
+            fontWeight: 700,
+          }}
+        >
+          Mover puesto completo
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            threeApiRef.current?.setMoveAsGroup?.(false);
+            console.log('modo actual', threeApiRef.current?.getMoveAsGroup?.());
+          }}
+          style={{
+            border: '1px solid #ddd',
+            background: '#fff',
+            padding: '6px 10px',
+            borderRadius: 8,
+            cursor: 'pointer',
+            fontWeight: 700,
+          }}
+        >
+          Mover pieza individual
+        </button>
+      </div>
+
+      <div style={{ display: 'flex', gap: 8 }}>
+        <button
+          type="button"
+          onClick={() => threeApiRef.current?.setDeleteAsGroup?.(true)}
+          style={{
+            border: '1px solid #ddd',
+            background: '#fff',
+            padding: '6px 10px',
+            borderRadius: 8,
+            cursor: 'pointer',
+            fontWeight: 700,
+          }}
+        >
+          Eliminar puesto completo
+        </button>
+
+        <button
+          type="button"
+          onClick={() => threeApiRef.current?.setDeleteAsGroup?.(false)}
+          style={{
+            border: '1px solid #ddd',
+            background: '#fff',
+            padding: '6px 10px',
+            borderRadius: 8,
+            cursor: 'pointer',
+            fontWeight: 700,
+          }}
+        >
+          Eliminar pieza individual
+        </button>
+      </div>
+
       <div style={{ fontSize: 12, opacity: 0.8, fontWeight: 800 }}>
         {labelUser}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

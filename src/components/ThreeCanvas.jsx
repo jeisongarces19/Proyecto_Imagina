@@ -49,6 +49,24 @@ export default function ThreeCanvas({
   const countryRef = useRef(country);
   const emitBOMRef = useRef(null);
 
+  //mover todos los objetos del padre
+  const [moveAsGroup, setMoveAsGroup] = useState(true);
+  const moveAsGroupRef = useRef(true);
+
+  const dragGroupStartRef = useRef(null);
+  const dragRootStartRef = useRef(null);
+
+  useEffect(() => {
+    moveAsGroupRef.current = moveAsGroup;
+  }, [moveAsGroup]);
+
+  const [deleteAsGroup, setDeleteAsGroup] = useState(true);
+  const deleteAsGroupRef = useRef(true);
+
+  useEffect(() => {
+    deleteAsGroupRef.current = deleteAsGroup;
+  }, [deleteAsGroup]);
+
   useEffect(() => {
     countryRef.current = country;
     emitBOMRef.current?.();
@@ -1511,7 +1529,74 @@ export default function ThreeCanvas({
           filename: 'planta.dxf',
         });
       },
+      setMoveAsGroup: (value) => {
+        moveAsGroupRef.current = value;
+        setMoveAsGroup(value);
+      },
+      toggleMoveAsGroup: () => {
+        const next = !moveAsGroupRef.current;
+        moveAsGroupRef.current = next;
+        setMoveAsGroup(next);
+      },
+      getMoveAsGroup: () => moveAsGroupRef.current,
+      //eliminar por grupo
+      setDeleteAsGroup: (value) => {
+        deleteAsGroupRef.current = value;
+        setDeleteAsGroup(value);
+      },
+      toggleDeleteAsGroup: () => {
+        const next = !deleteAsGroupRef.current;
+        deleteAsGroupRef.current = next;
+        setDeleteAsGroup(next);
+      },
+      getDeleteAsGroup: () => deleteAsGroupRef.current,
+      removeTargetOrGroup: (target) => removeTargetOrGroup(target),
+      removeActiveOrGroup: () => removeTargetOrGroup(activePart),
     });
+
+    function getGroupedObjects(target) {
+      const groupId = target?.userData?.groupId;
+      if (!groupId) return [target].filter(Boolean);
+
+      return parts.map((p) => p?.obj).filter((obj) => obj?.userData?.groupId === groupId);
+    }
+
+    function moveTargetOrGroup(target, dx = 0, dy = 0, dz = 0) {
+      if (!target) return;
+
+      //const targets =     moveAsGroup && target?.userData?.groupId ? getGroupedObjects(target) : [target];
+
+      const targets =
+        moveAsGroupRef.current && target?.userData?.groupId ? getGroupedObjects(target) : [target];
+
+      targets.forEach((obj) => {
+        obj.position.x += dx;
+        obj.position.y += dy;
+        obj.position.z += dz;
+        obj.updateMatrixWorld(true);
+      });
+
+      if (selectionHelper) selectionHelper.update();
+    }
+
+    //eliminar por grupo
+    function removeTargetOrGroup(target) {
+      if (!target) return false;
+
+      const targets =
+        deleteAsGroupRef.current && target?.userData?.groupId
+          ? getGroupedObjects(target)
+          : [target];
+
+      let removedAny = false;
+
+      targets.forEach((obj) => {
+        const ok = removePartObject(obj);
+        if (ok) removedAny = true;
+      });
+
+      return removedAny;
+    }
 
     // ====== Keyboard ======
     function onKeyDown(e) {
@@ -1525,7 +1610,8 @@ export default function ThreeCanvas({
       if (e.key === 'Delete' || e.key === 'Backspace') {
         if (activePart) {
           e.preventDefault();
-          removeActivePart();
+          //removeActivePart();
+          removeTargetOrGroup(activePart);
         }
         return;
       }
@@ -1535,25 +1621,25 @@ export default function ThreeCanvas({
       switch (e.key) {
         case 'ArrowUp':
         case 'w':
-          activePart.position.z -= MOVE_STEP;
+          moveTargetOrGroup(activePart, 0, 0, -MOVE_STEP);
           break;
         case 'ArrowDown':
         case 's':
-          activePart.position.z += MOVE_STEP;
+          moveTargetOrGroup(activePart, 0, 0, MOVE_STEP);
           break;
         case 'ArrowLeft':
         case 'a':
-          activePart.position.x -= MOVE_STEP;
+          moveTargetOrGroup(activePart, -MOVE_STEP, 0, 0);
           break;
         case 'ArrowRight':
         case 'd':
-          activePart.position.x += MOVE_STEP;
+          moveTargetOrGroup(activePart, MOVE_STEP, 0, 0);
           break;
         case 'q':
-          activePart.position.y += MOVE_STEP;
+          moveTargetOrGroup(activePart, 0, MOVE_STEP, 0);
           break;
         case 'e':
-          activePart.position.y -= MOVE_STEP;
+          moveTargetOrGroup(activePart, 0, -MOVE_STEP, 0);
           break;
         case 'r': {
           if (!activePart) break;
@@ -1588,6 +1674,19 @@ export default function ThreeCanvas({
       if (!root) return;
 
       setActivePart(root);
+
+      //if (moveAsGroup && root?.userData?.groupId) {
+      if (moveAsGroupRef.current && root?.userData?.groupId) {
+        const grouped = getGroupedObjects(root);
+        dragGroupStartRef.current = grouped.map((obj) => ({
+          obj,
+          position: obj.position.clone(),
+        }));
+      } else {
+        dragGroupStartRef.current = null;
+      }
+
+      dragRootStartRef.current = root.position.clone();
 
       // ✅ Guardar submesh clickeado
       activeSubMesh = hitObj?.isMesh ? hitObj : null;
@@ -1626,8 +1725,25 @@ export default function ThreeCanvas({
       raycaster.setFromCamera(mouse, camera);
 
       if (raycaster.ray.intersectPlane(dragPlane, dragPoint)) {
-        activePart.position.copy(dragPoint.sub(dragOffset));
-        activePart.updateMatrixWorld(true);
+        const nextPos = dragPoint.clone().sub(dragOffset);
+
+        if (
+          moveAsGroupRef.current &&
+          activePart?.userData?.groupId &&
+          dragGroupStartRef.current &&
+          dragRootStartRef.current
+        ) {
+          const delta = nextPos.clone().sub(dragRootStartRef.current);
+
+          dragGroupStartRef.current.forEach(({ obj, position }) => {
+            obj.position.copy(position.clone().add(delta));
+            obj.updateMatrixWorld(true);
+          });
+        } else {
+          activePart.position.copy(nextPos);
+          activePart.updateMatrixWorld(true);
+        }
+
         if (selectionHelper) selectionHelper.update();
       }
     }
@@ -1652,10 +1768,15 @@ export default function ThreeCanvas({
       } catch (err) {
         void err;
       }
+
+      dragGroupStartRef.current = null;
+      dragRootStartRef.current = null;
       snapActivePart();
     }
 
     function onPointerCancel(e) {
+      dragGroupStartRef.current = null;
+      dragRootStartRef.current = null;
       endDrag(e.pointerId);
     }
 
@@ -1698,7 +1819,6 @@ export default function ThreeCanvas({
       renderer.render(scene, camera);
       rafId = requestAnimationFrame(animate);
     }
-
     animate();
 
     function addSurface(
@@ -2082,8 +2202,7 @@ export default function ThreeCanvas({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ✅ AQUÍ está la mezcla correcta:
-  // - NO se anida un useEffect dentro de otro
+  // ✅ AQUi está la mezcla correcta:
   // - NO toca OrbitControls/zoom/2D snapshot
   // - Solo reconstruye el group de muros cuando cambie `walls`
   useEffect(() => {
