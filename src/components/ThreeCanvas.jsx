@@ -498,9 +498,7 @@ export default function ThreeCanvas({
             obj.userData?.codigoPT || obj.userData?.code || p.code || ''
           );
           const label =
-            obj.userData?.name ||
-            obj.userData?.chairMeta?.descripcion ||
-            `Silla ${parentCode}`;
+            obj.userData?.name || obj.userData?.chairMeta?.descripcion || `Silla ${parentCode}`;
           const groupInstanceId = obj.userData?.instanceId || obj.uuid || p.id;
 
           const list = obj.userData?.chairParts || [];
@@ -527,7 +525,22 @@ export default function ThreeCanvas({
         }
 
         const code = obj.userData?.codigoPT || obj.userData?.code || p.code;
-        addRow(String(code), 1);
+
+        const groupId = obj.userData?.groupId || null;
+        const groupName = obj.userData?.groupName || null;
+        const groupInstanceId = obj.userData?.instanceId || obj.uuid || p.id;
+
+        addRow(
+          String(code),
+          1,
+          obj.userData?.description || null,
+          obj.userData?.unitPrice || 0,
+          groupId,
+          groupName,
+          obj.userData?.prices || undefined,
+          null,
+          groupInstanceId
+        );
       }
 
       const bomRows = Array.from(rows.values()).map(({ _groupInstanceIds, ...row }) => ({
@@ -926,10 +939,7 @@ export default function ThreeCanvas({
       }
 
       // 2) cargar GLB de silla desde carpeta Sillas
-      const possibleSrcs = [
-        `/assets/models/Sillas/${codigo}.glb`,
-        `/assets/models/${codigo}.glb`,
-      ];
+      const possibleSrcs = [`/assets/models/Sillas/${codigo}.glb`, `/assets/models/${codigo}.glb`];
 
       const gltf = await loadExistingGlb(possibleSrcs);
 
@@ -1822,7 +1832,18 @@ export default function ThreeCanvas({
     animate();
 
     function addSurface(
-      { widthM, depthM, thicknessM, line, codigoPT, dim, position, groupId, logicalCode } = {},
+      {
+        widthM,
+        depthM,
+        thicknessM,
+        line,
+        codigoPT,
+        dim,
+        position,
+        groupId,
+        groupName,
+        logicalCode,
+      } = {},
       item
     ) {
       if (readOnly) return;
@@ -1870,6 +1891,7 @@ export default function ThreeCanvas({
         description,
         unitPrice,
         groupId: groupId || null,
+        groupName: groupName || null,
         logicalCode: logicalCode || null,
       };
 
@@ -1923,6 +1945,7 @@ export default function ThreeCanvas({
           meta: part.meta || {},
           instanceId: `${part.code || 'glb'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
           groupId: part?.groupId || null,
+          groupName: part?.groupName || null,
           logicalCode: part?.logicalCode || null,
         };
 

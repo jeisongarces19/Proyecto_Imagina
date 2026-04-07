@@ -52,7 +52,7 @@ export default function LeftPanel({
 
   const [qChairs, setQChairs] = useState('');
   const [chairs, setChairs] = useState([]);
-  const [chairsReady, setChairsReady] = useState(false)
+  const [chairsReady, setChairsReady] = useState(false);
 
   //Materiales genericos
   const [qMaterials, setQMaterials] = useState('');
@@ -501,7 +501,7 @@ export default function LeftPanel({
           onCreate={(config) => {
             //const parts = buildKoncisaPlus(config);
             const result = buildKoncisaPlus(config);
-            const { groupId, parts } = result;
+            const { groupId, groupName, parts } = result;
 
             // SUPERFICIES
             const superficies = parts.filter((p) => p.type === 'superficie');
@@ -531,6 +531,7 @@ export default function LeftPanel({
                   z: (surface.position?.z || 0) / 1000,
                 },
                 groupId: surface.groupId || groupId,
+                groupName: surface.groupName || groupName,
                 logicalCode: surface.logicalCode,
               });
             });
@@ -547,6 +548,7 @@ export default function LeftPanel({
               threeApiRef.current?.addExternalGlbPart?.({
                 ...grommet,
                 groupId: grommet.groupId || groupId,
+                groupName: grommet.groupName || groupName,
               });
             });
 
@@ -561,6 +563,7 @@ export default function LeftPanel({
               threeApiRef.current?.addExternalGlbPart?.({
                 ...pasacable,
                 groupId: pasacable.groupId || groupId,
+                groupName: pasacable.groupName || groupName,
               });
             });
 

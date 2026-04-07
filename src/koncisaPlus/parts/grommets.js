@@ -1,7 +1,15 @@
 // src/koncisaPlus/parts/grommets.js
 import { resolveKoncisaCableAccessCodigoPT } from '../rules/koncisaCableAccessRules';
 
-export function createGrommet({ finish = 'ALUMINIUM', diameterMm = 80, x = 0, y = 735, z = 0 }) {
+export function createGrommet({
+  groupId = null,
+  groupName = null,
+  finish = 'ALUMINIUM',
+  diameterMm = 80,
+  x = 0,
+  y = 735,
+  z = 0,
+}) {
   const resolved = resolveKoncisaCableAccessCodigoPT({
     tipo: 'grommet',
     finish,
@@ -11,12 +19,12 @@ export function createGrommet({ finish = 'ALUMINIUM', diameterMm = 80, x = 0, y 
     type: 'grommet',
     subtype: '4-tomas',
     line: 'KONCISA.PLUS',
-
+    groupId,
+    groupName,
     code: resolved.codigoPT,
     logicalCode: resolved.logicalCode,
     existsInCatalog: resolved.exists,
     rawCodigoPT: resolved.rawCodigoPT,
-
     name: `Grommet ${finish}`,
     dimMm: {
       diameterMm,

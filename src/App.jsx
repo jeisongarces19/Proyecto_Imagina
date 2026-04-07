@@ -578,11 +578,7 @@ export default function App() {
           />
 
           <BOMWindow open={bomOpen} title="BOM - Proyecto" onClose={() => setBomOpen(false)}>
-            <BOMView
-              items={bomItems}
-              defaultCountry="CO"
-              catalogCountries={CATALOG_COUNTRIES}
-            />
+            <BOMView items={bomItems} defaultCountry="CO" catalogCountries={CATALOG_COUNTRIES} />
           </BOMWindow>
 
           {/* Help + PPT */}
@@ -683,6 +679,7 @@ export default function App() {
               depthM: depthMm / 1000,
               thicknessM: thickMm / 1000,
               dim: { widthMm, depthMm, thickMm },
+              groupName: surface.groupName || groupName,
             });
           }}
         />

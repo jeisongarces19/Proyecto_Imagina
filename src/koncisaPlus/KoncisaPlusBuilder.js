@@ -20,6 +20,7 @@ import { createPasacable } from './parts/pasacables';
 
 export function buildKoncisaPlus(config = {}) {
   const groupId = `KONCISA_${Date.now()}_${Math.random().toString(16).slice(2, 8)}`;
+  const groupName = `Koncisa Plus`;
 
   const {
     puestos = 1,
@@ -93,6 +94,7 @@ export function buildKoncisaPlus(config = {}) {
       createSuperficie({
         //grupo linea y padre
         groupId,
+        groupName,
 
         // medidas reales
         widthMm: s.widthMm,
@@ -160,6 +162,7 @@ export function buildKoncisaPlus(config = {}) {
         createGrommet({
           //grupo linea y padre
           groupId,
+          groupName,
           finish: grommetFinish,
           diameterMm: g.diameterMm || 80,
           x: g.x,
@@ -183,6 +186,7 @@ export function buildKoncisaPlus(config = {}) {
         createPasacable({
           //grupo linea y padre
           groupId,
+          groupName,
           diameterMm: p.diameterMm || 50,
           x: p.x,
           y: p.y ?? 735,
@@ -271,6 +275,7 @@ export function buildKoncisaPlus(config = {}) {
 
   return {
     groupId,
+    groupName,
     parts,
   };
 }
