@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useMemo, useState, useEffect } from 'react';
 import { loadTipologiasDetalle } from '../services/tipologiasDetalle';
-import { getChairDetail, loadChairsPriceList } from '../services/chairsLoader';
+import { getChairDetail, loadChairsPriceList, loadChairsCategoryMap, loadCategoriasSillas } from '../services/chairsLoader';
 import { getThreeMaterialFromDef } from '../materials/materialRegistry'; // Ajusta la ruta según tu estructura de carpetas
 
 import KoncisaPlusPanel from './KoncisaPlusPanel';
@@ -52,7 +52,12 @@ export default function LeftPanel({
 
   const [qChairs, setQChairs] = useState('');
   const [chairs, setChairs] = useState([]);
-  const [chairsReady, setChairsReady] = useState(false)
+  const [chairsReady, setChairsReady] = useState(false);
+  const [categoriasSillas, setCategoriasSillas] = useState([]);
+  const [categoriaSillaFilter, setCategoriaSillaFilter] = useState('');
+  const [subcategoriaSillaFilter, setSubcategoriaSillaFilter] = useState('');
+  const [subcategoriasSillasByCategoria, setSubcategoriasSillasByCategoria] = useState({});
+  const [subcategoriasSillasGlobalCountByCategoria, setSubcategoriasSillasGlobalCountByCategoria] = useState({});
 
   //Materiales genericos
   const [qMaterials, setQMaterials] = useState('');
@@ -179,28 +184,66 @@ export default function LeftPanel({
     let alive = true;
     (async () => {
       try {
-        const map = await loadChairsPriceList(country);
+        // Cargamos en paralelo: precios del XML, mapa de categorías, y lista de categorías
+        const [priceMap, categoryMap, categoriasArr] = await Promise.all([
+          loadChairsPriceList(country),
+          loadChairsCategoryMap(),
+          loadCategoriasSillas(),
+        ]);
 
-        const arr = Array.from(map.values()).map((c) => {
-          return {
-            codigoPT: String(c.codigo),
-            ui: {
-              title: c.descripcion || String(c.codigo),
-              subtitle: 'Silla',
-            },
-            prices: {
-              [country]: Number(c.precio || 0),
-              CO: Number(c.precio || 0),
-            },
-            model: { kind: 'CHAIR' },
-            raw: c,
-          };
-        });
+        if (!alive) return;
 
-        if (alive) {
-          setChairs(arr);
-          setChairsReady(true);
+        // Solo incluimos sillas que tienen categoría en SILLAS Y MESAS (vienen del JSON de categorías)
+        // o que al menos coincida su código con algo del XML
+        const arr = Array.from(priceMap.values())
+          .map((c) => {
+            const cat = categoryMap.get(String(c.codigo));
+            return {
+              codigoPT: String(c.codigo),
+              ui: {
+                title: c.descripcion || String(c.codigo),
+                subtitle: cat?.nivel2 || 'Silla',
+              },
+              prices: {
+                [country]: Number(c.precio || 0),
+                CO: Number(c.precio || 0),
+              },
+              model: { kind: 'CHAIR' },
+              raw: c,
+              categoriaNivel2: cat?.nivel2 || '',    // ej: "SILLAS DE COLECTIVIDAD INTERIORES"
+              categoriaNivel3: cat?.nivel3 || '',    // ej: "OFIPARTES"
+              categoriaSlug: cat?.slug || '',
+            };
+          })
+          // Solo mostramos las que tienen categoría bajo "SILLAS Y MESAS"
+          .filter((c) => c.categoriaSlug.startsWith('SILLAS Y MESAS'));
+
+        const byCategoria = {};
+        const byCategoriaCounts = {};
+        for (const cat of categoryMap.values()) {
+          const nivel2 = String(cat?.nivel2 || '').trim();
+          const nivel3 = String(cat?.nivel3 || '').trim();
+          if (!nivel2 || !nivel3) continue;
+
+          if (!byCategoria[nivel2]) byCategoria[nivel2] = new Set();
+          byCategoria[nivel2].add(nivel3);
+
+          if (!byCategoriaCounts[nivel2]) byCategoriaCounts[nivel2] = {};
+          byCategoriaCounts[nivel2][nivel3] = (byCategoriaCounts[nivel2][nivel3] || 0) + 1;
         }
+
+        const byCategoriaNormalized = Object.fromEntries(
+          Object.entries(byCategoria).map(([key, set]) => [
+            key,
+            Array.from(set).sort((a, b) => a.localeCompare(b)),
+          ])
+        );
+
+        setCategoriasSillas(categoriasArr);
+        setSubcategoriasSillasByCategoria(byCategoriaNormalized);
+        setSubcategoriasSillasGlobalCountByCategoria(byCategoriaCounts);
+        setChairs(arr);
+        setChairsReady(true);
       } catch (err) {
         console.error('Error cargando sillas:', err);
         if (alive) setChairsReady(true);
@@ -306,9 +349,74 @@ export default function LeftPanel({
       const matchesSearch =
         !q || code.includes(q) || title.includes(q) || subtitle.includes(q) || tags.includes(q);
 
-      return matchesSearch;
+      const matchesCategoria =
+        !categoriaSillaFilter || it.categoriaNivel2 === categoriaSillaFilter;
+
+      const matchesSubcategoria =
+        !subcategoriaSillaFilter || it.categoriaNivel3 === subcategoriaSillaFilter;
+
+      return matchesSearch && matchesCategoria && matchesSubcategoria;
     });
-  }, [chairs, qChairs]);
+  }, [chairs, qChairs, categoriaSillaFilter, subcategoriaSillaFilter]);
+
+  const chairCategoryCounts = useMemo(() => {
+    const counts = new Map();
+
+    (chairs || []).forEach((it) => {
+      const key = String(it?.categoriaNivel2 || '').trim();
+      if (!key) return;
+      counts.set(key, (counts.get(key) || 0) + 1);
+    });
+
+    return counts;
+  }, [chairs]);
+
+  const chairSubcategoryCounts = useMemo(() => {
+    const counts = new Map();
+
+    (chairs || []).forEach((it) => {
+      if (categoriaSillaFilter && it?.categoriaNivel2 !== categoriaSillaFilter) return;
+
+      const key = String(it?.categoriaNivel3 || '').trim();
+      if (!key) return;
+      counts.set(key, (counts.get(key) || 0) + 1);
+    });
+
+    return counts;
+  }, [chairs, categoriaSillaFilter]);
+
+  const chairSubcategories = useMemo(() => {
+    if (categoriaSillaFilter) {
+      return subcategoriasSillasByCategoria[categoriaSillaFilter] || [];
+    }
+
+    const all = new Set();
+    Object.values(subcategoriasSillasByCategoria || {}).forEach((arr) => {
+      (arr || []).forEach((value) => all.add(value));
+    });
+
+    return Array.from(all).sort((a, b) => a.localeCompare(b));
+  }, [categoriaSillaFilter, subcategoriasSillasByCategoria]);
+
+  const chairSubcategoryGlobalCounts = useMemo(() => {
+    const counts = new Map();
+
+    if (categoriaSillaFilter) {
+      const bySubcat = subcategoriasSillasGlobalCountByCategoria[categoriaSillaFilter] || {};
+      Object.entries(bySubcat).forEach(([subcat, count]) => {
+        counts.set(subcat, Number(count || 0));
+      });
+      return counts;
+    }
+
+    Object.values(subcategoriasSillasGlobalCountByCategoria || {}).forEach((bySubcat) => {
+      Object.entries(bySubcat || {}).forEach(([subcat, count]) => {
+        counts.set(subcat, (counts.get(subcat) || 0) + Number(count || 0));
+      });
+    });
+
+    return counts;
+  }, [categoriaSillaFilter, subcategoriasSillasGlobalCountByCategoria]);
 
   return (
     <div
@@ -893,6 +1001,54 @@ export default function LeftPanel({
 
           <h3 style={{ margin: '0 0 12px 0' }}>Bases y Mesas</h3>
 
+          <div style={{ display: 'grid', gap: 8, marginBottom: 10 }}>
+            <select
+              value={categoriaSillaFilter}
+              onChange={(e) => {
+                setCategoriaSillaFilter(e.target.value);
+                setSubcategoriaSillaFilter('');
+              }}
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 10,
+                border: '1px solid #e5e7eb',
+                outline: 'none',
+              }}
+            >
+              <option value="">Todas las categorías</option>
+              {categoriasSillas
+                .map((cat) => (
+                  <option key={cat.id} value={cat.nombre}>
+                    {cat.nombre} ({chairCategoryCounts.get(cat.nombre) || 0})
+                  </option>
+                ))}
+            </select>
+
+            <select
+              value={subcategoriaSillaFilter}
+              onChange={(e) => setSubcategoriaSillaFilter(e.target.value)}
+              style={{
+                width: '100%',
+                padding: 10,
+                borderRadius: 10,
+                border: '1px solid #e5e7eb',
+                outline: 'none',
+              }}
+            >
+              <option value="">Todas las subcategorías</option>
+              {chairSubcategories.map((subcat) => (
+                <option key={subcat} value={subcat}>
+                  {subcat} ({chairSubcategoryCounts.get(subcat) || 0}/{chairSubcategoryGlobalCounts.get(subcat) || 0})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{ fontSize: 11, opacity: 0.65, marginTop: -4, marginBottom: 10 }}>
+            Subcategoría: <b>actual/global</b> (códigos en la lista del país / códigos únicos en JSON).
+          </div>
+
           <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>
             Busca y selecciona una silla para agregarla al proyecto.
           </div>
@@ -926,9 +1082,9 @@ export default function LeftPanel({
                 <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
                 <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
 
-                {it.ui?.subtitle ? (
-                  <div style={{ fontSize: 11, opacity: 0.65 }}>{it.ui.subtitle}</div>
-                ) : null}
+                <div style={{ fontSize: 11, opacity: 0.65 }}>
+                  {it.categoriaNivel2 || 'Silla'}
+                </div>
               </button>
             ))}
           </div>

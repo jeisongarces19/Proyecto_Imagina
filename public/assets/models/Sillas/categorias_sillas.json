@@ -1,0 +1,114 @@
+[
+  {
+    "id": 11916,
+    "nombre": "SILLAS OFICINA PRESIDENCIALES",
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA PRESIDENCIALES",
+    "imagen_id": 49,
+    "imagen": {
+      "id": 49,
+      "nombre": "S-OFIC-PRESIDENCIALES",
+      "ubicacion": "uploads/2021/3/30/3_55_22_539729.JPG",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/30/3_55_22_539729.JPG"
+    },
+    "padre_id": 11910
+  },
+  {
+    "id": 11917,
+    "nombre": "SILLAS OFICINA GERENCIALES",
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA GERENCIALES",
+    "imagen_id": 50,
+    "imagen": {
+      "id": 50,
+      "nombre": "S-OFIC-GERENCIALES",
+      "ubicacion": "uploads/2021/3/30/3_55_40_461860.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/30/3_55_40_461860.jpg"
+    },
+    "padre_id": 11910
+  },
+  {
+    "id": 11918,
+    "nombre": "SILLAS OFICINA EJECUTIVAS",
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA EJECUTIVAS",
+    "imagen_id": 48,
+    "imagen": {
+      "id": 48,
+      "nombre": "S-OFIC-EJECUTIVAS",
+      "ubicacion": "uploads/2021/3/23/21_0_10_304901.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/23/21_0_10_304901.jpg"
+    },
+    "padre_id": 11910
+  },
+  {
+    "id": 11919,
+    "nombre": "SILLAS OFICINA VISITANTES",
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA VISITANTES",
+    "imagen_id": 51,
+    "imagen": {
+      "id": 51,
+      "nombre": "S-OFIC-VISITANTES",
+      "ubicacion": "uploads/2021/3/25/17_8_5_203784.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/25/17_8_5_203784.jpg"
+    },
+    "padre_id": 11910
+  },
+  {
+    "id": 11920,
+    "nombre": "SILLAS OFICINA OPERATIVAS",
+    "slug": "SILLAS Y MESAS.SILLAS OFICINA OPERATIVAS",
+    "imagen_id": 55,
+    "imagen": {
+      "id": 55,
+      "nombre": "S-OFIC-OPERATIVAS",
+      "ubicacion": "uploads/2021/3/25/18_49_10_672867.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/25/18_49_10_672867.jpg"
+    },
+    "padre_id": 11910
+  },
+  {
+    "id": 11921,
+    "nombre": "SILLAS DE COLECTIVIDAD INTERIORES",
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD INTERIORES",
+    "imagen_id": 44,
+    "imagen": {
+      "id": 44,
+      "nombre": "S-COLECT-INT",
+      "ubicacion": "uploads/2021/3/23/16_16_7_257926.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/23/16_16_7_257926.jpg"
+    },
+    "padre_id": 11910
+  },
+  {
+    "id": 11922,
+    "nombre": "SILLAS DE COLECTIVIDAD EXTERIORES",
+    "slug": "SILLAS Y MESAS.SILLAS DE COLECTIVIDAD EXTERIORES",
+    "imagen_id": 61,
+    "imagen": {
+      "id": 61,
+      "nombre": "S-COLECT-EXT",
+      "ubicacion": "uploads/2021/3/30/3_52_33_423428.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/3/30/3_52_33_423428.jpg"
+    },
+    "padre_id": 11910
+  },
+  {
+    "id": 11925,
+    "nombre": "BASES Y MESAS",
+    "slug": "SILLAS Y MESAS.BASES Y MESAS",
+    "imagen_id": 65,
+    "imagen": {
+      "id": 65,
+      "nombre": "S-BASES Y MESAS",
+      "ubicacion": "uploads/2021/4/8/22_48_43_408543.jpg",
+      "urlubicacion": "https://espacios.carvajal.com/media/uploads/2021/4/8/22_48_43_408543.jpg"
+    },
+    "padre_id": 11910
+  },
+  {
+    "id": 11926,
+    "nombre": "OTROS",
+    "slug": "SILLAS Y MESAS.OTROS",
+    "imagen_id": null,
+    "imagen": null,
+    "padre_id": 11910
+  }
+]
