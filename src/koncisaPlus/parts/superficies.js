@@ -2,19 +2,17 @@
 import { resolveKoncisaSurfaceCodigoPT } from '../rules/koncisaSurfaceRules';
 
 export function createSuperficie({
-  // Medidas reales (para dibujar)
+  groupId = null,
+  groupName = null,
   widthMm = 1200,
   depthMm = 600,
-
-  // Medidas de cobro / código
   billingWidthMm = null,
   billingDepthMm = null,
-
   thickMm = 25,
   shape = 'RECT',
   finishCode = '22008689',
   variant = '',
-  perforada = tipoPasoCable !== 'none',
+  perforada = false,
   canto = 'PVC-2MM',
   x = 0,
   y = 720,
@@ -37,45 +35,21 @@ export function createSuperficie({
     type: 'superficie',
     subtype: perforada ? 'con-perforacion' : 'sin-perforacion',
     line: 'KONCISA.PLUS',
-
-    // Código real de catálogo
+    groupId,
+    groupName,
     code: resolved.codigoPT,
-
-    // Código lógico armado con la regla
     logicalCode: resolved.logicalCode,
-
-    // Estado de existencia
     existsInCatalog: resolved.exists,
     rawCodigoPT: resolved.rawCodigoPT,
-
     name: `Superficie ${widthMm}x${depthMm}`,
-
-    // Dimensiones reales para render / dibujo
-    dimMm: {
-      widthMm,
-      depthMm,
-      thickMm,
-    },
-
-    // Dimensiones comerciales / facturables
+    dimMm: { widthMm, depthMm, thickMm },
     billingDimMm: {
       widthMm: resolvedBillingWidthMm,
       depthMm: resolvedBillingDepthMm,
       thickMm,
     },
-
-    position: {
-      x,
-      y,
-      z,
-    },
-
-    rotation: {
-      x: 0,
-      y: 0,
-      z: 0,
-    },
-
+    position: { x, y, z },
+    rotation: { x: 0, y: 0, z: 0 },
     meta: {
       index,
       perforada,
