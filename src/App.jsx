@@ -491,6 +491,9 @@ export default function App() {
               onAddChair={(codigoSilla) =>
                 !readOnly && threeApiRef.current?.addChair?.(codigoSilla)
               }
+              onAddHares={(codigoHares) =>
+                !readOnly && threeApiRef.current?.addHares?.(codigoHares)
+              }
               onToggleSnap={() => !readOnly && threeApiRef.current?.toggleSnap?.()}
               onApplyGlobalMaterial={(code, scope = 'ALL') => {
                 if (readOnly) return;

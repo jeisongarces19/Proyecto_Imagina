@@ -20,6 +20,7 @@ import { exportPlanToDXF } from '../utils/exportDXF';
 
 import { getTipologiaDetalle } from '../services/tipologiasDetalle';
 import { getChairDetail } from '../services/chairsLoader';
+import { getHaresDetail } from '../services/haresLoader';
 
 const MM_TO_M = 1 / 1000;
 
@@ -524,6 +525,37 @@ export default function ThreeCanvas({
           continue;
         }
 
+        if (obj.userData?.kind === 'HARES') {
+          const parentCode = normalizeText(
+            obj.userData?.codigoPT || obj.userData?.code || p.code || ''
+          );
+          const label =
+            obj.userData?.name || obj.userData?.haresMeta?.descripcion || `HARES ${parentCode}`;
+          const groupInstanceId = obj.userData?.instanceId || obj.uuid || p.id;
+
+          const list = obj.userData?.haresParts || [];
+
+          if (Array.isArray(list) && list.length) {
+            for (const it of list) {
+              addRow(
+                String(it.code),
+                Number(it.qty || 0),
+                it.description,
+                it.unitPrice,
+                parentCode,
+                label,
+                it.prices,
+                null,
+                groupInstanceId
+              );
+            }
+          } else {
+            if (parentCode)
+              addRow(parentCode, 1, label, 0, parentCode, label, undefined, null, groupInstanceId);
+          }
+          continue;
+        }
+
         const code = obj.userData?.codigoPT || obj.userData?.code || p.code;
 
         const groupId = obj.userData?.groupId || null;
@@ -984,6 +1016,88 @@ export default function ThreeCanvas({
       };
 
       obj.name = `CHAIR_${codigo}`;
+
+      // 4) posición inicial
+      obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
+      obj.updateMatrixWorld(true);
+
+      scene.add(obj);
+      parts.push({ code: codigo, obj });
+      pickables.push(obj);
+
+      setActivePart(obj);
+      emitBOM();
+
+      if (parts.length === 1) frameObject(obj);
+    }
+
+    async function addHares(codigoHares) {
+      if (readOnly) return;
+      const codigo = String(codigoHares);
+
+      // 1) trae detalle del producto HARES desde el XML
+      const [detCO, detEUC, detUSD] = await Promise.all([
+        getHaresDetail(codigo, 'CO'),
+        getHaresDetail(codigo, 'EUC'),
+        getHaresDetail(codigo, 'USD'),
+      ]);
+
+      const det =
+        (countryRef.current === 'EUC' && detEUC) ||
+        (countryRef.current === 'USD' && detUSD) ||
+        detCO ||
+        detEUC ||
+        detUSD;
+
+      if (!det) {
+        console.warn(`HARES: producto ${codigo} no encontrado en PriceList, se cargará sin precio.`);
+      }
+
+      // 2) cargar GLB desde carpeta HARES
+      const possibleSrcs = [
+        `/assets/models/HARES/${codigo}.glb`,
+        `/assets/models/${codigo}.glb`,
+      ];
+
+      const gltf = await loadExistingGlb(possibleSrcs);
+
+      if (!gltf) {
+        console.error(`No se encontró un GLB válido para HARES ${codigo}`);
+        return;
+      }
+
+      const obj = gltf.scene;
+
+      // 3) userData
+      const haresParts = [
+        {
+          code: codigo,
+          description: det?.descripcion || codigo,
+          qty: 1,
+          unitPrice: Number(det?.precio || 0),
+          prices: {
+            CO: detCO?.precio || 0,
+            EUC: detEUC?.precio || 0,
+            USD: detUSD?.precio || 0,
+          },
+        },
+      ];
+
+      obj.userData = {
+        ...(obj.userData || {}),
+        kind: 'HARES',
+        codigoPT: codigo,
+        code: codigo,
+        name: det?.descripcion || codigo,
+        haresParts,
+        haresMeta: {
+          descripcion: det?.descripcion || codigo,
+          precio: det?.precio || 0,
+          udm: det?.udm || 'und',
+        },
+      };
+
+      obj.name = `HARES_${codigo}`;
 
       // 4) posición inicial
       obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
@@ -1530,6 +1644,7 @@ export default function ThreeCanvas({
       selectPartById,
       addTypology,
       addChair,
+      addHares,
       exportGLTF: () => exportSceneToGLTF(scene, { filename: 'proyecto.glb' }),
       exportDXF: () => {
         const snap = getPartsSnapshot2D();

@@ -323,6 +323,7 @@ export default function BOMView({
         alignment: { horizontal: 'left', vertical: 'middle' },
       });
 
+      const itemRowNumbers = [];
       for (const r of g.items) {
         const aggregatedQty = Number(r.qty || 0);
         const quantityBaseRaw = isTypologyGroup && typologyCount > 0 ? aggregatedQty / typologyCount : aggregatedQty;
@@ -335,12 +336,13 @@ export default function BOMView({
           r.code,
           r.description,
           quantityBase,
-          isTypologyGroup ? typologyCount : '',
+          '',
           isTypologyGroup ? quantityTotal : '',
           r.unitPrice,
           r.total,
           '',
         ]);
+        itemRowNumbers.push(row.number);
         applyStyle(ws.getCell(`A${row.number}`), { alignment: { horizontal: 'left', vertical: 'middle' } });
         applyStyle(ws.getCell(`B${row.number}`), { alignment: { horizontal: 'left', vertical: 'middle' } });
         applyStyle(ws.getCell(`C${row.number}`), { alignment: { horizontal: 'center', vertical: 'middle' } });
@@ -349,6 +351,19 @@ export default function BOMView({
         applyStyle(ws.getCell(`F${row.number}`), { alignment: { horizontal: 'right', vertical: 'middle' }, numFmt: '#,##0' });
         applyStyle(ws.getCell(`G${row.number}`), { alignment: { horizontal: 'right', vertical: 'middle' }, numFmt: '#,##0' });
         applyStyle(ws.getCell(`H${row.number}`), { alignment: { horizontal: 'left', vertical: 'middle' } });
+      }
+
+      if (isTypologyGroup && itemRowNumbers.length > 0) {
+        const tipologyStartRow = itemRowNumbers[0];
+        const tipologyEndRow = itemRowNumbers[itemRowNumbers.length - 1];
+        if (tipologyEndRow > tipologyStartRow) {
+          ws.mergeCells(`D${tipologyStartRow}:D${tipologyEndRow}`);
+        }
+        ws.getCell(`D${tipologyStartRow}`).value = typologyCount;
+        applyStyle(ws.getCell(`D${tipologyStartRow}`), {
+          alignment: { horizontal: 'center', vertical: 'middle' },
+          font: { bold: true, size: 16, color: { argb: 'FF000000' } },
+        });
       }
 
       const subtotalRow = ws.addRow(['', 'Subtotal', '', '', '', '', g.subtotal, '']);

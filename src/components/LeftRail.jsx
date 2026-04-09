@@ -9,6 +9,11 @@ export default function LeftRail({ active, onChange }) {
     { id: 'plans', label: 'Planos', icon: '🗺️' },
     { id: 'sillas', label: 'Sillas', icon: '🪑' },
     {
+      id: 'hares',
+      label: 'HARES',
+      image: '/assets/iconos_imagen/Hares.png',
+    },
+    {
       id: 'koncisaPlus',
       label: 'Koncisa Plus',
       image: '/assets/iconos_imagen/koncisa2PlussLibrary.png',

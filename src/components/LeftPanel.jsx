@@ -2,10 +2,93 @@ import { useRef } from 'react';
 import { useMemo, useState, useEffect } from 'react';
 import { loadTipologiasDetalle } from '../services/tipologiasDetalle';
 import { getChairDetail, loadChairsPriceList, loadChairsCategoryMap, loadCategoriasSillas } from '../services/chairsLoader';
+import { loadHaresItems } from '../services/haresLoader';
 import { getThreeMaterialFromDef } from '../materials/materialRegistry'; // Ajusta la ruta según tu estructura de carpetas
 
 import KoncisaPlusPanel from './KoncisaPlusPanel';
 import { buildKoncisaPlus } from '../koncisaPlus/KoncisaPlusBuilder';
+
+const TYPOLOGY_IMAGE_EXTENSIONS = ['png', 'jpeg', 'jpg', 'webp'];
+const typologyImageCache = new Map();
+
+function buildTypologyImageCandidates(codigoPT) {
+  const code = String(codigoPT || '').trim();
+  if (!code) return [];
+  return TYPOLOGY_IMAGE_EXTENSIONS.map((ext) => `/assets/imagen/${code}.${ext}`);
+}
+
+function TypologyCardImage({ codigoPT, title }) {
+  const cacheKey = String(codigoPT || '').trim();
+  const candidates = useMemo(() => buildTypologyImageCandidates(codigoPT), [codigoPT]);
+  const [candidateIndex, setCandidateIndex] = useState(0);
+  const [resolvedImage, setResolvedImage] = useState(() => {
+    if (!cacheKey) return null;
+    return typologyImageCache.has(cacheKey) ? typologyImageCache.get(cacheKey) : candidates[0] || null;
+  });
+
+  useEffect(() => {
+    const nextCacheKey = String(codigoPT || '').trim();
+    if (!nextCacheKey) {
+      setCandidateIndex(0);
+      setResolvedImage(null);
+      return;
+    }
+
+    if (typologyImageCache.has(nextCacheKey)) {
+      setCandidateIndex(0);
+      setResolvedImage(typologyImageCache.get(nextCacheKey));
+      return;
+    }
+
+    setCandidateIndex(0);
+    setResolvedImage(candidates[0] || null);
+  }, [codigoPT, candidates]);
+
+  if (!resolvedImage) return null;
+
+  const handleLoad = () => {
+    if (cacheKey) typologyImageCache.set(cacheKey, resolvedImage);
+  };
+
+  const handleError = () => {
+    const nextIndex = candidateIndex + 1;
+    if (nextIndex < candidates.length) {
+      setCandidateIndex(nextIndex);
+      setResolvedImage(candidates[nextIndex]);
+      return;
+    }
+
+    if (cacheKey) typologyImageCache.set(cacheKey, null);
+    setResolvedImage(null);
+  };
+
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: 120,
+        overflow: 'hidden',
+        borderRadius: 10,
+        marginBottom: 8,
+        background: '#f3f4f6',
+      }}
+    >
+      <img
+        src={resolvedImage}
+        alt={title || codigoPT}
+        loading="lazy"
+        onLoad={handleLoad}
+        onError={handleError}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block',
+        }}
+      />
+    </div>
+  );
+}
 
 export default function LeftPanel({
   section,
@@ -28,6 +111,7 @@ export default function LeftPanel({
   onAddCatalogItem,
   onAddTypology,
   onAddChair,
+  onAddHares,
   onToggleSnap,
   // muros
   wallMode,
@@ -58,6 +142,11 @@ export default function LeftPanel({
   const [subcategoriaSillaFilter, setSubcategoriaSillaFilter] = useState('');
   const [subcategoriasSillasByCategoria, setSubcategoriasSillasByCategoria] = useState({});
   const [subcategoriasSillasGlobalCountByCategoria, setSubcategoriasSillasGlobalCountByCategoria] = useState({});
+
+  // HARES states
+  const [qHares, setQHares] = useState('');
+  const [haresItems, setHaresItems] = useState([]);
+  const [haresReady, setHaresReady] = useState(false);
 
   //Materiales genericos
   const [qMaterials, setQMaterials] = useState('');
@@ -256,6 +345,41 @@ export default function LeftPanel({
   }, [country]);
 
   // ================================
+  // Cargar HARES
+  // ================================
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const items = await loadHaresItems(country);
+        if (!alive) return;
+        const arr = items.map((c) => ({
+          codigoPT: String(c.codigo),
+          ui: {
+            title: c.descripcion || String(c.codigo),
+            subtitle: 'HARES',
+          },
+          prices: {
+            [country]: Number(c.precio || 0),
+            CO: Number(c.precio || 0),
+          },
+          model: { kind: 'HARES' },
+          raw: c,
+        }));
+        setHaresItems(arr);
+        setHaresReady(true);
+      } catch (err) {
+        console.error('Error cargando HARES:', err);
+        if (alive) setHaresReady(true);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, [country]);
+
+  // ================================
   // Filtrado de Tipologías
   // ================================
   const typologiesFiltered = useMemo(() => {
@@ -417,6 +541,21 @@ export default function LeftPanel({
 
     return counts;
   }, [categoriaSillaFilter, subcategoriasSillasGlobalCountByCategoria]);
+
+  // ================================
+  // Filtrado de HARES
+  // ================================
+  const haresFiltered = useMemo(() => {
+    const q = String(qHares || '')
+      .trim()
+      .toLowerCase();
+    if (!q) return haresItems || [];
+    return (haresItems || []).filter((it) => {
+      const code = String(it?.codigoPT ?? '').toLowerCase();
+      const title = String(it?.ui?.title ?? '').toLowerCase();
+      return code.includes(q) || title.includes(q);
+    });
+  }, [haresItems, qHares]);
 
   return (
     <div
@@ -582,6 +721,8 @@ export default function LeftPanel({
                 onClick={() => !readOnly && onAddTypology(it.codigoPT)}
                 style={cardBtn(readOnly)}
               >
+                <TypologyCardImage codigoPT={it.codigoPT} title={it.ui?.title || it.codigoPT} />
+
                 <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
                 <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
 
@@ -1097,6 +1238,49 @@ export default function LeftPanel({
               Mostrando 120 resultados. Refina la búsqueda para ver los demás.
             </div>
           )}
+        </>
+      )}
+
+      {/* ======================= HARES ======================= */}
+      {section === 'hares' && (
+        <>
+          <h1 style={{ margin: '0 0 12px 0' }}>HARES</h1>
+
+          <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>
+            Selecciona un producto HARES para agregarlo al proyecto.
+          </div>
+
+          <input
+            value={qHares}
+            onChange={(e) => setQHares(e.target.value)}
+            placeholder="Buscar por código o descripción..."
+            style={{
+              width: '100%',
+              padding: 10,
+              borderRadius: 10,
+              border: '1px solid #e5e7eb',
+              marginBottom: 10,
+              outline: 'none',
+            }}
+          />
+
+          {!haresReady && (
+            <div style={{ fontSize: 12, opacity: 0.7 }}>Cargando HARES...</div>
+          )}
+
+          <div style={{ display: 'grid', gap: 8 }}>
+            {haresFiltered.map((it) => (
+              <button
+                key={String(it.codigoPT)}
+                disabled={readOnly}
+                onClick={() => !readOnly && onAddHares(it.codigoPT)}
+                style={cardBtn(readOnly)}
+              >
+                <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
+                <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
+              </button>
+            ))}
+          </div>
         </>
       )}
     </div>
