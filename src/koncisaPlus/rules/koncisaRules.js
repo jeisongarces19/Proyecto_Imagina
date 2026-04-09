@@ -3,24 +3,71 @@
 // ==============================
 // COSTADOS
 // ==============================
-export function getCostadosConfig({ puestos }) {
-  if (puestos <= 0) return [];
+export function getCostadosConfig({
+  puestos,
+  tipoPuesto,
+  tipoCostado = 'RECT',
+  largoRealMm,
+  anchoRealMm,
+}) {
+  const out = [];
 
-  const result = [];
+  const offsetXIzq = 0;
+  const offsetXDer = 0;
 
-  // terminal izquierdo
-  result.push({ tipo: 'terminal', index: 0 });
+  const offsetZIzq = 300;
+  const offsetZDer = -300;
+  const offsetZIntermedio = 0;
 
-  if (puestos > 1) {
-    for (let i = 1; i < puestos; i++) {
-      result.push({ tipo: 'intermedio', index: i });
+  if (tipoPuesto === 'sencillo') {
+    for (let i = 0; i < puestos; i++) {
+      const baseX = i * largoRealMm;
+
+      // Solo el primero lleva terminal izquierdo
+      if (i === 0) {
+        out.push({
+          tipo: 'terminal',
+          lado: 'izq',
+          forma: tipoCostado,
+          tipoPuesto,
+          depthMm: anchoRealMm,
+          x: baseX - largoRealMm / 2 + offsetXIzq,
+          y: 0,
+          z: offsetZIzq,
+        });
+      }
+
+      // Desde el segundo puesto en adelante, va un intermedio
+      if (i > 0) {
+        out.push({
+          tipo: 'intermedio',
+          lado: 'center',
+          forma: tipoCostado,
+          tipoPuesto,
+          depthMm: anchoRealMm,
+          x: baseX - largoRealMm / 2,
+          y: 0,
+          z: offsetZIntermedio,
+        });
+      }
+
+      // Solo el último lleva terminal derecho
+      if (i === puestos - 1) {
+        out.push({
+          tipo: 'terminal',
+          lado: 'der',
+          forma: tipoCostado,
+          tipoPuesto,
+          depthMm: anchoRealMm,
+          x: baseX + largoRealMm / 2 + offsetXDer,
+          y: 0,
+          z: offsetZDer,
+        });
+      }
     }
   }
 
-  // terminal derecho
-  result.push({ tipo: 'terminal', index: puestos });
-
-  return result;
+  return out;
 }
 
 // ==============================

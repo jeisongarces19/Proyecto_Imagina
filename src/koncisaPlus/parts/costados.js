@@ -1,45 +1,82 @@
 // src/koncisaPlus/parts/costados.js
+import { resolveKoncisaCostadoTerminal } from '../rules/koncisaCostadoRules';
 
-function buildCostadoCode({ tipo, variante, depthMm, heightMm }) {
-  const varTxt = variante ? `-${String(variante).toUpperCase()}` : '';
-  return `KPL-COST-${String(tipo).toUpperCase()}${varTxt}-${depthMm}x${heightMm}`;
-}
+import { resolveKoncisaCostadoIntermedio } from '../rules/resolveKoncisaCostadoIntermedio';
 
 export function createCostado({
+  groupId = null,
+  groupName = null,
   tipo = 'terminal', // terminal | intermedio
-  variante = 'base', // luego aquí podrás manejar tus 5 tipos terminales
-  widthMm = 30,
+  tipoPuesto = 'sencillo', // sencillo | doble
   depthMm = 600,
-  heightMm = 720,
+  forma = 'RECT',
+  lado = 'izq', // izq | der | center
   x = 0,
   y = 0,
   z = 0,
-  code,
 }) {
+  let resolved = null;
+
+  if (tipo === 'terminal') {
+    resolved = resolveKoncisaCostadoTerminal({
+      tipoPuesto,
+      depthMm,
+      forma,
+      lado,
+    });
+  } else if (tipo === 'intermedio') {
+    resolved = resolveKoncisaCostadoIntermedio({
+      tipoPuesto,
+      depthMm,
+    });
+  }
+
+  const rotationY = tipo === 'terminal' ? (lado === 'der' ? Math.PI : 0) : 0;
+
   return {
     type: 'costado',
     subtype: tipo,
     line: 'KONCISA.PLUS',
-    code: code || buildCostadoCode({ tipo, variante, depthMm, heightMm }),
-    name: `Costado ${tipo} ${variante}`,
+
+    groupId,
+    groupName,
+
+    code: resolved?.codigoPT || null,
+    logicalCode: resolved?.logicalCode || null,
+    existsInCatalog: !!resolved?.exists,
+    rawCodigoPT: resolved?.codigoPT || null,
+
+    name:
+      tipo === 'intermedio' ? `Costado intermedio ${depthMm}` : `Costado terminal ${lado} ${forma}`,
+
     dimMm: {
-      widthMm,
       depthMm,
-      heightMm,
     },
+
     position: {
       x,
       y,
       z,
     },
+
     rotation: {
       x: 0,
-      y: 0,
+      y: rotationY,
       z: 0,
     },
+
+    model: {
+      kind: 'glb',
+      src: resolved?.modelSrc || null,
+    },
+
     meta: {
-      variante,
       category: 'costados',
+      tipo,
+      lado,
+      forma,
+      tipoPuesto,
+      depthMm,
     },
   };
 }

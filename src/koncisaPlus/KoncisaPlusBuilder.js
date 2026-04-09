@@ -25,6 +25,7 @@ export function buildKoncisaPlus(config = {}) {
   const {
     puestos = 1,
     tipoPuesto = 'sencillo',
+    tipoCostado = 'RECT',
 
     // medidas reales
     largoRealMm = 1200,
@@ -53,6 +54,7 @@ export function buildKoncisaPlus(config = {}) {
   const costados = getCostadosConfig({
     puestos,
     tipoPuesto,
+    tipoCostado,
     largoRealMm,
     anchoRealMm,
   });
@@ -60,13 +62,13 @@ export function buildKoncisaPlus(config = {}) {
   costados.forEach((c) => {
     parts.push(
       createCostado({
-        //grupo linea y padre
         groupId,
+        groupName,
         tipo: c.tipo,
-        variante: c.variante || 'base',
-        widthMm: c.widthMm,
+        lado: c.lado,
+        forma: c.forma,
+        tipoPuesto: c.tipoPuesto,
         depthMm: c.depthMm,
-        heightMm: c.heightMm,
         x: c.x,
         y: c.y ?? 0,
         z: c.z ?? 0,

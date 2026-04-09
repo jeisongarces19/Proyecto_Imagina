@@ -299,8 +299,8 @@ export default function LeftPanel({
               },
               model: { kind: 'CHAIR' },
               raw: c,
-              categoriaNivel2: cat?.nivel2 || '',    // ej: "SILLAS DE COLECTIVIDAD INTERIORES"
-              categoriaNivel3: cat?.nivel3 || '',    // ej: "OFIPARTES"
+              categoriaNivel2: cat?.nivel2 || '', // ej: "SILLAS DE COLECTIVIDAD INTERIORES"
+              categoriaNivel3: cat?.nivel3 || '', // ej: "OFIPARTES"
               categoriaSlug: cat?.slug || '',
             };
           })
@@ -473,8 +473,7 @@ export default function LeftPanel({
       const matchesSearch =
         !q || code.includes(q) || title.includes(q) || subtitle.includes(q) || tags.includes(q);
 
-      const matchesCategoria =
-        !categoriaSillaFilter || it.categoriaNivel2 === categoriaSillaFilter;
+      const matchesCategoria = !categoriaSillaFilter || it.categoriaNivel2 === categoriaSillaFilter;
 
       const matchesSubcategoria =
         !subcategoriaSillaFilter || it.categoriaNivel3 === subcategoriaSillaFilter;
@@ -816,9 +815,30 @@ export default function LeftPanel({
               });
             });
 
-            console.log('PARTS KONCISA', parts);
-            console.log('GROUP KONCISA', groupId);
-            console.log('PARTS KONCISA', parts);
+            const costados = parts.filter((p) => p.type === 'costado');
+
+            costados.forEach((costado) => {
+              console.log('COSTADO =>', costado);
+
+              if (!costado.code) {
+                alert(`No tenemos disponible este costado: ${costado.logicalCode}`);
+                return;
+              }
+
+              if (!costado?.model?.src) {
+                alert(`Este costado no tiene modelo 3D asociado: ${costado.logicalCode}`);
+                return;
+              }
+
+              threeApiRef.current?.addExternalGlbPart?.({
+                ...costado,
+                groupId: costado.groupId || groupId,
+                groupName: costado.groupName || groupName,
+              });
+            });
+
+            //console.log('PARTS KONCISA', parts);
+            //console.log('GROUP KONCISA', groupId);
           }}
         />
       )}
@@ -1161,12 +1181,11 @@ export default function LeftPanel({
               }}
             >
               <option value="">Todas las categorías</option>
-              {categoriasSillas
-                .map((cat) => (
-                  <option key={cat.id} value={cat.nombre}>
-                    {cat.nombre} ({chairCategoryCounts.get(cat.nombre) || 0})
-                  </option>
-                ))}
+              {categoriasSillas.map((cat) => (
+                <option key={cat.id} value={cat.nombre}>
+                  {cat.nombre} ({chairCategoryCounts.get(cat.nombre) || 0})
+                </option>
+              ))}
             </select>
 
             <select
@@ -1183,14 +1202,16 @@ export default function LeftPanel({
               <option value="">Todas las subcategorías</option>
               {chairSubcategories.map((subcat) => (
                 <option key={subcat} value={subcat}>
-                  {subcat} ({chairSubcategoryCounts.get(subcat) || 0}/{chairSubcategoryGlobalCounts.get(subcat) || 0})
+                  {subcat} ({chairSubcategoryCounts.get(subcat) || 0}/
+                  {chairSubcategoryGlobalCounts.get(subcat) || 0})
                 </option>
               ))}
             </select>
           </div>
 
           <div style={{ fontSize: 11, opacity: 0.65, marginTop: -4, marginBottom: 10 }}>
-            Subcategoría: <b>actual/global</b> (códigos en la lista del país / códigos únicos en JSON).
+            Subcategoría: <b>actual/global</b> (códigos en la lista del país / códigos únicos en
+            JSON).
           </div>
 
           <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>
@@ -1226,9 +1247,7 @@ export default function LeftPanel({
                 <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
                 <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
 
-                <div style={{ fontSize: 11, opacity: 0.65 }}>
-                  {it.categoriaNivel2 || 'Silla'}
-                </div>
+                <div style={{ fontSize: 11, opacity: 0.65 }}>{it.categoriaNivel2 || 'Silla'}</div>
               </button>
             ))}
           </div>
