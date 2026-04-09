@@ -44,6 +44,8 @@ export default function KoncisaPlusPanel({ onCreate }) {
   const [grommetFinish, setGrommetFinish] = useState('ALUMINIUM');
   const [selectedFinishId, setSelectedFinishId] = useState('FORMICA_30');
 
+  const [tipoCostado, setTipoCostado] = useState('RECT');
+
   const selectedFinish = useMemo(() => {
     return (
       KONCISA_SURFACE_FINISH_OPTIONS.find((f) => f.id === selectedFinishId) ||
@@ -86,6 +88,7 @@ export default function KoncisaPlusPanel({ onCreate }) {
     onCreate({
       puestos,
       tipoPuesto,
+      tipoCostado,
       modoEspecial,
       largoRealMm,
       anchoRealMm,
@@ -103,6 +106,29 @@ export default function KoncisaPlusPanel({ onCreate }) {
 
   const opcionesLargo = modoEspecial ? opcionesLargoEspecial : opcionesLargoNormal;
   const opcionesAncho = modoEspecial ? opcionesAnchoEspecial : opcionesAnchoNormal;
+
+  const opcionesCostado =
+    tipoPuesto === 'sencillo'
+      ? [
+          { value: 'RECT', label: 'Rectangular' },
+          { value: 'TEK_DER', label: 'Tek derecho' },
+          { value: 'TEK_IZQ', label: 'Tek izquierdo' },
+          { value: 'ORTOGONAL_DER', label: 'Ortogonal derecho' },
+          { value: 'ORTOGONAL_IZQ', label: 'Ortogonal izquierdo' },
+          { value: 'O', label: 'O' },
+          { value: 'CURVO_DER', label: 'Curvo derecho' },
+          { value: 'CURVO_IZQ', label: 'Curvo izquierdo' },
+          { value: 'TRAP_DER', label: 'Trapecial derecho' },
+          { value: 'TRAP_IZQ', label: 'Trapecial izquierdo' },
+        ]
+      : [
+          { value: 'RECT', label: 'Rectangular' },
+          { value: 'TEK', label: 'Tek' },
+          { value: 'ORTOGONAL', label: 'Ortogonal' },
+          { value: 'O', label: 'O' },
+          { value: 'CURVO', label: 'Curvo' },
+          { value: 'TRAP', label: 'Trapecial' },
+        ];
 
   return (
     <div style={{ padding: 12, display: 'grid', gap: 12 }}>
@@ -184,6 +210,21 @@ export default function KoncisaPlusPanel({ onCreate }) {
           {KONCISA_SURFACE_FINISH_OPTIONS.map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label>Tipo de costado</label>
+        <select
+          value={tipoCostado}
+          onChange={(e) => setTipoCostado(e.target.value)}
+          style={{ width: '100%' }}
+        >
+          {opcionesCostado.map((op) => (
+            <option key={op.value} value={op.value}>
+              {op.label}
             </option>
           ))}
         </select>

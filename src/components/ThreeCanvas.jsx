@@ -1865,15 +1865,25 @@ export default function ThreeCanvas({
 
       const code = String(codigoPT);
 
+      //const description =   item?.ui?.title ||  item?.ui?.subtitle ||    item?.raw?.descripcion |||   item?.raw?.description ||    code;
+
+      //const rawPrice =     item?.prices?.CO ?? item?.prices?.co ?? item?.raw?.prices?.CO ?? item?.raw?.price ?? 0;
+
+      const catalogItem = item || catalogByCodeRef.current?.get?.(code) || null;
+
       const description =
-        item?.ui?.title ||
-        item?.ui?.subtitle ||
-        item?.raw?.descripcion ||
-        item?.raw?.description ||
+        catalogItem?.ui?.title ||
+        catalogItem?.ui?.subtitle ||
+        catalogItem?.raw?.descripcion ||
+        catalogItem?.raw?.description ||
         code;
 
       const rawPrice =
-        item?.prices?.CO ?? item?.prices?.co ?? item?.raw?.prices?.CO ?? item?.raw?.price ?? 0;
+        catalogItem?.prices?.CO ??
+        catalogItem?.prices?.co ??
+        catalogItem?.raw?.prices?.CO ??
+        catalogItem?.raw?.price ??
+        0;
       const unitPrice = Number(rawPrice || 0);
 
       mesh.userData = {
@@ -1934,14 +1944,23 @@ export default function ThreeCanvas({
 
         obj.rotation.set(part.rotation?.x || 0, part.rotation?.y || 0, part.rotation?.z || 0);
 
+        const catalogItem = catalogByCodeRef.current?.get?.(String(part.code || '')) || null;
+
         obj.userData = {
           code: part.code || null,
           codigoPT: part.code || null,
           kind: part.type || 'GLB_PART',
           line: part.line || null,
           dim: part.dimMm || null,
-          description: part.name || part.code || 'Pieza GLB',
-          unitPrice: 0,
+          description:
+            catalogItem?.ui?.title ||
+            catalogItem?.ui?.subtitle ||
+            catalogItem?.raw?.descripcion ||
+            part.name ||
+            part.code ||
+            'Pieza GLB',
+          unitPrice:
+            Number(catalogItem?.prices?.[countryRef.current] ?? catalogItem?.prices?.CO ?? 0) || 0,
           meta: part.meta || {},
           instanceId: `${part.code || 'glb'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
           groupId: part?.groupId || null,
