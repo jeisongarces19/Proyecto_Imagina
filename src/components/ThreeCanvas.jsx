@@ -21,6 +21,7 @@ import { exportPlanToDXF } from '../utils/exportDXF';
 import { getTipologiaDetalle } from '../services/tipologiasDetalle';
 import { getChairDetail } from '../services/chairsLoader';
 import { getHaresDetail } from '../services/haresLoader';
+import { getPlantDetail } from '../services/plantsLoader';
 
 const MM_TO_M = 1 / 1000;
 
@@ -553,6 +554,36 @@ export default function ThreeCanvas({
             if (parentCode)
               addRow(parentCode, 1, label, 0, parentCode, label, undefined, null, groupInstanceId);
           }
+          continue;
+        }
+
+        if (obj.userData?.kind === 'PLANT') {
+          const parentCode = normalizeText(
+            obj.userData?.codigoPT || obj.userData?.code || p.code || ''
+          );
+          const label =
+            obj.userData?.name || obj.userData?.plantMeta?.descripcion || `Planta ${parentCode}`;
+          const groupInstanceId = obj.userData?.instanceId || obj.uuid || p.id;
+
+          const list = obj.userData?.plantParts || [];
+
+          // Solo agregamos al BOM si la planta tiene código de precio
+          if (Array.isArray(list) && list.length) {
+            for (const it of list) {
+              addRow(
+                String(it.code),
+                Number(it.qty || 0),
+                it.description,
+                it.unitPrice,
+                parentCode,
+                label,
+                it.prices,
+                null,
+                groupInstanceId
+              );
+            }
+          }
+          // Si no hay plantParts (sin código de precio), no agregamos al BOM
           continue;
         }
 
@@ -1113,6 +1144,109 @@ export default function ThreeCanvas({
       if (parts.length === 1) frameObject(obj);
     }
 
+    async function addPlant(plantName) {
+      if (readOnly) return;
+      const name = String(plantName).trim();
+
+      if (!name) {
+        console.error('Nombre de planta vacío');
+        return;
+      }
+
+      // 1) Obtener detalles de la planta (busca en XML si existe precio)
+      const [detCO, detEUC, detUSD] = await Promise.all([
+        getPlantDetail(name, 'CO'),
+        getPlantDetail(name, 'EUC'),
+        getPlantDetail(name, 'USD'),
+      ]);
+
+      const det =
+        (countryRef.current === 'EUC' && detEUC) ||
+        (countryRef.current === 'USD' && detUSD) ||
+        detCO ||
+        detEUC ||
+        detUSD;
+
+      // 2) Cargar GLB desde carpeta Plants and Flowers
+      const possibleSrcs = [
+        `/assets/models/Plants and Flowers/${name}.glb`,
+        `/assets/models/${name}.glb`,
+      ];
+
+      const gltf = await loadExistingGlb(possibleSrcs);
+
+      if (!gltf) {
+        console.error(`No se encontró GLB para planta: ${name}`);
+        alert(`No se encontró el modelo 3D para "${name}". Verifica que exista en /assets/models/Plants and Flowers/`);
+        return;
+      }
+
+      const obj = gltf.scene;
+
+      // Normalizar escala solo para plantas (algunos GLB vienen en mm y quedan gigantes)
+      obj.updateMatrixWorld(true);
+      const plantBox = new THREE.Box3().setFromObject(obj);
+      const plantSize = new THREE.Vector3();
+      plantBox.getSize(plantSize);
+      const maxDim = Math.max(plantSize.x, plantSize.y, plantSize.z);
+
+      if (Number.isFinite(maxDim) && maxDim > 0) {
+        // Si es enorme (p.ej. > 10m), lo llevamos a tamaño razonable (~1m máx)
+        if (maxDim > 10) {
+          const scale = 1 / maxDim;
+          obj.scale.multiplyScalar(scale);
+          obj.updateMatrixWorld(true);
+        }
+      }
+
+      // 3) Preparar BOM: solo si tiene código de precio
+      const plantParts = (det && det.codigo)
+        ? [
+            {
+              code: det.codigo,
+              description: det.descripcion,
+              qty: 1,
+              unitPrice: Number(det.precio || 0),
+              prices: {
+                CO: detCO?.precio || 0,
+                EUC: detEUC?.precio || 0,
+                USD: detUSD?.precio || 0,
+              },
+            },
+          ]
+        : [];
+
+      obj.userData = {
+        ...(obj.userData || {}),
+        kind: 'PLANT',
+        codigoPT: name,
+        code: name,
+        name: (det?.descripcion) || name,
+        plantName: name,
+        plantParts,
+        plantMeta: {
+          descripcion: (det?.descripcion) || name,
+          precio: (det?.precio) || 0,
+          udm: (det?.udm) || 'und',
+        },
+      };
+
+      obj.name = `PLANT_${name}`;
+
+      // 4) Posición y agregar a escena
+      obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
+      obj.updateMatrixWorld(true);
+
+      scene.add(obj);
+      parts.push({ code: name, obj });
+      pickables.push(obj);
+
+      setActivePart(obj);
+      emitBOM();
+
+      if (parts.length === 1) frameObject(obj);
+    }
+
     async function addCatalogItem(codigoPT) {
       if (readOnly) return;
       const codigo = String(codigoPT);
@@ -1645,6 +1779,7 @@ export default function ThreeCanvas({
       addTypology,
       addChair,
       addHares,
+      addPlant,
       exportGLTF: () => exportSceneToGLTF(scene, { filename: 'proyecto.glb' }),
       exportDXF: () => {
         const snap = getPartsSnapshot2D();
@@ -1980,25 +2115,15 @@ export default function ThreeCanvas({
 
       const code = String(codigoPT);
 
-      //const description =   item?.ui?.title ||  item?.ui?.subtitle ||    item?.raw?.descripcion |||   item?.raw?.description ||    code;
-
-      //const rawPrice =     item?.prices?.CO ?? item?.prices?.co ?? item?.raw?.prices?.CO ?? item?.raw?.price ?? 0;
-
-      const catalogItem = item || catalogByCodeRef.current?.get?.(code) || null;
-
       const description =
-        catalogItem?.ui?.title ||
-        catalogItem?.ui?.subtitle ||
-        catalogItem?.raw?.descripcion ||
-        catalogItem?.raw?.description ||
+        item?.ui?.title ||
+        item?.ui?.subtitle ||
+        item?.raw?.descripcion ||
+        item?.raw?.description ||
         code;
 
       const rawPrice =
-        catalogItem?.prices?.CO ??
-        catalogItem?.prices?.co ??
-        catalogItem?.raw?.prices?.CO ??
-        catalogItem?.raw?.price ??
-        0;
+        item?.prices?.CO ?? item?.prices?.co ?? item?.raw?.prices?.CO ?? item?.raw?.price ?? 0;
       const unitPrice = Number(rawPrice || 0);
 
       mesh.userData = {
@@ -2059,23 +2184,14 @@ export default function ThreeCanvas({
 
         obj.rotation.set(part.rotation?.x || 0, part.rotation?.y || 0, part.rotation?.z || 0);
 
-        const catalogItem = catalogByCodeRef.current?.get?.(String(part.code || '')) || null;
-
         obj.userData = {
           code: part.code || null,
           codigoPT: part.code || null,
           kind: part.type || 'GLB_PART',
           line: part.line || null,
           dim: part.dimMm || null,
-          description:
-            catalogItem?.ui?.title ||
-            catalogItem?.ui?.subtitle ||
-            catalogItem?.raw?.descripcion ||
-            part.name ||
-            part.code ||
-            'Pieza GLB',
-          unitPrice:
-            Number(catalogItem?.prices?.[countryRef.current] ?? catalogItem?.prices?.CO ?? 0) || 0,
+          description: part.name || part.code || 'Pieza GLB',
+          unitPrice: 0,
           meta: part.meta || {},
           instanceId: `${part.code || 'glb'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
           groupId: part?.groupId || null,

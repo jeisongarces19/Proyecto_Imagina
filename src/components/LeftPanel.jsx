@@ -3,6 +3,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { loadTipologiasDetalle } from '../services/tipologiasDetalle';
 import { getChairDetail, loadChairsPriceList, loadChairsCategoryMap, loadCategoriasSillas } from '../services/chairsLoader';
 import { loadHaresItems } from '../services/haresLoader';
+import { loadPlantsItems } from '../services/plantsLoader';
 import { getThreeMaterialFromDef } from '../materials/materialRegistry'; // Ajusta la ruta según tu estructura de carpetas
 
 import KoncisaPlusPanel from './KoncisaPlusPanel';
@@ -112,6 +113,7 @@ export default function LeftPanel({
   onAddTypology,
   onAddChair,
   onAddHares,
+  onAddPlant,
   onToggleSnap,
   // muros
   wallMode,
@@ -147,6 +149,11 @@ export default function LeftPanel({
   const [qHares, setQHares] = useState('');
   const [haresItems, setHaresItems] = useState([]);
   const [haresReady, setHaresReady] = useState(false);
+
+  // PLANTS AND FLOWERS states
+  const [qPlants, setQPlants] = useState('');
+  const [plantsItems, setPlantsItems] = useState([]);
+  const [plantsReady, setPlantsReady] = useState(false);
 
   //Materiales genericos
   const [qMaterials, setQMaterials] = useState('');
@@ -299,8 +306,8 @@ export default function LeftPanel({
               },
               model: { kind: 'CHAIR' },
               raw: c,
-              categoriaNivel2: cat?.nivel2 || '', // ej: "SILLAS DE COLECTIVIDAD INTERIORES"
-              categoriaNivel3: cat?.nivel3 || '', // ej: "OFIPARTES"
+              categoriaNivel2: cat?.nivel2 || '',    // ej: "SILLAS DE COLECTIVIDAD INTERIORES"
+              categoriaNivel3: cat?.nivel3 || '',    // ej: "OFIPARTES"
               categoriaSlug: cat?.slug || '',
             };
           })
@@ -371,6 +378,41 @@ export default function LeftPanel({
       } catch (err) {
         console.error('Error cargando HARES:', err);
         if (alive) setHaresReady(true);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, [country]);
+
+  // ================================
+  // Cargar PLANTS AND FLOWERS
+  // ================================
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const items = await loadPlantsItems(country);
+        if (!alive) return;
+        const arr = items.map((p) => ({
+          codigoPT: p.name,
+          ui: {
+            title: p.descripcion || p.name,
+            subtitle: p.found ? `${country}` : 'Sin precio',
+          },
+          prices: {
+            [country]: Number(p.precio || 0),
+            CO: Number(p.precio || 0),
+          },
+          model: { kind: 'PLANT' },
+          raw: p,
+        }));
+        setPlantsItems(arr);
+        setPlantsReady(true);
+      } catch (err) {
+        console.error('Error cargando Plants and Flowers:', err);
+        if (alive) setPlantsReady(true);
       }
     })();
 
@@ -473,7 +515,8 @@ export default function LeftPanel({
       const matchesSearch =
         !q || code.includes(q) || title.includes(q) || subtitle.includes(q) || tags.includes(q);
 
-      const matchesCategoria = !categoriaSillaFilter || it.categoriaNivel2 === categoriaSillaFilter;
+      const matchesCategoria =
+        !categoriaSillaFilter || it.categoriaNivel2 === categoriaSillaFilter;
 
       const matchesSubcategoria =
         !subcategoriaSillaFilter || it.categoriaNivel3 === subcategoriaSillaFilter;
@@ -555,6 +598,21 @@ export default function LeftPanel({
       return code.includes(q) || title.includes(q);
     });
   }, [haresItems, qHares]);
+
+  // ================================
+  // Filtrado de PLANTS AND FLOWERS
+  // ================================
+  const plantsFiltered = useMemo(() => {
+    const q = String(qPlants || '')
+      .trim()
+      .toLowerCase();
+    if (!q) return plantsItems || [];
+    return (plantsItems || []).filter((it) => {
+      const code = String(it?.codigoPT ?? '').toLowerCase();
+      const title = String(it?.ui?.title ?? '').toLowerCase();
+      return code.includes(q) || title.includes(q);
+    });
+  }, [plantsItems, qPlants]);
 
   return (
     <div
@@ -815,30 +873,9 @@ export default function LeftPanel({
               });
             });
 
-            const costados = parts.filter((p) => p.type === 'costado');
-
-            costados.forEach((costado) => {
-              console.log('COSTADO =>', costado);
-
-              if (!costado.code) {
-                alert(`No tenemos disponible este costado: ${costado.logicalCode}`);
-                return;
-              }
-
-              if (!costado?.model?.src) {
-                alert(`Este costado no tiene modelo 3D asociado: ${costado.logicalCode}`);
-                return;
-              }
-
-              threeApiRef.current?.addExternalGlbPart?.({
-                ...costado,
-                groupId: costado.groupId || groupId,
-                groupName: costado.groupName || groupName,
-              });
-            });
-
-            //console.log('PARTS KONCISA', parts);
-            //console.log('GROUP KONCISA', groupId);
+            console.log('PARTS KONCISA', parts);
+            console.log('GROUP KONCISA', groupId);
+            console.log('PARTS KONCISA', parts);
           }}
         />
       )}
@@ -1181,11 +1218,12 @@ export default function LeftPanel({
               }}
             >
               <option value="">Todas las categorías</option>
-              {categoriasSillas.map((cat) => (
-                <option key={cat.id} value={cat.nombre}>
-                  {cat.nombre} ({chairCategoryCounts.get(cat.nombre) || 0})
-                </option>
-              ))}
+              {categoriasSillas
+                .map((cat) => (
+                  <option key={cat.id} value={cat.nombre}>
+                    {cat.nombre} ({chairCategoryCounts.get(cat.nombre) || 0})
+                  </option>
+                ))}
             </select>
 
             <select
@@ -1202,16 +1240,14 @@ export default function LeftPanel({
               <option value="">Todas las subcategorías</option>
               {chairSubcategories.map((subcat) => (
                 <option key={subcat} value={subcat}>
-                  {subcat} ({chairSubcategoryCounts.get(subcat) || 0}/
-                  {chairSubcategoryGlobalCounts.get(subcat) || 0})
+                  {subcat} ({chairSubcategoryCounts.get(subcat) || 0}/{chairSubcategoryGlobalCounts.get(subcat) || 0})
                 </option>
               ))}
             </select>
           </div>
 
           <div style={{ fontSize: 11, opacity: 0.65, marginTop: -4, marginBottom: 10 }}>
-            Subcategoría: <b>actual/global</b> (códigos en la lista del país / códigos únicos en
-            JSON).
+            Subcategoría: <b>actual/global</b> (códigos en la lista del país / códigos únicos en JSON).
           </div>
 
           <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>
@@ -1247,7 +1283,9 @@ export default function LeftPanel({
                 <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
                 <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
 
-                <div style={{ fontSize: 11, opacity: 0.65 }}>{it.categoriaNivel2 || 'Silla'}</div>
+                <div style={{ fontSize: 11, opacity: 0.65 }}>
+                  {it.categoriaNivel2 || 'Silla'}
+                </div>
               </button>
             ))}
           </div>
@@ -1300,6 +1338,60 @@ export default function LeftPanel({
               </button>
             ))}
           </div>
+        </>
+      )}
+
+      {/* ======================= PLANTS AND FLOWERS ======================= */}
+      {section === 'plants' && (
+        <>
+          <h1 style={{ margin: '0 0 12px 0' }}>Plants and Flowers</h1>
+
+          <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>
+            Selecciona una planta para agregarla al proyecto.
+          </div>
+
+          <input
+            value={qPlants}
+            onChange={(e) => setQPlants(e.target.value)}
+            placeholder="Buscar por nombre o descripción..."
+            style={{
+              width: '100%',
+              padding: 10,
+              borderRadius: 10,
+              border: '1px solid #e5e7eb',
+              marginBottom: 10,
+              outline: 'none',
+            }}
+          />
+
+          {!plantsReady && (
+            <div style={{ fontSize: 12, opacity: 0.7 }}>Cargando Plants and Flowers...</div>
+          )}
+
+          <div style={{ display: 'grid', gap: 8 }}>
+            {plantsFiltered.map((it) => (
+              <button
+                key={String(it.codigoPT)}
+                disabled={readOnly}
+                onClick={() => !readOnly && onAddPlant(it.codigoPT)}
+                style={cardBtn(readOnly)}
+              >
+                <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
+                <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
+                {it.raw?.found && (
+                  <div style={{ fontSize: 11, opacity: 0.65 }}>
+                    Precio: ${it.prices?.[country] || 0}
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {plantsReady && plantsFiltered.length === 0 && (
+            <div style={{ fontSize: 12, opacity: 0.7, marginTop: 10 }}>
+              No hay plantas disponibles. Agrega entradas a plantas.json
+            </div>
+          )}
         </>
       )}
     </div>

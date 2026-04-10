@@ -494,6 +494,9 @@ export default function App() {
               onAddHares={(codigoHares) =>
                 !readOnly && threeApiRef.current?.addHares?.(codigoHares)
               }
+              onAddPlant={(plantName) =>
+                !readOnly && threeApiRef.current?.addPlant?.(plantName)
+              }
               onToggleSnap={() => !readOnly && threeApiRef.current?.toggleSnap?.()}
               onApplyGlobalMaterial={(code, scope = 'ALL') => {
                 if (readOnly) return;

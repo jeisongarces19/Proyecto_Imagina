@@ -9,6 +9,11 @@ export default function LeftRail({ active, onChange }) {
     { id: 'plans', label: 'Planos', icon: '🗺️' },
     { id: 'sillas', label: 'Sillas', icon: '🪑' },
     {
+      id: 'plants',
+      label: 'Plants and Flowers',
+      image: '/assets/iconos_imagen/Flores.png',
+    },
+    {
       id: 'hares',
       label: 'HARES',
       image: '/assets/iconos_imagen/Hares.png',
