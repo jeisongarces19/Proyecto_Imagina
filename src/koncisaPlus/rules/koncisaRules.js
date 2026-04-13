@@ -23,7 +23,6 @@ export function getCostadosConfig({
     for (let i = 0; i < puestos; i++) {
       const baseX = i * largoRealMm;
 
-      // Solo el primero lleva terminal izquierdo
       if (i === 0) {
         out.push({
           tipo: 'terminal',
@@ -37,7 +36,6 @@ export function getCostadosConfig({
         });
       }
 
-      // Desde el segundo puesto en adelante, va un intermedio
       if (i > 0) {
         out.push({
           tipo: 'intermedio',
@@ -51,7 +49,6 @@ export function getCostadosConfig({
         });
       }
 
-      // Solo el último lleva terminal derecho
       if (i === puestos - 1) {
         out.push({
           tipo: 'terminal',
@@ -62,6 +59,51 @@ export function getCostadosConfig({
           x: baseX + largoRealMm / 2 + offsetXDer,
           y: 0,
           z: offsetZDer,
+        });
+      }
+    }
+  }
+
+  if (tipoPuesto === 'doble') {
+    for (let i = 0; i < puestos; i++) {
+      const baseX = i * largoRealMm;
+
+      if (i === 0) {
+        out.push({
+          tipo: 'terminal',
+          lado: 'izq',
+          forma: tipoCostado,
+          tipoPuesto,
+          depthMm: anchoRealMm,
+          x: baseX - largoRealMm / 2 + offsetXIzq,
+          y: 0,
+          z: 0,
+        });
+      }
+
+      if (i > 0) {
+        out.push({
+          tipo: 'intermedio',
+          lado: 'center',
+          forma: tipoCostado,
+          tipoPuesto,
+          depthMm: anchoRealMm,
+          x: baseX - largoRealMm / 2,
+          y: 0,
+          z: 0,
+        });
+      }
+
+      if (i === puestos - 1) {
+        out.push({
+          tipo: 'terminal',
+          lado: 'der',
+          forma: tipoCostado,
+          tipoPuesto,
+          depthMm: anchoRealMm,
+          x: baseX + largoRealMm / 2 + offsetXDer,
+          y: 0,
+          z: 0,
         });
       }
     }
@@ -116,53 +158,176 @@ export function getPantallasConfig({ puestos, widthMm }) {
 // ==============================
 // GROMMETS
 // ==============================
-export function getGrommetsConfig({ puestos, largoRealMm }) {
-  return Array.from({ length: puestos }).map((_, i) => ({
-    index: i,
-    diameterMm: 80,
-    //x: i * largoRealMm + largoRealMm / 2,
-    x: i * largoRealMm,
-    y: 735,
-    z: 0,
-  }));
+export function getGrommetsConfig({ puestos, tipoPuesto, largoRealMm, anchoRealMm }) {
+  const out = [];
+
+  for (let i = 0; i < puestos; i++) {
+    const baseX = i * largoRealMm;
+
+    if (tipoPuesto === 'sencillo') {
+      out.push({
+        index: i,
+        diameterMm: 80,
+        x: baseX,
+        y: 735,
+        z: 0,
+        rotY: 0,
+      });
+    }
+
+    if (tipoPuesto === 'doble') {
+      out.push({
+        index: `${i}_front`,
+        diameterMm: 80,
+        x: baseX,
+        y: 735,
+        z: -300,
+        rotY: 0,
+      });
+
+      out.push({
+        index: `${i}_back`,
+        diameterMm: 80,
+        x: baseX,
+        y: 735,
+        z: 300,
+        rotY: Math.PI,
+      });
+    }
+  }
+
+  return out;
 }
 
 // ==============================
 // PASACABLE
 // ==============================
-export function getPasacablesConfig({ puestos, largoRealMm }) {
-  return Array.from({ length: puestos }).map((_, i) => ({
-    index: i,
-    diameterMm: 50,
-    //x: i * largoRealMm + largoRealMm / 2,
-    x: i * largoRealMm,
-    y: 735,
-    z: 0,
-  }));
+export function getPasacablesConfig({
+  puestos,
+  tipoPuesto,
+  largoRealMm,
+  anchoRealMm,
+  position = 'CENTER',
+}) {
+  const out = [];
+
+  for (let i = 0; i < puestos; i++) {
+    const baseX = i * largoRealMm;
+
+    if (tipoPuesto === 'sencillo') {
+      let z = 0;
+      if (position === 'LEFT') z = -300;
+      if (position === 'RIGHT') z = 300;
+
+      out.push({
+        index: i,
+        x: baseX,
+        y: 735,
+        z,
+        rotY: 0,
+      });
+    }
+
+    if (tipoPuesto === 'doble') {
+      switch (position) {
+        case 'CENTER':
+          out.push({ index: `${i}_f`, x: baseX, y: 735, z: -300, rotY: 0 });
+          out.push({ index: `${i}_b`, x: baseX, y: 735, z: 300, rotY: Math.PI });
+          break;
+
+        case 'LEFT_RIGHT':
+          out.push({ index: `${i}_l`, x: baseX, y: 735, z: -300, rotY: 0 });
+          out.push({ index: `${i}_r`, x: baseX, y: 735, z: 300, rotY: Math.PI });
+          break;
+
+        case 'LEFT_LEFT':
+          out.push({ index: `${i}_l1`, x: baseX, y: 735, z: -300, rotY: 0 });
+          out.push({ index: `${i}_l2`, x: baseX, y: 735, z: -300, rotY: Math.PI });
+          break;
+
+        case 'RIGHT_RIGHT':
+          out.push({ index: `${i}_r1`, x: baseX, y: 735, z: 300, rotY: 0 });
+          out.push({ index: `${i}_r2`, x: baseX, y: 735, z: 300, rotY: Math.PI });
+          break;
+
+        default:
+          out.push({ index: `${i}_f`, x: baseX, y: 735, z: -300, rotY: 0 });
+          out.push({ index: `${i}_b`, x: baseX, y: 735, z: 300, rotY: Math.PI });
+          break;
+      }
+    }
+  }
+
+  return out;
 }
 
 // ==============================
 // VIGAS
 // ==============================
-export function getVigasConfig({ puestos, widthMm }) {
-  return Array.from({ length: puestos }).map((_, i) => ({
-    index: i,
-    widthMm,
-  }));
+export function getVigasConfig({ puestos, tipoPuesto, largoRealMm }) {
+  const out = [];
+
+  for (let i = 0; i < puestos; i++) {
+    const baseX = i * largoRealMm;
+
+    if (tipoPuesto === 'sencillo') {
+      out.push({
+        nominalWidthMm: largoRealMm,
+        x: baseX,
+        y: 650,
+        z: 0,
+      });
+    }
+
+    if (tipoPuesto === 'doble') {
+      out.push({
+        nominalWidthMm: largoRealMm,
+        x: baseX,
+        y: 650,
+        z: -200,
+      });
+
+      out.push({
+        nominalWidthMm: largoRealMm,
+        x: baseX,
+        y: 650,
+        z: 200,
+      });
+    }
+  }
+
+  return out;
 }
 
 // ==============================
 // DUCTOS
 // ==============================
-export function getDuctosConfig({ puestos, widthMm, hasDuct }) {
-  if (!hasDuct) return [];
+export function getDuctosConfig({
+  puestos,
+  tipoPuesto,
+  largoRealMm,
+  anchoRealMm,
+  hasDuct = true,
+  ductModes = [],
+}) {
+  const out = [];
+  if (!hasDuct) return out;
 
-  return [
-    {
-      tipo: 'principal',
-      lengthMm: puestos * widthMm,
-    },
-  ];
+  for (let i = 0; i < puestos; i++) {
+    const baseX = i * largoRealMm;
+    const ductMode = ductModes[i] || 'TERMINAL';
+
+    out.push({
+      tipoPuesto,
+      tipoModulo: ductMode.toLowerCase(), // terminal | intermedio | individual
+      nominalWidthMm: largoRealMm,
+      x: baseX,
+      y: 620,
+      z: 0,
+    });
+  }
+
+  return out;
 }
 
 // ==============================

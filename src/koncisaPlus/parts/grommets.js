@@ -9,6 +9,7 @@ export function createGrommet({
   x = 0,
   y = 735,
   z = 0,
+  rotY = 0,
 }) {
   const resolved = resolveKoncisaCableAccessCodigoPT({
     tipo: 'grommet',
@@ -19,12 +20,15 @@ export function createGrommet({
     type: 'grommet',
     subtype: '4-tomas',
     line: 'KONCISA.PLUS',
+
     groupId,
     groupName,
+
     code: resolved.codigoPT,
     logicalCode: resolved.logicalCode,
     existsInCatalog: resolved.exists,
     rawCodigoPT: resolved.rawCodigoPT,
+
     name: `Grommet ${finish}`,
     dimMm: {
       diameterMm,
@@ -33,7 +37,7 @@ export function createGrommet({
       thickMm: 5,
     },
     position: { x, y, z },
-    rotation: { x: 0, y: 0, z: 0 },
+    rotation: { x: 0, y: rotY, z: 0 },
     model: {
       kind: 'glb',
       src: '/assets/models/koncisaPlus/LKAC250000.glb',

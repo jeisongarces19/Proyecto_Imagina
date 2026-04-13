@@ -8,8 +8,9 @@ function redondearLargoSencillo(mm) {
   return 1200;
 }
 */
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { KONCISA_SURFACE_FINISH_OPTIONS } from '../koncisaPlus/rules/koncisaSurfaceFinishOptions';
+import DuctConfigModal from './DuctConfigModal';
 
 function redondearLargo(mm) {
   if (mm <= 1000) return 1000;
@@ -95,17 +96,37 @@ export default function KoncisaPlusPanel({ onCreate }) {
       largoCobroMm,
       anchoCobroMm,
       tipoPasoCable,
+      pasacablePosition,
       grommetFinish,
       hasDuct: true,
       finishCode: selectedFinish.finishCode,
       thickMm: selectedFinish.thickMm,
       variant: selectedFinish.variant,
       finishLabel: selectedFinish.label,
+      ductModes,
     });
   };
 
   const opcionesLargo = modoEspecial ? opcionesLargoEspecial : opcionesLargoNormal;
   const opcionesAncho = modoEspecial ? opcionesAnchoEspecial : opcionesAnchoNormal;
+
+  const [pasacablePosition, setPasacablePosition] = useState('CENTER');
+
+  useEffect(() => {
+    if (tipoPasoCable !== 'pasacable') {
+      setPasacablePosition('CENTER');
+    }
+  }, [tipoPasoCable]);
+
+  const [ductConfigOpen, setDuctConfigOpen] = useState(false);
+  const [ductModes, setDuctModes] = useState([]);
+
+  useEffect(() => {
+    setDuctModes((prev) => {
+      const next = Array.from({ length: puestos }, (_, i) => prev[i] || 'TERMINAL');
+      return next;
+    });
+  }, [puestos]);
 
   const opcionesCostado =
     tipoPuesto === 'sencillo'
@@ -133,7 +154,6 @@ export default function KoncisaPlusPanel({ onCreate }) {
   return (
     <div style={{ padding: 12, display: 'grid', gap: 12 }}>
       <h3 style={{ margin: 0 }}>Koncisa Plus</h3>
-
       <div>
         <label>Tipo de puesto</label>
         <select
@@ -145,7 +165,6 @@ export default function KoncisaPlusPanel({ onCreate }) {
           <option value="doble">Doble</option>
         </select>
       </div>
-
       <div>
         <label>Puestos</label>
         <select
@@ -156,9 +175,13 @@ export default function KoncisaPlusPanel({ onCreate }) {
           <option value={1}>1 puesto</option>
           <option value={2}>2 puestos</option>
           <option value={3}>3 puestos</option>
+          <option value={4}>4 puestos</option>
+          <option value={5}>5 puestos</option>
+          <option value={6}>6 puestos</option>
+          <option value={7}>7 puestos</option>
+          <option value={8}>8 puestos</option>
         </select>
       </div>
-
       <div>
         <label>
           <input
@@ -169,7 +192,6 @@ export default function KoncisaPlusPanel({ onCreate }) {
           Puesto especial
         </label>
       </div>
-
       <div>
         <label>Largo real</label>
         <select
@@ -184,7 +206,6 @@ export default function KoncisaPlusPanel({ onCreate }) {
           ))}
         </select>
       </div>
-
       <div>
         <label>Ancho real</label>
         <select
@@ -199,7 +220,6 @@ export default function KoncisaPlusPanel({ onCreate }) {
           ))}
         </select>
       </div>
-
       <div>
         <label>Acabado / tipo de superficie</label>
         <select
@@ -214,6 +234,18 @@ export default function KoncisaPlusPanel({ onCreate }) {
           ))}
         </select>
       </div>
+
+      <button type="button" onClick={() => setDuctConfigOpen(true)}>
+        Configurar ductos
+      </button>
+
+      <DuctConfigModal
+        open={ductConfigOpen}
+        onClose={() => setDuctConfigOpen(false)}
+        puestos={puestos}
+        ductModes={ductModes}
+        setDuctModes={setDuctModes}
+      />
 
       <div>
         <label>Tipo de costado</label>
@@ -242,7 +274,41 @@ export default function KoncisaPlusPanel({ onCreate }) {
           <option value="pasacable">Pasacable</option>
         </select>
       </div>
+      {/* =========================
+    PASACABLE
+========================= */}
+      {tipoPasoCable === 'pasacable' && (
+        <div>
+          <label>Posición pasacables</label>
 
+          {tipoPuesto === 'sencillo' && (
+            <select
+              value={pasacablePosition}
+              onChange={(e) => setPasacablePosition(e.target.value)}
+            >
+              <option value="LEFT">Izquierda</option>
+              <option value="CENTER">Centro</option>
+              <option value="RIGHT">Derecha</option>
+            </select>
+          )}
+
+          {tipoPuesto === 'doble' && (
+            <select
+              value={pasacablePosition}
+              onChange={(e) => setPasacablePosition(e.target.value)}
+            >
+              <option value="CENTER">Centro</option>
+              <option value="LEFT_RIGHT">Izq - Der</option>
+              <option value="LEFT_LEFT">Izq - Izq</option>
+              <option value="RIGHT_RIGHT">Der - Der</option>
+            </select>
+          )}
+        </div>
+      )}
+
+      {/* =========================
+    GROMMET
+========================= */}
       {tipoPasoCable === 'grommet' && (
         <div>
           <label>Acabado del grommet</label>
@@ -258,7 +324,6 @@ export default function KoncisaPlusPanel({ onCreate }) {
           </select>
         </div>
       )}
-
       <div
         style={{
           border: '1px solid #ddd',
@@ -280,7 +345,6 @@ export default function KoncisaPlusPanel({ onCreate }) {
         <div>Espesor: {selectedFinish.thickMm} mm</div>
         <div>Variante: {selectedFinish.variant || 'base'}</div>
       </div>
-
       <button onClick={handleCreate}>Crear puesto</button>
     </div>
   );

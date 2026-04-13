@@ -1,41 +1,57 @@
 // src/koncisaPlus/parts/vigas.js
-
-function buildVigaCode({ widthMm }) {
-  return `KPL-VIGA-${widthMm}`;
-}
+import { resolveKoncisaViga } from '../rules/koncisaVigaRules';
 
 export function createViga({
-  widthMm = 1200,
-  heightMm = 60,
-  depthMm = 40,
+  groupId = null,
+  groupName = null,
+  nominalWidthMm = 1200,
   x = 0,
   y = 650,
   z = 0,
-  code,
 }) {
+  const resolved = resolveKoncisaViga({ nominalWidthMm });
+
+  const widthMm = Math.max(1, nominalWidthMm - 87);
+  const heightMm = 50.8;
+  const depthMm = 25.4;
+
   return {
     type: 'viga',
-    subtype: 'estructural',
+    subtype: 'soporte',
     line: 'KONCISA.PLUS',
-    code: code || buildVigaCode({ widthMm }),
-    name: `Viga ${widthMm}`,
+
+    groupId,
+    groupName,
+
+    code: resolved.codigoPT,
+    logicalCode: resolved.logicalCode,
+    existsInCatalog: resolved.exists,
+    rawCodigoPT: resolved.codigoPT,
+
+    name: `Viga ${nominalWidthMm}`,
+
     dimMm: {
       widthMm,
       heightMm,
       depthMm,
+      nominalWidthMm,
     },
+
     position: {
       x,
       y,
       z,
     },
+
     rotation: {
       x: 0,
       y: 0,
       z: 0,
     },
+
     meta: {
       category: 'vigas',
+      nominalWidthMm,
     },
   };
 }

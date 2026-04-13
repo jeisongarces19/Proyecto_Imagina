@@ -1,7 +1,12 @@
 import { useRef } from 'react';
 import { useMemo, useState, useEffect } from 'react';
 import { loadTipologiasDetalle } from '../services/tipologiasDetalle';
-import { getChairDetail, loadChairsPriceList, loadChairsCategoryMap, loadCategoriasSillas } from '../services/chairsLoader';
+import {
+  getChairDetail,
+  loadChairsPriceList,
+  loadChairsCategoryMap,
+  loadCategoriasSillas,
+} from '../services/chairsLoader';
 import { loadHaresItems } from '../services/haresLoader';
 import { loadPlantsItems } from '../services/plantsLoader';
 import { getThreeMaterialFromDef } from '../materials/materialRegistry'; // Ajusta la ruta según tu estructura de carpetas
@@ -24,7 +29,9 @@ function TypologyCardImage({ codigoPT, title }) {
   const [candidateIndex, setCandidateIndex] = useState(0);
   const [resolvedImage, setResolvedImage] = useState(() => {
     if (!cacheKey) return null;
-    return typologyImageCache.has(cacheKey) ? typologyImageCache.get(cacheKey) : candidates[0] || null;
+    return typologyImageCache.has(cacheKey)
+      ? typologyImageCache.get(cacheKey)
+      : candidates[0] || null;
   });
 
   useEffect(() => {
@@ -143,7 +150,8 @@ export default function LeftPanel({
   const [categoriaSillaFilter, setCategoriaSillaFilter] = useState('');
   const [subcategoriaSillaFilter, setSubcategoriaSillaFilter] = useState('');
   const [subcategoriasSillasByCategoria, setSubcategoriasSillasByCategoria] = useState({});
-  const [subcategoriasSillasGlobalCountByCategoria, setSubcategoriasSillasGlobalCountByCategoria] = useState({});
+  const [subcategoriasSillasGlobalCountByCategoria, setSubcategoriasSillasGlobalCountByCategoria] =
+    useState({});
 
   // HARES states
   const [qHares, setQHares] = useState('');
@@ -306,8 +314,8 @@ export default function LeftPanel({
               },
               model: { kind: 'CHAIR' },
               raw: c,
-              categoriaNivel2: cat?.nivel2 || '',    // ej: "SILLAS DE COLECTIVIDAD INTERIORES"
-              categoriaNivel3: cat?.nivel3 || '',    // ej: "OFIPARTES"
+              categoriaNivel2: cat?.nivel2 || '', // ej: "SILLAS DE COLECTIVIDAD INTERIORES"
+              categoriaNivel3: cat?.nivel3 || '', // ej: "OFIPARTES"
               categoriaSlug: cat?.slug || '',
             };
           })
@@ -515,8 +523,7 @@ export default function LeftPanel({
       const matchesSearch =
         !q || code.includes(q) || title.includes(q) || subtitle.includes(q) || tags.includes(q);
 
-      const matchesCategoria =
-        !categoriaSillaFilter || it.categoriaNivel2 === categoriaSillaFilter;
+      const matchesCategoria = !categoriaSillaFilter || it.categoriaNivel2 === categoriaSillaFilter;
 
       const matchesSubcategoria =
         !subcategoriaSillaFilter || it.categoriaNivel3 === subcategoriaSillaFilter;
@@ -873,9 +880,61 @@ export default function LeftPanel({
               });
             });
 
+            const costados = parts.filter((p) => p.type === 'costado');
+
+            costados.forEach((costado) => {
+              console.log('COSTADO =>', costado);
+
+              if (!costado.code) {
+                alert(`No tenemos disponible este costado: ${costado.logicalCode}`);
+                return;
+              }
+
+              if (!costado?.model?.src) {
+                alert(`Este costado no tiene modelo 3D asociado: ${costado.logicalCode}`);
+                return;
+              }
+
+              threeApiRef.current?.addExternalGlbPart?.({
+                ...costado,
+                groupId: costado.groupId || groupId,
+                groupName: costado.groupName || groupName,
+              });
+            });
+
+            //VIGAS
+            const vigas = parts.filter((p) => p.type === 'viga');
+
+            vigas.forEach((viga) => {
+              if (!viga.code) {
+                alert(`No tenemos disponible esta viga: ${viga.logicalCode}`);
+                return;
+              }
+
+              threeApiRef.current?.addNativeBlockPart?.({
+                ...viga,
+                groupId: viga.groupId || groupId,
+                groupName: viga.groupName || groupName,
+              });
+            });
+
+            const ductos = parts.filter((p) => p.type === 'ducto');
+
+            ductos.forEach((ducto) => {
+              if (!ducto.code) {
+                alert(`No tenemos disponible este ducto: ${ducto.logicalCode}`);
+                return;
+              }
+
+              threeApiRef.current?.addExternalGlbPart?.({
+                ...ducto,
+                groupId: ducto.groupId || groupId,
+                groupName: ducto.groupName || groupName,
+              });
+            });
+
             console.log('PARTS KONCISA', parts);
             console.log('GROUP KONCISA', groupId);
-            console.log('PARTS KONCISA', parts);
           }}
         />
       )}
@@ -1218,12 +1277,11 @@ export default function LeftPanel({
               }}
             >
               <option value="">Todas las categorías</option>
-              {categoriasSillas
-                .map((cat) => (
-                  <option key={cat.id} value={cat.nombre}>
-                    {cat.nombre} ({chairCategoryCounts.get(cat.nombre) || 0})
-                  </option>
-                ))}
+              {categoriasSillas.map((cat) => (
+                <option key={cat.id} value={cat.nombre}>
+                  {cat.nombre} ({chairCategoryCounts.get(cat.nombre) || 0})
+                </option>
+              ))}
             </select>
 
             <select
@@ -1240,14 +1298,16 @@ export default function LeftPanel({
               <option value="">Todas las subcategorías</option>
               {chairSubcategories.map((subcat) => (
                 <option key={subcat} value={subcat}>
-                  {subcat} ({chairSubcategoryCounts.get(subcat) || 0}/{chairSubcategoryGlobalCounts.get(subcat) || 0})
+                  {subcat} ({chairSubcategoryCounts.get(subcat) || 0}/
+                  {chairSubcategoryGlobalCounts.get(subcat) || 0})
                 </option>
               ))}
             </select>
           </div>
 
           <div style={{ fontSize: 11, opacity: 0.65, marginTop: -4, marginBottom: 10 }}>
-            Subcategoría: <b>actual/global</b> (códigos en la lista del país / códigos únicos en JSON).
+            Subcategoría: <b>actual/global</b> (códigos en la lista del país / códigos únicos en
+            JSON).
           </div>
 
           <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>
@@ -1283,9 +1343,7 @@ export default function LeftPanel({
                 <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
                 <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
 
-                <div style={{ fontSize: 11, opacity: 0.65 }}>
-                  {it.categoriaNivel2 || 'Silla'}
-                </div>
+                <div style={{ fontSize: 11, opacity: 0.65 }}>{it.categoriaNivel2 || 'Silla'}</div>
               </button>
             ))}
           </div>
@@ -1321,9 +1379,7 @@ export default function LeftPanel({
             }}
           />
 
-          {!haresReady && (
-            <div style={{ fontSize: 12, opacity: 0.7 }}>Cargando HARES...</div>
-          )}
+          {!haresReady && <div style={{ fontSize: 12, opacity: 0.7 }}>Cargando HARES...</div>}
 
           <div style={{ display: 'grid', gap: 8 }}>
             {haresFiltered.map((it) => (

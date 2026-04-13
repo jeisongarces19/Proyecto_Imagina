@@ -1,42 +1,54 @@
 // src/koncisaPlus/parts/ductos.js
+import { resolveKoncisaDucto } from '../rules/koncisaDuctoRules';
 
 function buildDuctoCode({ tipo, widthMm, heightMm }) {
   return `KPL-DUCT-${String(tipo).toUpperCase()}-${widthMm}x${heightMm}`;
 }
 
 export function createDucto({
-  tipo = 'individual', // terminal | individual | intermedio | piso | techo
-  widthMm = 1200,
-  heightMm = 120,
-  depthMm = 80,
+  groupId = null,
+  groupName = null,
+  tipoPuesto = 'sencillo',
+  tipoModulo = 'terminal',
+  nominalWidthMm = 1200,
   x = 0,
   y = 620,
   z = 0,
-  code,
 }) {
+  const resolved = resolveKoncisaDucto({
+    tipoPuesto,
+    tipoModulo,
+    nominalWidthMm,
+  });
+
   return {
     type: 'ducto',
-    subtype: tipo,
+    subtype: tipoModulo,
     line: 'KONCISA.PLUS',
-    code: code || buildDuctoCode({ tipo, widthMm, heightMm }),
-    name: `Ducto ${tipo}`,
-    dimMm: {
-      widthMm,
-      heightMm,
-      depthMm,
+
+    groupId,
+    groupName,
+
+    code: resolved.codigoPT,
+    logicalCode: resolved.logicalCode,
+    existsInCatalog: resolved.exists,
+    rawCodigoPT: resolved.rawCodigoPT,
+
+    name: `Ducto ${tipoPuesto} ${tipoModulo} ${nominalWidthMm}`,
+
+    position: { x, y, z },
+    rotation: { x: 0, y: 0, z: 0 },
+
+    model: {
+      kind: 'glb',
+      src: resolved?.modelSrc || null,
     },
-    position: {
-      x,
-      y,
-      z,
-    },
-    rotation: {
-      x: 0,
-      y: 0,
-      z: 0,
-    },
+
     meta: {
       category: 'ductos',
+      tipoPuesto,
+      tipoModulo,
+      nominalWidthMm,
     },
   };
 }

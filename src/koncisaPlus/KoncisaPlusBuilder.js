@@ -36,6 +36,7 @@ export function buildKoncisaPlus(config = {}) {
     anchoCobroMm = 600,
 
     tipoPasoCable = 'none',
+    pasacablePosition = 'CENTER',
     grommetFinish = 'ALUMINIUM',
     hasDuct = true,
     includePedestal = false,
@@ -44,6 +45,7 @@ export function buildKoncisaPlus(config = {}) {
     finishCode = '22008689',
     thickMm = 25,
     variant = '',
+    ductModes = [],
   } = config;
 
   const parts = [];
@@ -162,7 +164,6 @@ export function buildKoncisaPlus(config = {}) {
     grommets.forEach((g) => {
       parts.push(
         createGrommet({
-          //grupo linea y padre
           groupId,
           groupName,
           finish: grommetFinish,
@@ -170,6 +171,7 @@ export function buildKoncisaPlus(config = {}) {
           x: g.x,
           y: g.y ?? 735,
           z: g.z ?? 0,
+          rotY: g.rotY ?? 0,
         })
       );
     });
@@ -181,18 +183,18 @@ export function buildKoncisaPlus(config = {}) {
       tipoPuesto,
       largoRealMm,
       anchoRealMm,
+      position: pasacablePosition,
     });
 
     pasacables.forEach((p) => {
       parts.push(
         createPasacable({
-          //grupo linea y padre
           groupId,
           groupName,
-          diameterMm: p.diameterMm || 50,
           x: p.x,
-          y: p.y ?? 735,
-          z: p.z ?? 0,
+          y: p.y,
+          z: p.z,
+          rotY: p.rotY,
         })
       );
     });
@@ -210,11 +212,9 @@ export function buildKoncisaPlus(config = {}) {
   vigas.forEach((v) => {
     parts.push(
       createViga({
-        //grupo linea y padre
         groupId,
-        widthMm: v.widthMm,
-        heightMm: v.heightMm,
-        depthMm: v.depthMm,
+        groupName,
+        nominalWidthMm: v.nominalWidthMm,
         x: v.x,
         y: v.y ?? 650,
         z: v.z ?? 0,
@@ -231,18 +231,18 @@ export function buildKoncisaPlus(config = {}) {
     largoRealMm,
     anchoRealMm,
     hasDuct,
+    ductModes,
   });
 
   ductos.forEach((d) => {
     parts.push(
       createDucto({
-        //grupo linea y padre
         groupId,
-        tipo: d.tipo || 'individual',
-        widthMm: d.widthMm ?? d.lengthMm ?? largoRealMm,
-        heightMm: d.heightMm,
-        depthMm: d.depthMm,
-        x: d.x ?? 0,
+        groupName,
+        tipoPuesto: d.tipoPuesto,
+        tipoModulo: d.tipoModulo,
+        nominalWidthMm: d.nominalWidthMm,
+        x: d.x,
         y: d.y ?? 620,
         z: d.z ?? 0,
       })

@@ -14,7 +14,7 @@ export const KONCISA_COSTADO_INTERMEDIO_RULES = {
   // Intermedio doble
   KONPLUSSPAINTEDLEGINTERMEDIATE_16_120: {
     codigoPT: '22000132390',
-    modelSrc: '/assets/models/koncisaPlus/2KSO070000_120.glb',
+    modelSrc: '/assets/models/koncisaPlus/2KSO329000_120.glb',
   },
   KONPLUSSPAINTEDLEGINTERMEDIATE_16_150: {
     codigoPT: '22000132391',

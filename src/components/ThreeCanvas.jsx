@@ -1081,14 +1081,13 @@ export default function ThreeCanvas({
         detUSD;
 
       if (!det) {
-        console.warn(`HARES: producto ${codigo} no encontrado en PriceList, se cargará sin precio.`);
+        console.warn(
+          `HARES: producto ${codigo} no encontrado en PriceList, se cargará sin precio.`
+        );
       }
 
       // 2) cargar GLB desde carpeta HARES
-      const possibleSrcs = [
-        `/assets/models/HARES/${codigo}.glb`,
-        `/assets/models/${codigo}.glb`,
-      ];
+      const possibleSrcs = [`/assets/models/HARES/${codigo}.glb`, `/assets/models/${codigo}.glb`];
 
       const gltf = await loadExistingGlb(possibleSrcs);
 
@@ -1177,7 +1176,9 @@ export default function ThreeCanvas({
 
       if (!gltf) {
         console.error(`No se encontró GLB para planta: ${name}`);
-        alert(`No se encontró el modelo 3D para "${name}". Verifica que exista en /assets/models/Plants and Flowers/`);
+        alert(
+          `No se encontró el modelo 3D para "${name}". Verifica que exista en /assets/models/Plants and Flowers/`
+        );
         return;
       }
 
@@ -1200,34 +1201,35 @@ export default function ThreeCanvas({
       }
 
       // 3) Preparar BOM: solo si tiene código de precio
-      const plantParts = (det && det.codigo)
-        ? [
-            {
-              code: det.codigo,
-              description: det.descripcion,
-              qty: 1,
-              unitPrice: Number(det.precio || 0),
-              prices: {
-                CO: detCO?.precio || 0,
-                EUC: detEUC?.precio || 0,
-                USD: detUSD?.precio || 0,
+      const plantParts =
+        det && det.codigo
+          ? [
+              {
+                code: det.codigo,
+                description: det.descripcion,
+                qty: 1,
+                unitPrice: Number(det.precio || 0),
+                prices: {
+                  CO: detCO?.precio || 0,
+                  EUC: detEUC?.precio || 0,
+                  USD: detUSD?.precio || 0,
+                },
               },
-            },
-          ]
-        : [];
+            ]
+          : [];
 
       obj.userData = {
         ...(obj.userData || {}),
         kind: 'PLANT',
         codigoPT: name,
         code: name,
-        name: (det?.descripcion) || name,
+        name: det?.descripcion || name,
         plantName: name,
         plantParts,
         plantMeta: {
-          descripcion: (det?.descripcion) || name,
-          precio: (det?.precio) || 0,
-          udm: (det?.udm) || 'und',
+          descripcion: det?.descripcion || name,
+          precio: det?.precio || 0,
+          udm: det?.udm || 'und',
         },
       };
 
@@ -1764,6 +1766,8 @@ export default function ThreeCanvas({
       addSurface,
       addSurfaceFromRules,
       addExternalGlbPart,
+      //Vigas nativas
+      addNativeBlockPart,
       // utilidades
       toggleSnap,
       exportProject,
@@ -2115,15 +2119,22 @@ export default function ThreeCanvas({
 
       const code = String(codigoPT);
 
+      const catalogItem = item || catalogByCodeRef.current?.get?.(code) || null;
+
       const description =
-        item?.ui?.title ||
-        item?.ui?.subtitle ||
-        item?.raw?.descripcion ||
-        item?.raw?.description ||
+        catalogItem?.ui?.title ||
+        catalogItem?.ui?.subtitle ||
+        catalogItem?.raw?.descripcion ||
+        catalogItem?.raw?.description ||
         code;
 
       const rawPrice =
-        item?.prices?.CO ?? item?.prices?.co ?? item?.raw?.prices?.CO ?? item?.raw?.price ?? 0;
+        catalogItem?.prices?.CO ??
+        catalogItem?.prices?.co ??
+        catalogItem?.raw?.prices?.CO ??
+        catalogItem?.raw?.price ??
+        0;
+
       const unitPrice = Number(rawPrice || 0);
 
       mesh.userData = {
@@ -2163,6 +2174,75 @@ export default function ThreeCanvas({
       emitBOM();
     }
 
+    // VIGAS Bloque nativo
+    function addNativeBlockPart(part) {
+      if (readOnly) return;
+      if (!part?.dimMm) return;
+
+      const widthM = (part.dimMm.widthMm || 0) / 1000;
+      const heightM = (part.dimMm.heightMm || 0) / 1000;
+      const depthM = (part.dimMm.depthMm || 0) / 1000;
+
+      const geometry = new THREE.BoxGeometry(widthM, heightM, depthM);
+      const material = new THREE.MeshStandardMaterial({ color: 0x8a8a8a });
+      const mesh = new THREE.Mesh(geometry, material);
+
+      mesh.position.set(
+        (part.position?.x || 0) / 1000,
+        (part.position?.y || 0) / 1000,
+        (part.position?.z || 0) / 1000
+      );
+
+      mesh.rotation.set(part.rotation?.x || 0, part.rotation?.y || 0, part.rotation?.z || 0);
+
+      const code = String(part.code || '').trim();
+      const catalogItem = catalogByCodeRef.current?.get?.(code) || null;
+
+      const description =
+        catalogItem?.ui?.title ||
+        catalogItem?.ui?.subtitle ||
+        catalogItem?.raw?.descripcion ||
+        catalogItem?.raw?.description ||
+        part.name ||
+        part.code ||
+        'Bloque nativo';
+
+      const unitPrice =
+        Number(
+          catalogItem?.prices?.[countryRef.current] ??
+            catalogItem?.prices?.CO ??
+            catalogItem?.prices?.co ??
+            catalogItem?.raw?.prices?.[countryRef.current] ??
+            catalogItem?.raw?.prices?.CO ??
+            catalogItem?.raw?.price ??
+            0
+        ) || 0;
+
+      mesh.userData = {
+        code: code || null,
+        codigoPT: code || null,
+        kind: part.type || 'BLOCK_PART',
+        line: part.line || null,
+        dim: part.dimMm || null,
+        description,
+        unitPrice,
+        meta: part.meta || {},
+        instanceId: `${code || 'block'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
+        groupId: part?.groupId || null,
+        groupName: part?.groupName || null,
+        logicalCode: part?.logicalCode || null,
+      };
+
+      mesh.name = code || part.name || 'BLOCK_PART';
+
+      scene.add(mesh);
+      parts.push({ code: code || mesh.name, obj: mesh });
+      pickables.push(mesh);
+
+      setActivePart(mesh);
+      emitBOM();
+    }
+
     async function addExternalGlbPart(part) {
       if (readOnly) return;
       if (!part?.model?.src) {
@@ -2184,25 +2264,48 @@ export default function ThreeCanvas({
 
         obj.rotation.set(part.rotation?.x || 0, part.rotation?.y || 0, part.rotation?.z || 0);
 
+        const code = String(part.code || '').trim();
+        const catalogItem = catalogByCodeRef.current?.get?.(code) || null;
+
+        const description =
+          catalogItem?.ui?.title ||
+          catalogItem?.ui?.subtitle ||
+          catalogItem?.raw?.descripcion ||
+          catalogItem?.raw?.description ||
+          part.name ||
+          part.code ||
+          'Pieza GLB';
+
+        const unitPrice =
+          Number(
+            catalogItem?.prices?.[countryRef.current] ??
+              catalogItem?.prices?.CO ??
+              catalogItem?.prices?.co ??
+              catalogItem?.raw?.prices?.[countryRef.current] ??
+              catalogItem?.raw?.prices?.CO ??
+              catalogItem?.raw?.price ??
+              0
+          ) || 0;
+
         obj.userData = {
-          code: part.code || null,
-          codigoPT: part.code || null,
+          code: code || null,
+          codigoPT: code || null,
           kind: part.type || 'GLB_PART',
           line: part.line || null,
           dim: part.dimMm || null,
-          description: part.name || part.code || 'Pieza GLB',
-          unitPrice: 0,
+          description,
+          unitPrice,
           meta: part.meta || {},
-          instanceId: `${part.code || 'glb'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
+          instanceId: `${code || 'glb'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
           groupId: part?.groupId || null,
           groupName: part?.groupName || null,
           logicalCode: part?.logicalCode || null,
         };
 
-        obj.name = part.code || part.name || 'GLB_PART';
+        obj.name = code || part.name || 'GLB_PART';
 
         scene.add(obj);
-        parts.push({ code: part.code || obj.name, obj });
+        parts.push({ code: code || obj.name, obj });
         pickables.push(obj);
 
         setActivePart(obj);
