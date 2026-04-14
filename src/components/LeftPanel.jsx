@@ -1236,7 +1236,8 @@ export default function LeftPanel({
       {section === 'plans' && (
         <>
           <h3 style={{ margin: '0 0 12px 0' }}>Planos</h3>
-          <Plan2DUploader onLoadFile={handleLoadPlan2D} />
+
+          {Plan2DUploader ? <Plan2DUploader onLoadFile={handleLoadPlan2D} /> : null}
 
           <button
             onClick={() => setPlan2DVisible((v) => !v)}

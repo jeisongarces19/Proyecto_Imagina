@@ -36,6 +36,34 @@ import LeftPanel from './components/LeftPanel';
 
 import { loadCategoriasIntranet } from './services/categoriasIntranet.js';
 
+import PropertiesPopup from './components/PropertiesPopup';
+
+import * as pdfjsLib from 'pdfjs-dist';
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+
+async function pdfFileToDataUrl(file) {
+  const bytes = new Uint8Array(await file.arrayBuffer());
+
+  const pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
+  const page = await pdf.getPage(1);
+
+  const viewport = page.getViewport({ scale: 1.5 });
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = Math.ceil(viewport.width);
+  canvas.height = Math.ceil(viewport.height);
+
+  await page.render({
+    canvasContext: ctx,
+    viewport,
+  }).promise;
+
+  return canvas.toDataURL('image/png');
+}
+
 function normalizeCode(code) {
   return String(code ?? '').trim();
 }
@@ -97,7 +125,7 @@ export default function App() {
   const [selectedPartAcabado, _setSelectedPartAcabado] = useState(null);
 
   // Muros
-  const [wallMode, setWallMode] = useState(false);
+  const [wallMode, setWallMode] = useState('NONE');
   const [wallHeight, setWallHeight] = useState(2.4);
   const [wallThickness, setWallThickness] = useState(0.1);
   const [walls, setWalls] = useState([]);
@@ -222,17 +250,71 @@ export default function App() {
   };
 
   const [plan2DVisible, setPlan2DVisible] = useState(true);
-  const [_plan2DSrc, setPlan2DSrc] = useState(null);
+  const [plan2DSrc, setPlan2DSrc] = useState(null);
+  const [plan2DKind, setPlan2DKind] = useState(null);
+  const [plan2DName, setPlan2DName] = useState('');
+  const [plan2DTransform, setPlan2DTransform] = useState({
+    metersPerPixel: 0.01, // temporal, luego se calibra
+    offsetX: 0,
+    offsetZ: 0,
+    opacity: 0.35,
+  });
   const plan2DUrlRef = useRef(null);
 
-  const handleLoadPlan2D = (file) => {
-    // Limpia URL anterior
-    if (plan2DUrlRef.current) URL.revokeObjectURL(plan2DUrlRef.current);
+  const handleLoadPlan2D = async (file, meta) => {
+    if (!file) return;
 
-    const url = URL.createObjectURL(file);
-    plan2DUrlRef.current = url;
-    setPlan2DSrc(url);
-    setPlan2DVisible(true);
+    if (plan2DUrlRef.current) {
+      URL.revokeObjectURL(plan2DUrlRef.current);
+      plan2DUrlRef.current = null;
+    }
+
+    const type = meta?.type || 'unknown';
+    setPlan2DKind(type);
+    setPlan2DName(meta?.name || file.name || '');
+
+    if (type === 'image' || type === 'svg') {
+      const url = URL.createObjectURL(file);
+      plan2DUrlRef.current = url;
+      setPlan2DSrc(url);
+      setPlan2DVisible(true);
+      return;
+    }
+
+    if (type === 'pdf') {
+      try {
+        const dataUrl = await pdfFileToDataUrl(file);
+        setPlan2DSrc(dataUrl);
+        setPlan2DKind('image');
+        setPlan2DVisible(true);
+        return;
+      } catch (err) {
+        console.error('Error renderizando PDF:', err);
+        alert('No se pudo convertir el PDF a imagen para mostrarlo en 2D.');
+        setPlan2DSrc(null);
+        return;
+      }
+    }
+
+    if (type === 'dwg') {
+      alert(
+        'El DWG no se puede renderizar directo en este visor. Convierte el archivo a DXF o SVG para visualizarlo en 2D.'
+      );
+      setPlan2DSrc(null);
+      setPlan2DVisible(true);
+      return;
+    }
+
+    if (type === 'dxf') {
+      alert(
+        'El DXF ya fue detectado, pero todavía falta integrar su renderer/parser. Por ahora usa SVG, imagen o PDF.'
+      );
+      setPlan2DSrc(null);
+      setPlan2DVisible(true);
+      return;
+    }
+
+    setPlan2DSrc(null);
   };
 
   /* =====================================================
@@ -366,6 +448,13 @@ export default function App() {
     })().catch(console.error);
   }, []);
 
+  const [floatingEditor, setFloatingEditor] = useState({
+    open: false,
+    x: 0,
+    y: 0,
+    part: null,
+  });
+
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* TOP BAR */}
@@ -494,9 +583,7 @@ export default function App() {
               onAddHares={(codigoHares) =>
                 !readOnly && threeApiRef.current?.addHares?.(codigoHares)
               }
-              onAddPlant={(plantName) =>
-                !readOnly && threeApiRef.current?.addPlant?.(plantName)
-              }
+              onAddPlant={(plantName) => !readOnly && threeApiRef.current?.addPlant?.(plantName)}
               onToggleSnap={() => !readOnly && threeApiRef.current?.toggleSnap?.()}
               onApplyGlobalMaterial={(code, scope = 'ALL') => {
                 if (readOnly) return;
@@ -562,6 +649,20 @@ export default function App() {
             }}
             onSelectionChange={setSelectedPart}
             onBOMChange={handleBOMChange}
+            onFloatingEditorRequest={setFloatingEditor}
+          />
+          <PropertiesPopup
+            open={floatingEditor.open}
+            x={floatingEditor.x}
+            y={floatingEditor.y}
+            part={floatingEditor.part}
+            api={threeApiRef.current}
+            onClose={() =>
+              setFloatingEditor((prev) => ({
+                ...prev,
+                open: false,
+              }))
+            }
           />
 
           <Plan2DOverlay
@@ -581,6 +682,9 @@ export default function App() {
             onSetWalls={setWalls}
             height={240}
             invertZ={true}
+            plan2DSrc={plan2DSrc}
+            plan2DVisible={plan2DVisible}
+            plan2DTransform={plan2DTransform}
           />
 
           <BOMWindow open={bomOpen} title="BOM - Proyecto" onClose={() => setBomOpen(false)}>

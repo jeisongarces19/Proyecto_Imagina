@@ -151,6 +151,8 @@ export default function KoncisaPlusPanel({ onCreate }) {
           { value: 'TRAP', label: 'Trapecial' },
         ];
 
+  //console.log('DUCT MODES PANEL', ductModes);
+
   return (
     <div style={{ padding: 12, display: 'grid', gap: 12 }}>
       <h3 style={{ margin: 0 }}>Koncisa Plus</h3>

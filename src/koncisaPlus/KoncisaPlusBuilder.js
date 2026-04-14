@@ -48,6 +48,8 @@ export function buildKoncisaPlus(config = {}) {
     ductModes = [],
   } = config;
 
+  //console.log('DUCT MODES BUILDER', ductModes);
+
   const parts = [];
 
   // ========================

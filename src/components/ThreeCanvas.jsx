@@ -23,6 +23,8 @@ import { getChairDetail } from '../services/chairsLoader';
 import { getHaresDetail } from '../services/haresLoader';
 import { getPlantDetail } from '../services/plantsLoader';
 
+import { resolveKoncisaDucto } from '../koncisaPlus/rules/koncisaDuctoRules';
+
 const MM_TO_M = 1 / 1000;
 
 export default function ThreeCanvas({
@@ -34,6 +36,7 @@ export default function ThreeCanvas({
   materialsByCode,
   catalogByCode,
   country = 'CO',
+  onFloatingEditorRequest,
 }) {
   const mountRef = useRef(null);
 
@@ -280,6 +283,14 @@ export default function ThreeCanvas({
         subKey,
         subName,
         subMaterialCode,
+
+        //datos para los popup
+        kind: obj.userData?.kind || null,
+        meta: obj.userData?.meta || null,
+        groupId: obj.userData?.groupId || null,
+        groupName: obj.userData?.groupName || null,
+        logicalCode: obj.userData?.logicalCode || null,
+        instanceId: obj.userData?.instanceId || null,
       });
     }
 
@@ -1449,6 +1460,13 @@ export default function ThreeCanvas({
           selectionHelper = null;
         }
         onSelectionChange?.(null);
+
+        onFloatingEditorRequest?.({
+          open: false,
+          x: 0,
+          y: 0,
+          part: null,
+        });
       }
 
       // liberar recursos
@@ -1816,6 +1834,8 @@ export default function ThreeCanvas({
       getDeleteAsGroup: () => deleteAsGroupRef.current,
       removeTargetOrGroup: (target) => removeTargetOrGroup(target),
       removeActiveOrGroup: () => removeTargetOrGroup(activePart),
+      //para el popup
+      updateSelectedDuctType,
     });
 
     function getGroupedObjects(target) {
@@ -1860,6 +1880,64 @@ export default function ThreeCanvas({
       });
 
       return removedAny;
+    }
+
+    async function updateSelectedDuctType(newType) {
+      if (readOnly) return;
+      if (!activePart) return;
+      if (activePart.userData?.kind !== 'ducto') return;
+
+      const tipoPuesto = activePart.userData?.meta?.tipoPuesto || 'sencillo';
+      const nominalWidthMm = activePart.userData?.meta?.nominalWidthMm || 1200;
+
+      const resolved = resolveKoncisaDucto({
+        tipoPuesto,
+        tipoModulo: newType,
+        nominalWidthMm,
+      });
+
+      if (!resolved?.codigoPT || !resolved?.modelSrc) {
+        alert(`No tenemos disponible ese ducto: ${resolved?.logicalCode || newType}`);
+        return;
+      }
+
+      const oldObj = activePart;
+      const pos = oldObj.position.clone();
+      const rot = oldObj.rotation.clone();
+      const groupId = oldObj.userData?.groupId || null;
+      const groupName = oldObj.userData?.groupName || null;
+
+      removePartObject(oldObj);
+
+      await addExternalGlbPart({
+        type: 'ducto',
+        subtype: newType,
+        line: 'KONCISA.PLUS',
+        code: resolved.codigoPT,
+        logicalCode: resolved.logicalCode,
+        groupId,
+        groupName,
+        position: {
+          x: pos.x * 1000,
+          y: pos.y * 1000,
+          z: pos.z * 1000,
+        },
+        rotation: {
+          x: rot.x,
+          y: rot.y,
+          z: rot.z,
+        },
+        model: {
+          kind: 'glb',
+          src: resolved.modelSrc,
+        },
+        meta: {
+          category: 'ductos',
+          tipoPuesto,
+          tipoModulo: newType,
+          nominalWidthMm,
+        },
+      });
     }
 
     // ====== Keyboard ======
@@ -1938,6 +2016,23 @@ export default function ThreeCanvas({
       if (!root) return;
 
       setActivePart(root);
+
+      //para propiedades flotantes p popup:
+      onFloatingEditorRequest?.({
+        open: true,
+        x: e.clientX,
+        y: e.clientY,
+        part: {
+          code: root.userData?.codigoPT || root.userData?.code || null,
+          kind: root.userData?.kind || null,
+          meta: root.userData?.meta || null,
+          groupId: root.userData?.groupId || null,
+          groupName: root.userData?.groupName || null,
+          logicalCode: root.userData?.logicalCode || null,
+          instanceId: root.userData?.instanceId || null,
+          description: root.userData?.description || null,
+        },
+      });
 
       //if (moveAsGroup && root?.userData?.groupId) {
       if (moveAsGroupRef.current && root?.userData?.groupId) {

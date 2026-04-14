@@ -317,16 +317,34 @@ export function getDuctosConfig({
     const baseX = i * largoRealMm;
     const ductMode = ductModes[i] || 'TERMINAL';
 
+    const tipoModulo = (ductModes[i] || 'TERMINAL').toLowerCase();
+
+    let ductLengthMm = largoRealMm;
+
+    if (tipoModulo === 'terminal') {
+      ductLengthMm = largoRealMm - 313.5;
+    } else if (tipoModulo === 'intermedio') {
+      ductLengthMm = largoRealMm - 313.5; // 👈 CAMBIAR cuando me digas el valor real
+    } else if (tipoModulo === 'individual') {
+      ductLengthMm = largoRealMm - 313.5; // 👈 o el valor que aplique
+    }
+
+    // Inicio del módulo
+    const moduleStartX = baseX - largoRealMm / 2;
+
+    // Centro del ducto, arrancando desde el inicio
+    const ductCenterX = moduleStartX + ductLengthMm / 2;
+
     out.push({
       tipoPuesto,
       tipoModulo: ductMode.toLowerCase(), // terminal | intermedio | individual
       nominalWidthMm: largoRealMm,
-      x: baseX,
+      x: ductCenterX, //baseX,
       y: 620,
       z: 0,
     });
   }
-
+  //console.log('DUCTOS CONFIG', out);
   return out;
 }
 
