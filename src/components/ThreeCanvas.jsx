@@ -43,6 +43,12 @@ export default function ThreeCanvas({
   // ✅ NUEVO: referencia al group de muros (para reconstruir sin romper hooks/zoom/2D)
   const wallsGroupRef = useRef(null);
 
+  const floorMeshRef = useRef(null);
+  const gridHelperRef = useRef(null);
+  const sceneRef = useRef(null);
+
+  const refreshFloorAndGridRef = useRef(() => {});
+
   // ✅ (opcional) guardar refs de scene para debug
   // const sceneRef = useRef(null);
 
@@ -61,6 +67,7 @@ export default function ThreeCanvas({
   const dragGroupStartRef = useRef(null);
   const dragRootStartRef = useRef(null);
 
+  //use effect 1
   useEffect(() => {
     moveAsGroupRef.current = moveAsGroup;
   }, [moveAsGroup]);
@@ -68,24 +75,29 @@ export default function ThreeCanvas({
   const [deleteAsGroup, setDeleteAsGroup] = useState(true);
   const deleteAsGroupRef = useRef(true);
 
+  //use effect 2
   useEffect(() => {
     deleteAsGroupRef.current = deleteAsGroup;
   }, [deleteAsGroup]);
 
+  //use effect 3
   useEffect(() => {
     countryRef.current = country;
     emitBOMRef.current?.();
   }, [country]);
 
+  //use effect 4
   useEffect(() => {
     materialsByCodeRef.current = materialsByCode || new Map();
     console.log('[ThreeCanvas] materialsByCodeRef size:', materialsByCodeRef.current.size);
   }, [materialsByCode]);
 
+  //use effect 5
   useEffect(() => {
     catalogByCodeRef.current = catalogByCode || new Map();
   }, [catalogByCode]);
 
+  //use effect 6
   useEffect(() => {
     if (!pendingProject) return;
 
@@ -105,6 +117,7 @@ export default function ThreeCanvas({
     setPendingProject(null);
   }, [pendingProject]);
 
+  //use effect 7
   useEffect(() => {
     console.log('[ThreeCanvas] materialsByCode size:', materialsByCode?.size, materialsByCode);
     const container = mountRef.current;
@@ -113,6 +126,7 @@ export default function ThreeCanvas({
     // ====== Scene ======
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xf5f5f5);
+    sceneRef.current = scene;
     // sceneRef.current = scene;
 
     const camera = new THREE.PerspectiveCamera(
@@ -137,7 +151,9 @@ export default function ThreeCanvas({
     scene.add(dir);
 
     // Grid + axes
-    scene.add(new THREE.GridHelper(8, 80));
+    //scene.add(new THREE.GridHelper(8, 80));
+    //scene.add(new THREE.AxesHelper(0.6));
+
     scene.add(new THREE.AxesHelper(0.6));
 
     // ✅ NUEVO: group de muros (una sola vez)
@@ -243,6 +259,100 @@ export default function ThreeCanvas({
 
       return { localCenter, sizeLocal };
     }
+
+    function computeSceneXZBounds(parts = [], walls = []) {
+      let minX = Infinity;
+      let maxX = -Infinity;
+      let minZ = Infinity;
+      let maxZ = -Infinity;
+
+      for (const p of parts) {
+        if (!p) continue;
+        const halfW = (p.w || 0) / 2;
+        const halfD = (p.d || 0) / 2;
+
+        minX = Math.min(minX, (p.x || 0) - halfW);
+        maxX = Math.max(maxX, (p.x || 0) + halfW);
+        minZ = Math.min(minZ, (p.z || 0) - halfD);
+        maxZ = Math.max(maxZ, (p.z || 0) + halfD);
+      }
+
+      for (const wall of walls || []) {
+        for (const pt of wall?.points || []) {
+          minX = Math.min(minX, pt.x);
+          maxX = Math.max(maxX, pt.x);
+          minZ = Math.min(minZ, pt.z);
+          maxZ = Math.max(maxZ, pt.z);
+        }
+      }
+
+      if (!isFinite(minX) || !isFinite(maxX) || !isFinite(minZ) || !isFinite(maxZ)) {
+        return {
+          minX: -5,
+          maxX: 5,
+          minZ: -5,
+          maxZ: 5,
+        };
+      }
+
+      return { minX, maxX, minZ, maxZ };
+    }
+
+    function updateFloorAndGrid({
+      floorMesh,
+      gridHelper,
+      scene,
+      bounds,
+      padding = 4,
+      minSize = 12,
+    }) {
+      const spanX = bounds.maxX - bounds.minX;
+      const spanZ = bounds.maxZ - bounds.minZ;
+
+      const size = Math.max(minSize, Math.ceil(Math.max(spanX, spanZ) + padding * 2));
+      const centerX = (bounds.minX + bounds.maxX) / 2;
+      const centerZ = (bounds.minZ + bounds.maxZ) / 2;
+
+      // Piso
+      floorMesh.scale.set(size, size, 1);
+      floorMesh.position.set(centerX, 0, centerZ);
+
+      // Grid viejo fuera
+      if (gridHelper.current) {
+        scene.remove(gridHelper.current);
+        gridHelper.current.geometry?.dispose?.();
+        gridHelper.current.material?.dispose?.();
+      }
+
+      //const divisions = Math.max(10, Math.round(size));// de 1 metro en 1 metro
+      const cellSize = 0.1; // 10 cm
+      const divisions = Math.max(10, Math.round(size / cellSize));
+      const newGrid = new THREE.GridHelper(size, divisions, 0x999999, 0xdddddd);
+      newGrid.position.set(centerX, 0.001, centerZ);
+      scene.add(newGrid);
+      gridHelper.current = newGrid;
+    }
+
+    const floorGeo = new THREE.PlaneGeometry(1, 1);
+    const floorMat = new THREE.MeshStandardMaterial({
+      color: 0xdedede, //color: 0xf5f5f5,
+      side: THREE.DoubleSide,
+    });
+
+    const floorMesh = new THREE.Mesh(floorGeo, floorMat);
+    floorMesh.rotation.x = -Math.PI / 2;
+    scene.add(floorMesh);
+    floorMeshRef.current = floorMesh;
+
+    // bounds iniciales vacíos / mínimos
+    const initialBounds = computeSceneXZBounds([], walls);
+
+    updateFloorAndGrid({
+      floorMesh: floorMeshRef.current,
+      gridHelper: gridHelperRef,
+      scene,
+      bounds: initialBounds,
+    });
 
     function setActivePart(obj) {
       activePart = obj;
@@ -840,6 +950,7 @@ export default function ThreeCanvas({
       emitBOM?.();
 
       if (parts.length === 1) frameObject(obj);
+      refreshFloorAndGrid();
     }
 
     async function loadExistingGlb(possibleSrcs) {
@@ -987,6 +1098,7 @@ export default function ThreeCanvas({
       emitBOM();
 
       if (parts.length === 1) frameObject(obj);
+      refreshFloorAndGrid();
     }
 
     async function addChair(codigoSilla) {
@@ -1071,6 +1183,7 @@ export default function ThreeCanvas({
       emitBOM();
 
       if (parts.length === 1) frameObject(obj);
+      refreshFloorAndGrid();
     }
 
     async function addHares(codigoHares) {
@@ -1152,6 +1265,7 @@ export default function ThreeCanvas({
       emitBOM();
 
       if (parts.length === 1) frameObject(obj);
+      refreshFloorAndGrid();
     }
 
     async function addPlant(plantName) {
@@ -1258,6 +1372,7 @@ export default function ThreeCanvas({
       emitBOM();
 
       if (parts.length === 1) frameObject(obj);
+      refreshFloorAndGrid();
     }
 
     async function addCatalogItem(codigoPT) {
@@ -1473,6 +1588,7 @@ export default function ThreeCanvas({
       disposeObject3D(obj);
 
       emitBOM();
+      refreshFloorAndGrid();
       return true;
     }
 
@@ -1755,6 +1871,7 @@ export default function ThreeCanvas({
         controls.target.copy(center);
         controls.update();
       }
+      refreshFloorAndGrid();
     }
 
     function toggleSnap() {
@@ -1774,6 +1891,37 @@ export default function ThreeCanvas({
         }
       }
     }
+
+    function movePartToXZInternal(id, x, z) {
+      const found = parts.find(({ obj }) => (obj?.userData?.instanceId || obj?.uuid) === id);
+
+      const target = found?.obj;
+      if (!target) return false;
+
+      target.position.x = x;
+      target.position.z = z;
+      target.updateMatrixWorld(true);
+
+      if (selectionHelper) selectionHelper.update();
+      emitBOM?.();
+      refreshFloorAndGrid();
+      return true;
+    }
+
+    function refreshFloorAndGrid() {
+      if (!sceneRef.current || !floorMeshRef.current) return;
+
+      const bounds = computeSceneXZBounds(getPartsSnapshot2D(), walls);
+
+      updateFloorAndGrid({
+        floorMesh: floorMeshRef.current,
+        gridHelper: gridHelperRef,
+        scene: sceneRef.current,
+        bounds,
+      });
+    }
+
+    refreshFloorAndGridRef.current = refreshFloorAndGrid;
 
     emitBOM();
 
@@ -1836,6 +1984,7 @@ export default function ThreeCanvas({
       removeActiveOrGroup: () => removeTargetOrGroup(activePart),
       //para el popup
       updateSelectedDuctType,
+      movePartToXZ: (id, x, z) => movePartToXZInternal(id, x, z),
     });
 
     function getGroupedObjects(target) {
@@ -1861,6 +2010,7 @@ export default function ThreeCanvas({
       });
 
       if (selectionHelper) selectionHelper.update();
+      refreshFloorAndGrid();
     }
 
     //eliminar por grupo
@@ -2105,6 +2255,7 @@ export default function ThreeCanvas({
 
         if (selectionHelper) selectionHelper.update();
       }
+      refreshFloorAndGrid();
     }
 
     function onPointerUp(e) {
@@ -2131,6 +2282,7 @@ export default function ThreeCanvas({
       dragGroupStartRef.current = null;
       dragRootStartRef.current = null;
       snapActivePart();
+      refreshFloorAndGrid();
     }
 
     function onPointerCancel(e) {
@@ -2267,6 +2419,7 @@ export default function ThreeCanvas({
 
       setActivePart(mesh);
       emitBOM();
+      refreshFloorAndGrid();
     }
 
     // VIGAS Bloque nativo
@@ -2336,6 +2489,7 @@ export default function ThreeCanvas({
 
       setActivePart(mesh);
       emitBOM();
+      refreshFloorAndGrid();
     }
 
     async function addExternalGlbPart(part) {
@@ -2409,6 +2563,8 @@ export default function ThreeCanvas({
         console.error('Error cargando GLB externo:', part.model.src, error);
         alert(`No se pudo cargar el modelo 3D: ${part.model.src}`);
       }
+
+      refreshFloorAndGrid();
     }
 
     function looksLikeGuid(s) {
@@ -2673,6 +2829,7 @@ export default function ThreeCanvas({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //use effect 8
   // ✅ AQUi está la mezcla correcta:
   // - NO toca OrbitControls/zoom/2D snapshot
   // - Solo reconstruye el group de muros cuando cambie `walls`
@@ -2722,6 +2879,7 @@ export default function ThreeCanvas({
         group.add(mesh);
       }
     }
+    refreshFloorAndGridRef.current?.();
   }, [walls]);
 
   return <div ref={mountRef} style={{ width: '100%', height: '100%' }} />;

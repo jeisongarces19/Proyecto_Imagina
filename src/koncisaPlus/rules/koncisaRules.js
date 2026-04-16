@@ -32,7 +32,7 @@ export function getCostadosConfig({
           depthMm: anchoRealMm,
           x: baseX - largoRealMm / 2 + offsetXIzq,
           y: 0,
-          z: offsetZIzq,
+          z: offsetZIzq - 5.5,
         });
       }
 
@@ -58,7 +58,7 @@ export function getCostadosConfig({
           depthMm: anchoRealMm,
           x: baseX + largoRealMm / 2 + offsetXDer,
           y: 0,
-          z: offsetZDer,
+          z: offsetZDer + 5.5,
         });
       }
     }
@@ -77,7 +77,7 @@ export function getCostadosConfig({
           depthMm: anchoRealMm,
           x: baseX - largoRealMm / 2 + offsetXIzq,
           y: 0,
-          z: 0,
+          z: 600,
         });
       }
 
@@ -274,7 +274,7 @@ export function getVigasConfig({ puestos, tipoPuesto, largoRealMm }) {
       out.push({
         nominalWidthMm: largoRealMm,
         x: baseX,
-        y: 650,
+        y: 690,
         z: 0,
       });
     }
@@ -283,14 +283,14 @@ export function getVigasConfig({ puestos, tipoPuesto, largoRealMm }) {
       out.push({
         nominalWidthMm: largoRealMm,
         x: baseX,
-        y: 650,
+        y: 690,
         z: -200,
       });
 
       out.push({
         nominalWidthMm: largoRealMm,
         x: baseX,
-        y: 650,
+        y: 690,
         z: 200,
       });
     }
@@ -322,9 +322,9 @@ export function getDuctosConfig({
     let ductLengthMm = largoRealMm;
 
     if (tipoModulo === 'terminal') {
-      ductLengthMm = largoRealMm - 313.5;
+      ductLengthMm = largoRealMm - 339 * 2;
     } else if (tipoModulo === 'intermedio') {
-      ductLengthMm = largoRealMm - 313.5; // 👈 CAMBIAR cuando me digas el valor real
+      ductLengthMm = 0; //largoRealMm - 1200; // 👈 CAMBIAR cuando me digas el valor real
     } else if (tipoModulo === 'individual') {
       ductLengthMm = largoRealMm - 313.5; // 👈 o el valor que aplique
     }
@@ -340,8 +340,8 @@ export function getDuctosConfig({
       tipoModulo: ductMode.toLowerCase(), // terminal | intermedio | individual
       nominalWidthMm: largoRealMm,
       x: ductCenterX, //baseX,
-      y: 620,
-      z: 0,
+      y: 0, //530,
+      z: 102,
     });
   }
   //console.log('DUCTOS CONFIG', out);

@@ -674,6 +674,10 @@ export default function App() {
               if (last) threeApiRef.current?.selectPartById?.(last);
             }}
             onPickId={(id) => threeApiRef.current?.selectPartById?.(id)}
+            onMovePart2D={(id, x, z) => {
+              if (readOnly) return;
+              threeApiRef.current?.movePartToXZ?.(id, x, z);
+            }}
             walls={walls}
             wallMode={wallMode}
             wallHeight={wallHeight}
@@ -681,10 +685,11 @@ export default function App() {
             onAddWall={(wall) => setWalls((prev) => [...prev, wall])}
             onSetWalls={setWalls}
             height={240}
-            invertZ={true}
+            invertZ={false}
             plan2DSrc={plan2DSrc}
             plan2DVisible={plan2DVisible}
             plan2DTransform={plan2DTransform}
+            onPlan2DTransformChange={setPlan2DTransform}
           />
 
           <BOMWindow open={bomOpen} title="BOM - Proyecto" onClose={() => setBomOpen(false)}>
