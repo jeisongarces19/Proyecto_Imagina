@@ -17,15 +17,15 @@ import { buildKoncisaPlus } from '../koncisaPlus/KoncisaPlusBuilder';
 const TYPOLOGY_IMAGE_EXTENSIONS = ['png', 'jpeg', 'jpg', 'webp'];
 const typologyImageCache = new Map();
 
-function buildTypologyImageCandidates(codigoPT) {
-  const code = String(codigoPT || '').trim();
+function buildCardImageCandidates(assetName) {
+  const code = String(assetName || '').trim();
   if (!code) return [];
   return TYPOLOGY_IMAGE_EXTENSIONS.map((ext) => `/assets/imagen/${code}.${ext}`);
 }
 
-function TypologyCardImage({ codigoPT, title }) {
-  const cacheKey = String(codigoPT || '').trim();
-  const candidates = useMemo(() => buildTypologyImageCandidates(codigoPT), [codigoPT]);
+function CardImage({ assetName, title }) {
+  const cacheKey = String(assetName || '').trim();
+  const candidates = useMemo(() => buildCardImageCandidates(assetName), [assetName]);
   const [candidateIndex, setCandidateIndex] = useState(0);
   const [resolvedImage, setResolvedImage] = useState(() => {
     if (!cacheKey) return null;
@@ -35,7 +35,7 @@ function TypologyCardImage({ codigoPT, title }) {
   });
 
   useEffect(() => {
-    const nextCacheKey = String(codigoPT || '').trim();
+    const nextCacheKey = String(assetName || '').trim();
     if (!nextCacheKey) {
       setCandidateIndex(0);
       setResolvedImage(null);
@@ -50,7 +50,7 @@ function TypologyCardImage({ codigoPT, title }) {
 
     setCandidateIndex(0);
     setResolvedImage(candidates[0] || null);
-  }, [codigoPT, candidates]);
+  }, [assetName, candidates]);
 
   if (!resolvedImage) return null;
 
@@ -83,7 +83,7 @@ function TypologyCardImage({ codigoPT, title }) {
     >
       <img
         src={resolvedImage}
-        alt={title || codigoPT}
+        alt={title || assetName}
         loading="lazy"
         onLoad={handleLoad}
         onError={handleError}
@@ -96,6 +96,14 @@ function TypologyCardImage({ codigoPT, title }) {
       />
     </div>
   );
+}
+
+function TypologyCardImage({ codigoPT, title }) {
+  return <CardImage assetName={codigoPT} title={title} />;
+}
+
+function PlantCardImage({ plantName, title }) {
+  return <CardImage assetName={plantName} title={title} />;
 }
 
 export default function LeftPanel({
@@ -1433,6 +1441,7 @@ export default function LeftPanel({
                 onClick={() => !readOnly && onAddPlant(it.codigoPT)}
                 style={cardBtn(readOnly)}
               >
+                <PlantCardImage plantName={it.codigoPT} title={it.ui?.title || it.codigoPT} />
                 <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
                 <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
                 {it.raw?.found && (
