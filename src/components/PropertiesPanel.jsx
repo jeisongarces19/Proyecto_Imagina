@@ -15,24 +15,30 @@ export default function PropertiesPanel({
 }) {
   const hasBom = Array.isArray(bomItems) && bomItems.length > 0;
 
-  const [applyScope, setApplyScope] = useState('PART'); // PART | ALL
+  const [applyScope, setApplyScope] = useState('PART'); // PART | GROUP | ALL
   const [finishQuery, setFinishQuery] = useState(''); // 🔎 buscar por código o nombre
 
   //
+  const hasFinishRestriction = Array.isArray(allowedFinishCodes);
+
   const allowedSet = useMemo(() => {
-    if (!Array.isArray(allowedFinishCodes) || allowedFinishCodes.length === 0) return null;
-    return new Set(allowedFinishCodes.map((x) => String(x)));
-  }, [allowedFinishCodes]);
+    if (!hasFinishRestriction) return null;
+    return new Set((allowedFinishCodes || []).map((x) => String(x)));
+  }, [allowedFinishCodes, hasFinishRestriction]);
 
   // 1) primero restringe por allowedSet (si existe)
   const scopedMaterials = useMemo(() => {
     const list = materials || [];
-    if (!allowedSet) return list;
+
+    // null/undefined = sin restricción
+    if (!hasFinishRestriction) return list;
+
+    // [] = restricción activa pero sin coincidencias => lista vacía
     return list.filter((m) => allowedSet.has(String(m?.code)));
-  }, [materials, allowedSet]);
+  }, [materials, allowedSet, hasFinishRestriction]);
 
   // 2) luego aplica búsqueda dentro de ese scope
-  const filteredMaterialsAcanado = useMemo(() => {
+  const filteredMaterialsAcabado = useMemo(() => {
     const q = (finishQuery || '').trim().toLowerCase();
     if (!q) return scopedMaterials;
 
@@ -52,16 +58,52 @@ export default function PropertiesPanel({
     setFinishQuery('');
   }, [part?.code, part?.subKey, part?.activeSubKey, part?.subName]);
 
-  const filteredMaterials = useMemo(() => {
-    const q = (finishQuery || '').trim().toLowerCase();
-    if (!q) return materials || [];
+  function normalizeGenericos(source, byCodeMap) {
+    const code = String(source?.code || '').trim();
+    const item = code ? byCodeMap?.get?.(code) || null : null;
 
-    return (materials || []).filter((m) => {
-      const code = String(m?.code ?? '').toLowerCase();
-      const name = String(m?.name ?? '').toLowerCase();
-      return code.includes(q) || name.includes(q);
-    });
-  }, [materials, finishQuery]);
+    const values = [
+      ...(Array.isArray(source?.raw?.genericos) ? source.raw.genericos : []),
+      ...(Array.isArray(source?.genericos) ? source.genericos : []),
+      source?.raw?.generico ?? null,
+      source?.generico ?? null,
+
+      ...(Array.isArray(item?.raw?.genericos) ? item.raw.genericos : []),
+      ...(Array.isArray(item?.genericos) ? item.genericos : []),
+      item?.raw?.generico ?? null,
+      item?.generico ?? null,
+    ]
+      .map((g) => String(g ?? '').trim())
+      .filter(Boolean);
+
+    return [...new Set(values)];
+  }
+
+  const partGenericos = useMemo(() => normalizeGenericos(part, byCode), [part, byCode]);
+  const partAcabadoGenericos = useMemo(
+    () => normalizeGenericos(partAcabado, byCode),
+    [partAcabado, byCode]
+  );
+
+  const partGenericoText = partGenericos.length ? partGenericos.join(', ') : 'Sin genérico';
+  const partAcabadoGenericoText = partAcabadoGenericos.length
+    ? partAcabadoGenericos.join(', ')
+    : 'Sin genérico Acabado';
+
+  //para poner el acabado por grupos
+  const canApplyGroup = !!part?.groupId;
+
+  const groupScopeLabel = useMemo(() => {
+    if (part?.kind === 'SURFACE') return 'Grupo similar';
+    const cat = String(part?.meta?.category || '').toLowerCase();
+
+    if (cat === 'costados') return 'Grupo similar';
+    if (cat === 'ductos') return 'Grupo similar';
+    if (cat === 'pantallas') return 'Grupo similar';
+    if (cat === 'grommets') return 'Grupo similar';
+
+    return 'Grupo similar';
+  }, [part]);
 
   return (
     <div
@@ -106,18 +148,12 @@ export default function PropertiesPanel({
           {/* Genérico */}
           <div style={{ marginBottom: 10 }}>
             <b>Genérico:</b>{' '}
-            {part?.generico ? (
-              <span>{part.generico}</span>
-            ) : (
-              <span style={{ opacity: 0.7 }}>Sin genérico</span>
-            )}
+            <span style={{ opacity: partGenericos.length ? 1 : 0.7 }}>{partGenericoText}</span>
             <div style={{ marginTop: 4 }}>
               <b>Genérico (Acabado):</b>{' '}
-              {partAcabado?.generico ? (
-                <span>{partAcabado.generico}</span>
-              ) : (
-                <span style={{ opacity: 0.7 }}>Sin genérico Acabado</span>
-              )}
+              <span style={{ opacity: partAcabadoGenericos.length ? 1 : 0.7 }}>
+                {partAcabadoGenericoText}
+              </span>
             </div>
           </div>
 
@@ -146,41 +182,81 @@ export default function PropertiesPanel({
             <div style={{ fontWeight: 700, marginBottom: 6 }}>Acabado</div>
 
             {/* Scope */}
-            <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr',
+                gap: 8,
+                marginBottom: 8,
+              }}
+            >
               <button
                 type="button"
+                title="Aplicar a la parte seleccionada"
                 onClick={() => setApplyScope('PART')}
                 disabled={readOnly}
                 style={{
-                  flex: 1,
                   padding: '6px 8px',
                   borderRadius: 8,
                   border: '1px solid #ddd',
                   background: applyScope === 'PART' ? '#111827' : '#fff',
                   color: applyScope === 'PART' ? '#fff' : '#111827',
                   cursor: readOnly ? 'not-allowed' : 'pointer',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
                 }}
               >
-                Parte seleccionada
+                ◧ Parte
               </button>
 
               <button
                 type="button"
+                title="Aplicar a piezas similares del mismo conjunto"
+                onClick={() => setApplyScope('GROUP')}
+                disabled={readOnly || !canApplyGroup}
+                style={{
+                  padding: '6px 8px',
+                  borderRadius: 8,
+                  border: '1px solid #ddd',
+                  background: applyScope === 'GROUP' ? '#111827' : '#fff',
+                  color: applyScope === 'GROUP' ? '#fff' : '#111827',
+                  cursor: readOnly || !canApplyGroup ? 'not-allowed' : 'pointer',
+                  opacity: !canApplyGroup ? 0.6 : 1,
+                  fontSize: 12,
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                ◫ Grupo
+              </button>
+
+              <button
+                type="button"
+                title="Aplicar al objeto completo"
                 onClick={() => setApplyScope('ALL')}
                 disabled={readOnly}
                 style={{
-                  flex: 1,
                   padding: '6px 8px',
                   borderRadius: 8,
                   border: '1px solid #ddd',
                   background: applyScope === 'ALL' ? '#111827' : '#fff',
                   color: applyScope === 'ALL' ? '#fff' : '#111827',
                   cursor: readOnly ? 'not-allowed' : 'pointer',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
                 }}
               >
-                Objeto completo
+                ⬚ Todo
               </button>
             </div>
+
+            {applyScope === 'GROUP' && (
+              <div style={{ fontSize: 11, opacity: 0.7, marginBottom: 8, lineHeight: 1.3 }}>
+                Mismo grupo y misma familia.
+              </div>
+            )}
 
             {part.subName && (
               <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 6 }}>
@@ -203,6 +279,10 @@ export default function PropertiesPanel({
               }}
             />
 
+            <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 6 }}>
+              Acabados permitidos: <b>{filteredMaterialsAcabado.length}</b>
+            </div>
+
             <select
               value={part.subMaterialCode ?? part.materialCode ?? ''}
               onChange={(e) => {
@@ -221,7 +301,7 @@ export default function PropertiesPanel({
             >
               <option value="">Sin acabado</option>
 
-              {filteredMaterials.map((m) => (
+              {filteredMaterialsAcabado.map((m) => (
                 <option key={m.code} value={m.code}>
                   {m.code} — {m.name}
                 </option>

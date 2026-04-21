@@ -1,6 +1,59 @@
-// applyMaterial.js
 import * as THREE from 'three';
 import { getThreeMaterialFromDef } from './materialRegistry';
+
+const textureLoader = new THREE.TextureLoader();
+const textureCache = new Map();
+
+function loadTextureCached(url) {
+  if (!url) return null;
+  if (textureCache.has(url)) return textureCache.get(url);
+
+  const tex = textureLoader.load(url);
+  tex.wrapS = THREE.RepeatWrapping;
+  tex.wrapT = THREE.RepeatWrapping;
+
+  textureCache.set(url, tex);
+  return tex;
+}
+
+function buildThreeMaterialFromDef(def = {}) {
+  const material = new THREE.MeshStandardMaterial({
+    color: def.rgbValue
+      ? `rgb(${String(def.rgbValue).replaceAll('_', ',')})`
+      : def.color || '#cccccc',
+    roughness: Number.isFinite(def.roughness) ? def.roughness : 0.9,
+    metalness: Number.isFinite(def.metalness) ? def.metalness : 0.0,
+    side: THREE.DoubleSide,
+  });
+
+  if (def.mapUrl) {
+    const map = loadTextureCached(def.mapUrl);
+    if (map) {
+      map.colorSpace = THREE.SRGBColorSpace;
+      map.repeat.set(def.repeatX || 1, def.repeatY || 1);
+      material.map = map;
+    }
+  }
+
+  if (def.normalMapUrl) {
+    const normalMap = loadTextureCached(def.normalMapUrl);
+    if (normalMap) {
+      normalMap.repeat.set(def.repeatX || 1, def.repeatY || 1);
+      material.normalMap = normalMap;
+    }
+  }
+
+  if (def.roughnessMapUrl) {
+    const roughnessMap = loadTextureCached(def.roughnessMapUrl);
+    if (roughnessMap) {
+      roughnessMap.repeat.set(def.repeatX || 1, def.repeatY || 1);
+      material.roughnessMap = roughnessMap;
+    }
+  }
+
+  material.needsUpdate = true;
+  return material;
+}
 
 // Helpers internos
 function markNeedsUpdate(material) {
@@ -17,13 +70,37 @@ function restoreMeshMaterial(mesh) {
   markNeedsUpdate(mesh.material);
 }
 
+function resolveMaterial(materialDef) {
+  const isTextured =
+    !!materialDef?.mapUrl ||
+    !!materialDef?.normalMapUrl ||
+    !!materialDef?.roughnessMapUrl ||
+    materialDef?.materialType === 'floor' ||
+    materialDef?.useTexture === true;
+
+  if (isTextured) {
+    return buildThreeMaterialFromDef(materialDef);
+  }
+
+  return (
+    getThreeMaterialFromDef(materialDef) ||
+    buildThreeMaterialFromDef(materialDef) ||
+    new THREE.MeshStandardMaterial({
+      color: 0xdddddd,
+      roughness: 0.75,
+      metalness: 0.0,
+      side: THREE.DoubleSide,
+    })
+  );
+}
+
 export function applyMaterialToObject3D(root, materialCode, materialDef) {
   if (!root) return;
 
   const code = materialCode ? String(materialCode) : null;
   root.userData.materialCode = code;
 
-  // ✅ Sin acabado: restaurar TODOS los meshes del root
+  // Sin acabado: restaurar originales
   if (!code) {
     root.traverse((obj) => {
       if (!obj?.isMesh) return;
@@ -32,33 +109,21 @@ export function applyMaterialToObject3D(root, materialCode, materialDef) {
     return;
   }
 
-  // ✅ Construir material base (puede venir null si def no está listo)
-  let baseMat = getThreeMaterialFromDef(materialDef);
-
-  // ✅ FALLBACK visible
-  if (!baseMat) {
-    console.warn(
-      '[applyMaterialToObject3D] materialDef inválido o sin soporte:',
-      materialDef,
-      'code:',
-      code
-    );
-    baseMat = new THREE.MeshStandardMaterial({ color: 0xdddddd, roughness: 0.75, metalness: 0.0 });
-  }
+  const baseMat = resolveMaterial(materialDef);
 
   root.traverse((obj) => {
     if (!obj?.isMesh) return;
 
-    // Guardar material original una sola vez
+    // guardar original una sola vez
     if (!obj.userData.__origMaterial) obj.userData.__origMaterial = obj.material;
 
-    // ✅ Si el mesh era multi-material, mantenemos la estructura (array)
     if (Array.isArray(obj.material)) {
       obj.material = obj.material.map(() => (baseMat.clone ? baseMat.clone() : baseMat));
     } else {
       obj.material = baseMat.clone ? baseMat.clone() : baseMat;
     }
 
+    obj.userData.materialCode = code;
     markNeedsUpdate(obj.material);
     obj.castShadow = true;
     obj.receiveShadow = true;
@@ -71,29 +136,17 @@ export function applyMaterialToMesh(mesh, materialCode, materialDef) {
   const code = materialCode ? String(materialCode) : null;
   mesh.userData.materialCode = code;
 
-  // ✅ Sin acabado: restaurar SOLO este mesh
+  // Sin acabado: restaurar solo este mesh
   if (!code) {
     restoreMeshMaterial(mesh);
     return;
   }
 
-  let baseMat = getThreeMaterialFromDef(materialDef);
+  const baseMat = resolveMaterial(materialDef);
 
-  // ✅ FALLBACK visible
-  if (!baseMat) {
-    console.warn(
-      '[applyMaterialToMesh] materialDef inválido o sin soporte:',
-      materialDef,
-      'code:',
-      code
-    );
-    baseMat = new THREE.MeshStandardMaterial({ color: 0xdddddd, roughness: 0.75, metalness: 0.0 });
-  }
-
-  // Guardar material original una sola vez
+  // guardar original una sola vez
   if (!mesh.userData.__origMaterial) mesh.userData.__origMaterial = mesh.material;
 
-  // ✅ Soportar mesh con material único o multi-material (array)
   if (Array.isArray(mesh.material)) {
     mesh.material = mesh.material.map(() => (baseMat.clone ? baseMat.clone() : baseMat));
   } else {

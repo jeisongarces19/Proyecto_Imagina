@@ -327,22 +327,76 @@ export default function ThreeCanvas({
       //const divisions = Math.max(10, Math.round(size));// de 1 metro en 1 metro
       const cellSize = 0.1; // 10 cm
       const divisions = Math.max(10, Math.round(size / cellSize));
-      const newGrid = new THREE.GridHelper(size, divisions, 0x999999, 0xdddddd);
+      //const newGrid = new THREE.GridHelper(size, divisions, 0x999999, 0xdddddd);
+      const newGrid = new THREE.GridHelper(size, divisions, 0xbcbcbc, 0xe9e9e9);
       newGrid.position.set(centerX, 0.001, centerZ);
       scene.add(newGrid);
       gridHelper.current = newGrid;
     }
 
+    function updateFloorVisualOptions(patch = {}) {
+      const floor = floorMeshRef.current;
+      if (!floor) return false;
+
+      floor.userData = {
+        ...floor.userData,
+        ...patch,
+      };
+
+      applyFloorVisualState();
+      setActivePart(floor);
+
+      onFloatingEditorRequest?.({
+        open: true,
+        x: 120,
+        y: 120,
+        part: {
+          code: floor.userData?.codigoPT || floor.userData?.code || 'FLOOR_MAIN',
+          kind: floor.userData?.kind || 'FLOOR_VISUAL',
+          meta: floor.userData?.meta || null,
+          groupId: floor.userData?.groupId || null,
+          groupName: floor.userData?.groupName || null,
+          logicalCode: floor.userData?.logicalCode || null,
+          instanceId: floor.userData?.instanceId || 'FLOOR_MAIN',
+          description: floor.userData?.description || 'Piso principal',
+          showGrid: floor.userData?.showGrid !== false,
+        },
+      });
+
+      return true;
+    }
+
     const floorGeo = new THREE.PlaneGeometry(1, 1);
     const floorMat = new THREE.MeshStandardMaterial({
-      color: 0xdedede, //color: 0xf5f5f5,
+      color: 0xe8e8e8, //color: 0xf5f5f5,
       side: THREE.DoubleSide,
     });
 
     const floorMesh = new THREE.Mesh(floorGeo, floorMat);
     floorMesh.rotation.x = -Math.PI / 2;
+
+    floorMesh.name = 'FLOOR_MAIN';
+
+    floorMesh.userData = {
+      code: 'FLOOR_MAIN',
+      codigoPT: 'FLOOR_MAIN',
+      kind: 'FLOOR_VISUAL',
+      description: 'Piso principal',
+      materialBase: 'PISO',
+      materialCode: null,
+      generico: 'PISO',
+      instanceId: 'FLOOR_MAIN',
+      lockedMovement: true,
+      lockedDelete: true,
+      excludeFromBOM: true,
+      isFloor: true,
+      showGrid: true,
+    };
+
     scene.add(floorMesh);
     floorMeshRef.current = floorMesh;
+    // importante: que pueda seleccionarse
+    //pickables.push(floorMesh);
 
     // bounds iniciales vacíos / mínimos
     const initialBounds = computeSceneXZBounds([], walls);
@@ -363,6 +417,8 @@ export default function ThreeCanvas({
         scene.remove(selectionHelper);
         selectionHelper = null;
       }
+
+      syncGridVisibility();
 
       if (activePart) {
         selectionHelper = new THREE.BoxHelper(activePart, 0xffcc00);
@@ -401,7 +457,35 @@ export default function ThreeCanvas({
         groupName: obj.userData?.groupName || null,
         logicalCode: obj.userData?.logicalCode || null,
         instanceId: obj.userData?.instanceId || null,
+
+        showGrid: obj.userData?.isFloor ? obj.userData?.showGrid !== false : undefined,
       });
+    }
+
+    function selectFloor() {
+      const floor = floorMeshRef.current;
+      if (!floor) return false;
+
+      setActivePart(floor);
+
+      onFloatingEditorRequest?.({
+        open: true,
+        x: 120,
+        y: 120,
+        part: {
+          code: floor.userData?.codigoPT || floor.userData?.code || 'FLOOR_MAIN',
+          kind: floor.userData?.kind || 'FLOOR_VISUAL',
+          meta: floor.userData?.meta || null,
+          groupId: floor.userData?.groupId || null,
+          groupName: floor.userData?.groupName || null,
+          logicalCode: floor.userData?.logicalCode || null,
+          instanceId: floor.userData?.instanceId || 'FLOOR_MAIN',
+          description: floor.userData?.description || 'Piso principal',
+          showGrid: floor.userData?.showGrid !== false,
+        },
+      });
+
+      return true;
     }
 
     function getPartsSnapshot2D() {
@@ -582,6 +666,8 @@ export default function ThreeCanvas({
       for (const p of parts) {
         const obj = p.obj;
         if (!obj) continue;
+
+        if (obj.userData?.excludeFromBOM) continue;
 
         if (obj.userData?.kind === 'TYPOLOGY') {
           const parentCode = normalizeText(
@@ -1547,6 +1633,7 @@ export default function ThreeCanvas({
     }
 
     function removePartObject(obj) {
+      if (obj?.userData?.lockedDelete) return false;
       if (!obj) return false;
 
       // quitar de escena
@@ -1897,6 +1984,7 @@ export default function ThreeCanvas({
 
       const target = found?.obj;
       if (!target) return false;
+      if (target?.userData?.lockedMovement) return false;
 
       target.position.x = x;
       target.position.z = z;
@@ -1919,9 +2007,34 @@ export default function ThreeCanvas({
         scene: sceneRef.current,
         bounds,
       });
+
+      applyFloorVisualState();
     }
 
     refreshFloorAndGridRef.current = refreshFloorAndGrid;
+
+    function applyFloorVisualState() {
+      const floor = floorMeshRef.current;
+      const grid = gridHelperRef.current;
+      if (!floor || !grid) return;
+
+      const showGrid = floor.userData?.showGrid !== false;
+      grid.visible = showGrid;
+    }
+
+    function syncGridVisibility() {
+      const grid = gridHelperRef.current;
+      if (!grid) return;
+
+      // Si el activo es el piso, manda showGrid del piso
+      if (activePart?.userData?.isFloor) {
+        grid.visible = activePart.userData?.showGrid !== false;
+        return;
+      }
+
+      // Para cualquier otro objeto, deja la cuadrícula visible
+      grid.visible = true;
+    }
 
     emitBOM();
 
@@ -1985,6 +2098,8 @@ export default function ThreeCanvas({
       //para el popup
       updateSelectedDuctType,
       movePartToXZ: (id, x, z) => movePartToXZInternal(id, x, z),
+      selectFloor,
+      updateFloorVisualOptions,
     });
 
     function getGroupedObjects(target) {
@@ -1994,10 +2109,39 @@ export default function ThreeCanvas({
       return parts.map((p) => p?.obj).filter((obj) => obj?.userData?.groupId === groupId);
     }
 
+    function getFinishFamilyKey(obj) {
+      if (!obj) return null;
+
+      const groupId = String(obj.userData?.groupId || '').trim();
+      if (!groupId) return null;
+
+      const kind = String(obj.userData?.kind || '').trim();
+      const category = String(obj.userData?.meta?.category || '')
+        .trim()
+        .toLowerCase();
+
+      if (kind === 'SURFACE') return `${groupId}::SURFACE`;
+      if (category) return `${groupId}::CAT:${category}`;
+      if (kind) return `${groupId}::KIND:${kind}`;
+
+      return `${groupId}::GENERIC`;
+    }
+
+    function getFinishGroupTargets(target) {
+      if (!target) return [];
+
+      const familyKey = getFinishFamilyKey(target);
+      if (!familyKey) return [target];
+
+      return parts
+        .map((p) => p?.obj)
+        .filter(Boolean)
+        .filter((obj) => getFinishFamilyKey(obj) === familyKey);
+    }
+
     function moveTargetOrGroup(target, dx = 0, dy = 0, dz = 0) {
       if (!target) return;
-
-      //const targets =     moveAsGroup && target?.userData?.groupId ? getGroupedObjects(target) : [target];
+      if (target?.userData?.lockedMovement) return;
 
       const targets =
         moveAsGroupRef.current && target?.userData?.groupId ? getGroupedObjects(target) : [target];
@@ -2111,6 +2255,11 @@ export default function ThreeCanvas({
       if (!activePart) return;
 
       switch (e.key) {
+        case 'p':
+        case 'P':
+          e.preventDefault();
+          selectFloor();
+          break;
         case 'ArrowUp':
         case 'w':
           moveTargetOrGroup(activePart, 0, 0, -MOVE_STEP);
@@ -2167,6 +2316,12 @@ export default function ThreeCanvas({
 
       setActivePart(root);
 
+      if (root?.userData?.lockedMovement) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
       //para propiedades flotantes p popup:
       onFloatingEditorRequest?.({
         open: true,
@@ -2181,6 +2336,7 @@ export default function ThreeCanvas({
           logicalCode: root.userData?.logicalCode || null,
           instanceId: root.userData?.instanceId || null,
           description: root.userData?.description || null,
+          showGrid: root.userData?.showGrid !== false,
         },
       });
 
@@ -2549,6 +2705,12 @@ export default function ThreeCanvas({
           groupId: part?.groupId || null,
           groupName: part?.groupName || null,
           logicalCode: part?.logicalCode || null,
+
+          // NUEVO: contexto de acabados
+          generico: catalogItem?.generico || catalogItem?.raw?.generico || null,
+          genericos: catalogItem?.raw?.genericos || catalogItem?.genericos || [],
+          materialBase: catalogItem?.materialBase || catalogItem?.raw?.material || null,
+          materialCode: null,
         };
 
         obj.name = code || part.name || 'GLB_PART';
@@ -2593,30 +2755,74 @@ export default function ThreeCanvas({
     }
 
     function applyFinishToActivePart(materialCode, materialDef = null, scope = 'PART') {
-      console.log('[applyFinishToActivePart]', {
-        kind: activePart?.userData?.kind,
-        scope,
-        activeSubMesh: !!activeSubMesh,
-      });
       if (readOnly) return;
       if (!activePart) return;
 
-      // ✅ normaliza
       const code = materialCode || null;
       const def = materialDef || null;
 
-      const isSurface = activePart.userData?.kind === 'SURFACE';
-      const wantAll = scope === 'ALL';
+      const isSurface =
+        activePart.userData?.kind === 'SURFACE' || activePart.userData?.kind === 'FLOOR_VISUAL';
 
-      // ✅ CASO ESPECIAL: SURFACE siempre es material global (no subpartes)
+      const wantAll = scope === 'ALL';
+      const wantGroup = scope === 'GROUP';
+
+      // ===== GROUP =====
+      if (wantGroup) {
+        const targets = getFinishGroupTargets(activePart);
+
+        targets.forEach((obj) => {
+          obj.userData.materialCode = code;
+          obj.userData.materialDef = def;
+
+          applyMaterialToObject3D(obj, code, def);
+
+          obj.userData.finishes = null;
+          obj.userData.activeSubKey = null;
+          obj.userData.activeSubName = null;
+        });
+
+        // refresca panel con la pieza activa actual
+        const subKey = activePart.userData?.activeSubKey || null;
+        const finishes = activePart.userData?.finishes || {};
+        const subMaterialCode = subKey ? finishes[subKey]?.materialCode || null : null;
+        const subName = activePart.userData?.activeSubName || null;
+
+        onSelectionChange?.({
+          code: activePart.userData.codigoPT || activePart.userData.code,
+          dimMm: activePart.userData?.dim || null,
+          dimM:
+            activePart.userData?.dimM ||
+            activePart.userData?.procedural ||
+            activePart.userData?.dimMeters ||
+            null,
+          materialCode: activePart.userData?.materialCode || null,
+          materialBase: activePart.userData?.materialBase || null,
+          generico: activePart.userData?.generico || null,
+          genericos: activePart.userData?.genericos || null,
+          line: activePart.userData?.line || null,
+          subKey,
+          subName,
+          subMaterialCode,
+          kind: activePart.userData?.kind || null,
+          meta: activePart.userData?.meta || null,
+          groupId: activePart.userData?.groupId || null,
+          groupName: activePart.userData?.groupName || null,
+          logicalCode: activePart.userData?.logicalCode || null,
+          instanceId: activePart.userData?.instanceId || null,
+        });
+
+        emitBOM?.();
+        return;
+      }
+
+      // ===== SURFACE / FLOOR =====
       if (isSurface) {
         activePart.userData.materialCode = code;
         activePart.userData.materialDef = def;
 
-        // ✅ aplicar al objeto completo
         applyMaterialToObject3D(activePart, code, def);
 
-        // ✅ NO guardar finishes en surfaces (evita key "")
         activePart.userData.finishes = null;
         activePart.userData.activeSubKey = null;
         activePart.userData.activeSubName = null;
@@ -2625,12 +2831,9 @@ export default function ThreeCanvas({
           code: activePart.userData.codigoPT || activePart.userData.code,
           dimMm: activePart.userData?.dim || null,
           dimM: activePart.userData?.dimM || null,
-
           materialCode: activePart.userData?.materialCode ?? null,
           materialBase: activePart.userData?.materialBase ?? null,
           line: activePart.userData?.line ?? null,
-
-          // sin subparte
           subKey: null,
           subName: null,
           subMaterialCode: null,
@@ -2640,41 +2843,31 @@ export default function ThreeCanvas({
         return;
       }
 
-      // --- APLICAR A SUBPARTE (solo si NO es ALL) ---
+      // ===== PART / ALL =====
       if (!wantAll && activeSubMesh?.isMesh) {
         const subKey =
           activePart.userData?.activeSubKey || getMeshPathKey(activePart, activeSubMesh);
 
-        // ✅ persistir en el mesh (clave para cargar/export)
         activeSubMesh.userData.materialCode = code;
-
-        // ✅ aplicar SOLO al mesh
         applyMaterialToMesh(activeSubMesh, code, def);
 
-        // ✅ persistir en el root (para UI/BOM/export)
         activePart.userData.finishes = activePart.userData.finishes || {};
         activePart.userData.finishes[subKey] = {
           materialCode: code,
           materialBase: activePart.userData?.materialBase || null,
           subName: activePart.userData?.activeSubName || activeSubMesh.name || subKey,
         };
-      }
-
-      // --- APLICAR A TODO EL OBJETO (ALL) ---
-      else {
+      } else {
         activePart.userData.materialCode = code;
         activePart.userData.materialDef = def;
 
         applyMaterialToObject3D(activePart, code, def);
 
-        // ✅ opcional recomendado: si aplicas ALL, borra finishes para evitar mezcla
-        // (si quieres conservarlos, comenta estas líneas)
         activePart.userData.finishes = null;
         activePart.userData.activeSubKey = null;
         activePart.userData.activeSubName = null;
       }
 
-      // ✅ refrescar panel (para que no quede en blanco)
       const activeSubKey = activePart.userData?.activeSubKey || null;
       const finishes = activePart.userData?.finishes || {};
       const subMaterialCode = activeSubKey ? (finishes[activeSubKey]?.materialCode ?? null) : null;
@@ -2683,13 +2876,9 @@ export default function ThreeCanvas({
         code: activePart.userData.codigoPT || activePart.userData.code,
         dimMm: activePart.userData?.dim || null,
         dimM: activePart.userData?.dimM || null,
-
-        // material global
         materialCode: activePart.userData?.materialCode ?? null,
         materialBase: activePart.userData?.materialBase ?? null,
         line: activePart.userData?.line ?? null,
-
-        // subparte
         subKey: activeSubKey,
         subName: activePart.userData?.activeSubName ?? null,
         subMaterialCode,

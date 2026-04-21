@@ -28,9 +28,10 @@ export default function PropertiesPopup({ open, x, y, part, api, onClose }) {
   if (!open || !part) return null;
 
   const isDucto = part?.kind === 'ducto' || part?.meta?.category === 'ductos';
+  const isFloor = part?.kind === 'FLOOR_VISUAL';
 
   const popupLeft = Math.min(x + 12, window.innerWidth - 280);
-  const popupTop = Math.min(y + 12, window.innerHeight - 220);
+  const popupTop = Math.min(y + 12, window.innerHeight - 260);
 
   return (
     <div
@@ -73,6 +74,8 @@ export default function PropertiesPopup({ open, x, y, part, api, onClose }) {
         <div style={{ marginTop: 4, fontSize: 11, opacity: 0.6 }}>Código: {part.code}</div>
       )}
 
+      <div style={{ marginTop: 6, fontSize: 11, color: '#888' }}>kind: {String(part?.kind)}</div>
+
       {isDucto && (
         <div style={{ marginTop: 12 }}>
           <label style={{ display: 'block', fontSize: 12, fontWeight: 700, marginBottom: 6 }}>
@@ -98,7 +101,32 @@ export default function PropertiesPopup({ open, x, y, part, api, onClose }) {
         </div>
       )}
 
-      {!isDucto && (
+      {isFloor && (
+        <div style={{ marginTop: 12 }}>
+          <label
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              fontSize: 12,
+              fontWeight: 700,
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={part?.showGrid !== false}
+              onChange={(e) => {
+                api?.updateFloorVisualOptions?.({
+                  showGrid: e.target.checked,
+                });
+              }}
+            />
+            Mostrar cuadrícula
+          </label>
+        </div>
+      )}
+
+      {!isDucto && !isFloor && (
         <div style={{ marginTop: 12, fontSize: 12, opacity: 0.65 }}>
           Este elemento aún no tiene propiedades editables desde el popup.
         </div>

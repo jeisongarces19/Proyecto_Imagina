@@ -12,6 +12,8 @@ import TopMenuBar from './components/TopMenuBar';
 import { buildCatalogFromXml, CATALOG_COUNTRIES } from './catalog/buildCatalogFromXml';
 import { loadMaterialsFromGenEsp } from './data/materialLoader';
 
+import { floorMaterials } from './materials/floorMaterials';
+
 import {
   generatePlanSvg,
   downloadTextFile,
@@ -336,6 +338,7 @@ export default function App() {
     return materialsAcabado.filter((m) => String(m.groupCode || '').trim() === gen);
   }, [materialsAcabado, selectedPartAcabado?.generico]);
 
+  /*
   const allowedFinishCodes = useMemo(() => {
     const pt = String(selectedPartAcabado?.code ?? '').trim();
     if (!pt) return null;
@@ -366,21 +369,95 @@ export default function App() {
     if (!allowedFinishCodes) return materialsAcabado;
     return (materialsAcabado || []).filter((m) => allowedFinishCodes.has(String(m.code)));
   }, [materialsAcabado, allowedFinishCodes]);
+*/
+
+  const allowedFinishCodes = useMemo(() => {
+    const pt = String(selectedPart?.code ?? '').trim();
+    if (!pt) return null;
+
+    const item = byCode?.get?.(pt) || null;
+
+    const genericos = [
+      ...(Array.isArray(item?.raw?.genericos) ? item.raw.genericos : []),
+      ...(Array.isArray(item?.genericos) ? item.genericos : []),
+      item?.raw?.generico ?? null,
+      item?.generico ?? null,
+    ]
+      .map((g) => String(g ?? '').trim())
+      .filter(Boolean);
+
+    const genericosUnicos = [...new Set(genericos)];
+
+    if (!genericosUnicos.length) {
+      console.log('[allowedFinishCodes] sin genéricos', { pt, item });
+      return null;
+    }
+
+    const allowed = new Set();
+    for (const m of materialsAcabado || []) {
+      const g = String(m.groupCode || '').trim();
+      if (g && genericosUnicos.includes(g)) {
+        allowed.add(String(m.code));
+      }
+    }
+
+    console.log('[allowedFinishCodes]', {
+      pt,
+      genericosUnicos,
+      totalMaterials: materialsAcabado?.length || 0,
+      matchesCount: allowed.size,
+      matchesSample: (materialsAcabado || [])
+        .filter((m) => genericosUnicos.includes(String(m.groupCode || '').trim()))
+        .slice(0, 10)
+        .map((m) => ({
+          code: m.code,
+          groupCode: m.groupCode,
+          name: m.name,
+        })),
+    });
+
+    return Array.from(allowed);
+  }, [selectedPart?.code, byCode, materialsAcabado]);
 
   /* ==========================
      Cargar materiales (gen-esp)
      ========================== */
+
   useEffect(() => {
     (async () => {
       try {
         const mats = await loadMaterialsFromGenEsp('/data/xml/gen-esp_3.xml');
-        setMaterials(mats);
-        setMaterialsAcabado(mats);
+
+        const merged = [...mats, ...floorMaterials];
+
+        setMaterials(merged);
+        setMaterialsAcabado(merged);
       } catch (e) {
         console.error('Error cargando materiales:', e);
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (!selectedPart?.code) {
+      _setSelectedPartAcabado(null);
+      return;
+    }
+
+    const pt = String(selectedPart.code).trim();
+    const item = byCode?.get?.(pt) || null;
+
+    const genericosRaw = item?.raw?.genericos || item?.genericos || [];
+    const genericos = (Array.isArray(genericosRaw) ? genericosRaw : [])
+      .map((g) => String(g).trim())
+      .filter(Boolean);
+
+    _setSelectedPartAcabado({
+      ...selectedPart,
+      generico: genericos[0] || null,
+      genericos,
+    });
+  }, [selectedPart, byCode]);
 
   /* ==========================
      Cargar Tipologias por categorias (categorias_intranet)
@@ -765,6 +842,7 @@ export default function App() {
 
         {/* RIGHT */}
         <div style={{}}>
+          {/*
           <PropertiesPanel
             part={selectedPart}
             partAcabado={materialsForPanel}
@@ -774,6 +852,19 @@ export default function App() {
             api={threeApi}
             materials={filteredMaterials}
             materialsAcabado={filteredMaterialsAcabado}
+            materialsByCode={materialsByCode}
+            readOnly={readOnly}
+          />*/}
+          <PropertiesPanel
+            part={selectedPart}
+            partAcabado={selectedPart}
+            allowedFinishCodes={allowedFinishCodes ? Array.from(allowedFinishCodes) : null}
+            bomItems={bomItems}
+            country={country}
+            byCode={byCode}
+            api={threeApi}
+            materials={materialsAcabado}
+            materialsAcabado={materialsAcabado}
             materialsByCode={materialsByCode}
             readOnly={readOnly}
           />
