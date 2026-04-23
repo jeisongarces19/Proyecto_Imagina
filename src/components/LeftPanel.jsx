@@ -1,8 +1,6 @@
-import { useRef } from 'react';
-import { useMemo, useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { loadTipologiasDetalle } from '../services/tipologiasDetalle';
 import {
-  getChairDetail,
   loadChairsPriceList,
   loadChairsCategoryMap,
   loadCategoriasSillas,
@@ -10,7 +8,6 @@ import {
 import { loadHaresItems } from '../services/haresLoader';
 import { loadPlantsItems } from '../services/plantsLoader';
 import { loadOfficeAccessoriesItems } from '../services/officeAccessoriesLoader';
-import { getThreeMaterialFromDef } from '../materials/materialRegistry'; // Ajusta la ruta según tu estructura de carpetas
 
 import KoncisaPlusPanel from './KoncisaPlusPanel';
 import { buildKoncisaPlus } from '../koncisaPlus/KoncisaPlusBuilder';
@@ -24,7 +21,14 @@ function buildCardImageCandidates(assetName) {
   return TYPOLOGY_IMAGE_EXTENSIONS.map((ext) => `/assets/imagen/${code}.${ext}`);
 }
 
-function CardImage({ assetName, title }) {
+function CardImage({
+  assetName,
+  title,
+  imageFit = 'cover',
+  imageHeight = 120,
+  imagePadding = 0,
+  imageBackground = '#ffffff',
+}) {
   const cacheKey = String(assetName || '').trim();
   const candidates = useMemo(() => buildCardImageCandidates(assetName), [assetName]);
   const [candidateIndex, setCandidateIndex] = useState(0);
@@ -34,24 +38,6 @@ function CardImage({ assetName, title }) {
       ? typologyImageCache.get(cacheKey)
       : candidates[0] || null;
   });
-
-  useEffect(() => {
-    const nextCacheKey = String(assetName || '').trim();
-    if (!nextCacheKey) {
-      setCandidateIndex(0);
-      setResolvedImage(null);
-      return;
-    }
-
-    if (typologyImageCache.has(nextCacheKey)) {
-      setCandidateIndex(0);
-      setResolvedImage(typologyImageCache.get(nextCacheKey));
-      return;
-    }
-
-    setCandidateIndex(0);
-    setResolvedImage(candidates[0] || null);
-  }, [assetName, candidates]);
 
   if (!resolvedImage) return null;
 
@@ -75,11 +61,16 @@ function CardImage({ assetName, title }) {
     <div
       style={{
         width: '100%',
-        height: 120,
+        height: imageHeight,
         overflow: 'hidden',
         borderRadius: 10,
         marginBottom: 8,
-        background: '#f3f4f6',
+        background: imageBackground,
+        padding: imagePadding,
+        boxSizing: 'border-box',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <img
@@ -91,7 +82,8 @@ function CardImage({ assetName, title }) {
         style={{
           width: '100%',
           height: '100%',
-          objectFit: 'cover',
+          objectFit: imageFit,
+          objectPosition: 'center',
           display: 'block',
         }}
       />
@@ -104,7 +96,29 @@ function TypologyCardImage({ codigoPT, title }) {
 }
 
 function PlantCardImage({ plantName, title }) {
-  return <CardImage assetName={plantName} title={title} />;
+  return (
+    <CardImage
+      assetName={plantName}
+      title={title}
+      imageFit="contain"
+      imageHeight={156}
+      imagePadding={12}
+      imageBackground="#ffffff"
+    />
+  );
+}
+
+function OfficeAccessoryCardImage({ accessoryName, title }) {
+  return (
+    <CardImage
+      assetName={accessoryName}
+      title={title}
+      imageFit="contain"
+      imageHeight={156}
+      imagePadding={12}
+      imageBackground="#ffffff"
+    />
+  );
 }
 
 export default function LeftPanel({
@@ -122,7 +136,6 @@ export default function LeftPanel({
   espesorFilter,
   setEspesorFilter,
   materials, // 👈 nuevo
-  materialsByCode,
   selectedPart,
   onApplyGlobalMaterial,
   onAddCatalogItem,
@@ -151,11 +164,9 @@ export default function LeftPanel({
   const [qCatalog, setQCatalog] = useState('');
   const [qTyp, setQTyp] = useState('');
   const [tipologias, setTipologias] = useState([]);
-  const [tipologiasReady, setTipologiasReady] = useState(false);
 
   const [qChairs, setQChairs] = useState('');
   const [chairs, setChairs] = useState([]);
-  const [chairsReady, setChairsReady] = useState(false);
   const [categoriasSillas, setCategoriasSillas] = useState([]);
   const [categoriaSillaFilter, setCategoriaSillaFilter] = useState('');
   const [subcategoriaSillaFilter, setSubcategoriaSillaFilter] = useState('');
@@ -204,24 +215,6 @@ export default function LeftPanel({
       );
     });
   }, [materials, qMaterials]);
-
-  function rgbValueToCss(rgbValue) {
-    if (!rgbValue) return 'rgb(200,200,200)';
-
-    const raw = String(rgbValue).trim();
-
-    if (raw.startsWith('#')) return raw;
-
-    if (raw.includes('_')) {
-      return `rgb(${raw.replaceAll('_', ',')})`;
-    }
-
-    if (raw.includes(',')) {
-      return `rgb(${raw})`;
-    }
-
-    return 'rgb(200,200,200)';
-  }
 
   function onApplyMaterialToPart(materialCode) {
     if (!selectedPart) {
@@ -283,11 +276,9 @@ export default function LeftPanel({
 
         if (alive) {
           setTipologias(arr);
-          setTipologiasReady(true);
         }
       } catch (err) {
         console.error('Error cargando tipologias-detalle:', err);
-        if (alive) setTipologiasReady(true);
       }
     })();
 
@@ -362,10 +353,8 @@ export default function LeftPanel({
         setSubcategoriasSillasByCategoria(byCategoriaNormalized);
         setSubcategoriasSillasGlobalCountByCategoria(byCategoriaCounts);
         setChairs(arr);
-        setChairsReady(true);
       } catch (err) {
         console.error('Error cargando sillas:', err);
-        if (alive) setChairsReady(true);
       }
     })();
 
@@ -1553,8 +1542,8 @@ export default function LeftPanel({
                 onClick={() => !readOnly && onAddOfficeAccessory(it.codigoPT)}
                 style={cardBtn(readOnly)}
               >
-                <CardImage
-                  assetName={it.codigoPT}
+                <OfficeAccessoryCardImage
+                  accessoryName={it.codigoPT}
                   title={it.ui?.title || it.codigoPT}
                 />
                 <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
