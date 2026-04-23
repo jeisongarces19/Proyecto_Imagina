@@ -414,7 +414,7 @@ export default function ThreeCanvas({
       const sceneNow = sceneRef.current;
       if (!floor || !sceneNow) return;
 
-      const bounds = computeSceneXZBounds(parts, walls);
+      const bounds = computeSceneXZBounds(getPartsSnapshot2D(), walls);
 
       updateFloorAndGrid({
         floorMesh: floor,
@@ -1636,7 +1636,6 @@ export default function ThreeCanvas({
     }
 
     async function addCatalogItem(codigoPT) {
-
       if (readOnly) return;
       const codigo = String(codigoPT);
 
@@ -2155,63 +2154,63 @@ export default function ThreeCanvas({
     }
 
     onApiReady?.({
-        addPart,
-        addSurface,
-        addCatalogItem,
-        addExternalGlbPart,
-        addNativeBlockPart,
-        toggleSnap,
-        exportProject,
-        loadProject,
-        clearProject,
-        removeActivePart,
-        removePartById,
-        applyFinishToActivePart,
-        getPartsSnapshot2D,
-        selectPartById,
-        addTypology,
-        addChair,
-        addHares,
-        addPlant,
-        addOfficeAccessory,
-        exportGLTF: () => exportSceneToGLTF(scene, { filename: 'proyecto.glb' }),
-        exportDXF: () => {
-          const snap = getPartsSnapshot2D();
-          exportPlanToDXF({
-            walls,
-            partsSnapshot: snap,
-            fileName: 'proyecto.dxf',
-          });
-        },
-        setMoveAsGroup: (value) => {
-          if (readOnly) return;
-          moveAsGroupRef.current = value;
-          setMoveAsGroup(value);
-        },
-        toggleMoveAsGroup: () => {
-          const next = !moveAsGroupRef.current;
-          moveAsGroupRef.current = next;
-          setMoveAsGroup(next);
-        },
-        getMoveAsGroup: () => moveAsGroupRef.current,
-        setDeleteAsGroup: (value) => {
-          if (readOnly) return;
-          deleteAsGroupRef.current = value;
-          setDeleteAsGroup(value);
-        },
-        toggleDeleteAsGroup: () => {
-          const next = !deleteAsGroupRef.current;
-          deleteAsGroupRef.current = next;
-          setDeleteAsGroup(next);
-        },
-        getDeleteAsGroup: () => deleteAsGroupRef.current,
-        removeTargetOrGroup: (target) => removeTargetOrGroup(target),
-        removeActiveOrGroup: () => removeTargetOrGroup(activePart),
-        updateSelectedDuctType,
-        movePartToXZ: (id, x, z) => movePartToXZInternal(id, x, z),
-        selectFloor,
-        updateFloorVisualOptions,
-      });
+      addPart,
+      addSurface,
+      addCatalogItem,
+      addExternalGlbPart,
+      addNativeBlockPart,
+      toggleSnap,
+      exportProject,
+      loadProject,
+      clearProject,
+      removeActivePart,
+      removePartById,
+      applyFinishToActivePart,
+      getPartsSnapshot2D,
+      selectPartById,
+      addTypology,
+      addChair,
+      addHares,
+      addPlant,
+      addOfficeAccessory,
+      exportGLTF: () => exportSceneToGLTF(scene, { filename: 'proyecto.glb' }),
+      exportDXF: () => {
+        const snap = getPartsSnapshot2D();
+        exportPlanToDXF({
+          walls,
+          partsSnapshot: snap,
+          fileName: 'proyecto.dxf',
+        });
+      },
+      setMoveAsGroup: (value) => {
+        if (readOnly) return;
+        moveAsGroupRef.current = value;
+        setMoveAsGroup(value);
+      },
+      toggleMoveAsGroup: () => {
+        const next = !moveAsGroupRef.current;
+        moveAsGroupRef.current = next;
+        setMoveAsGroup(next);
+      },
+      getMoveAsGroup: () => moveAsGroupRef.current,
+      setDeleteAsGroup: (value) => {
+        if (readOnly) return;
+        deleteAsGroupRef.current = value;
+        setDeleteAsGroup(value);
+      },
+      toggleDeleteAsGroup: () => {
+        const next = !deleteAsGroupRef.current;
+        deleteAsGroupRef.current = next;
+        setDeleteAsGroup(next);
+      },
+      getDeleteAsGroup: () => deleteAsGroupRef.current,
+      removeTargetOrGroup: (target) => removeTargetOrGroup(target),
+      removeActiveOrGroup: () => removeTargetOrGroup(activePart),
+      updateSelectedDuctType,
+      movePartToXZ: (id, x, z) => movePartToXZInternal(id, x, z),
+      selectFloor,
+      updateFloorVisualOptions,
+    });
 
     function getGroupedObjects(target) {
       const groupId = target?.userData?.groupId;

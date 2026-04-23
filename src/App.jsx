@@ -338,39 +338,6 @@ export default function App() {
     return materialsAcabado.filter((m) => String(m.groupCode || '').trim() === gen);
   }, [materialsAcabado, selectedPartAcabado?.generico]);
 
-  /*
-  const allowedFinishCodes = useMemo(() => {
-    const pt = String(selectedPartAcabado?.code ?? '').trim();
-    if (!pt) return null;
-
-    const item = byCode?.get?.(pt) || null;
-    const genericosRaw = item?.raw?.genericos || item?.genericos || [];
-
-    const genericos = (Array.isArray(genericosRaw) ? genericosRaw : [])
-      .map((g) => String(g).trim())
-      .filter(Boolean);
-
-    // si no hay genéricos => NO restringimos (muestra todos)
-    if (!genericos.length) return null;
-
-    // materials ya trae groupCode = COD_GENERICO y code = COD_ESPECIFICO
-    const allowed = new Set();
-    for (const m of materialsAcabado || []) {
-      const g = String(m.groupCode || '').trim();
-      if (g && genericos.includes(g)) {
-        allowed.add(String(m.code));
-      }
-    }
-
-    return allowed; // Set<string>
-  }, [selectedPartAcabado?.code, byCode, materialsAcabado]);
-
-  const materialsForPanel = useMemo(() => {
-    if (!allowedFinishCodes) return materialsAcabado;
-    return (materialsAcabado || []).filter((m) => allowedFinishCodes.has(String(m.code)));
-  }, [materialsAcabado, allowedFinishCodes]);
-*/
-
   const allowedFinishCodes = useMemo(() => {
     const pt = String(selectedPart?.code ?? '').trim();
     if (!pt) return null;
@@ -382,16 +349,17 @@ export default function App() {
       ...(Array.isArray(item?.genericos) ? item.genericos : []),
       item?.raw?.generico ?? null,
       item?.generico ?? null,
+
+      // ✅ fallback para objetos que no viven en byCode, como el piso
+      ...(Array.isArray(selectedPart?.genericos) ? selectedPart.genericos : []),
+      selectedPart?.generico ?? null,
     ]
       .map((g) => String(g ?? '').trim())
       .filter(Boolean);
 
     const genericosUnicos = [...new Set(genericos)];
 
-    if (!genericosUnicos.length) {
-      console.log('[allowedFinishCodes] sin genéricos', { pt, item });
-      return null;
-    }
+    if (!genericosUnicos.length) return null;
 
     const allowed = new Set();
     for (const m of materialsAcabado || []) {
@@ -400,7 +368,7 @@ export default function App() {
         allowed.add(String(m.code));
       }
     }
-
+    /*
     console.log('[allowedFinishCodes]', {
       pt,
       genericosUnicos,
@@ -415,9 +383,15 @@ export default function App() {
           name: m.name,
         })),
     });
-
+*/
     return Array.from(allowed);
-  }, [selectedPart?.code, byCode, materialsAcabado]);
+  }, [
+    selectedPart?.code,
+    selectedPart?.generico,
+    selectedPart?.genericos,
+    byCode,
+    materialsAcabado,
+  ]);
 
   /* ==========================
      Cargar materiales (gen-esp)
