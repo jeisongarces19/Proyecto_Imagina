@@ -22,6 +22,7 @@ import { getTipologiaDetalle } from '../services/tipologiasDetalle';
 import { getChairDetail } from '../services/chairsLoader';
 import { getHaresDetail } from '../services/haresLoader';
 import { getPlantDetail } from '../services/plantsLoader';
+import { getOfficeAccessoryDetail } from '../services/officeAccessoriesLoader';
 
 import { resolveKoncisaDucto } from '../koncisaPlus/rules/koncisaDuctoRules';
 
@@ -408,6 +409,51 @@ export default function ThreeCanvas({
       bounds: initialBounds,
     });
 
+    function refreshFloorAndGrid() {
+      const floor = floorMeshRef.current;
+      const sceneNow = sceneRef.current;
+      if (!floor || !sceneNow) return;
+
+      const bounds = computeSceneXZBounds(parts, walls);
+
+      updateFloorAndGrid({
+        floorMesh: floor,
+        gridHelper: gridHelperRef,
+        scene: sceneNow,
+        bounds,
+      });
+
+      applyFloorVisualState();
+      syncGridVisibility();
+
+      if (selectionHelper) selectionHelper.update();
+    }
+
+    refreshFloorAndGridRef.current = refreshFloorAndGrid;
+
+    function applyFloorVisualState() {
+      const floor = floorMeshRef.current;
+      if (!floor) return;
+
+      const grid = gridHelperRef.current;
+      if (grid) {
+        grid.visible = floor.userData?.showGrid !== false;
+      }
+    }
+
+    function syncGridVisibility() {
+      const grid = gridHelperRef.current;
+      if (!grid) return;
+
+      if (activePart?.userData?.isFloor) {
+        grid.visible = activePart.userData?.showGrid !== false;
+        return;
+      }
+
+      const floor = floorMeshRef.current;
+      grid.visible = floor?.userData?.showGrid !== false;
+    }
+
     function setActivePart(obj) {
       activePart = obj;
       activeSubMesh = null; // ✅ cada vez que cambia selección, reset submesh
@@ -553,6 +599,27 @@ export default function ThreeCanvas({
         setActivePart(found.obj);
         frameObject?.(found.obj); // opcional: enfocar al seleccionar desde 2D
       }
+    }
+
+    function movePartToXZInternal(instanceId, x, z) {
+      const found = parts.find(
+        ({ obj }) => (obj?.userData?.instanceId || obj?.uuid) === instanceId
+      );
+      const obj = found?.obj;
+      if (!obj || obj.userData?.lockedMovement) return false;
+
+      const nextX = Number(x);
+      const nextZ = Number(z);
+      if (!Number.isFinite(nextX) || !Number.isFinite(nextZ)) return false;
+
+      obj.position.x = nextX;
+      obj.position.z = nextZ;
+      obj.updateMatrixWorld(true);
+
+      if (selectionHelper) selectionHelper.update();
+      refreshFloorAndGrid();
+      emitBOM();
+      return true;
     }
 
     function emitBOM() {
@@ -1461,7 +1528,115 @@ export default function ThreeCanvas({
       refreshFloorAndGrid();
     }
 
+    async function addOfficeAccessory(accessoryName) {
+      if (readOnly) return;
+      const name = String(accessoryName).trim();
+
+      if (!name) {
+        console.error('Nombre de accesorio vacío');
+        return;
+      }
+
+      // 1) Obtener detalles del accesorio (busca en XML si existe precio)
+      const [detCO, detEUC, detUSD] = await Promise.all([
+        getOfficeAccessoryDetail(name, 'CO'),
+        getOfficeAccessoryDetail(name, 'EUC'),
+        getOfficeAccessoryDetail(name, 'USD'),
+      ]);
+
+      const det =
+        (countryRef.current === 'EUC' && detEUC) ||
+        (countryRef.current === 'USD' && detUSD) ||
+        detCO ||
+        detEUC ||
+        detUSD;
+
+      // 2) Cargar GLB desde carpeta Office Accesories
+      const possibleSrcs = [
+        `/assets/models/Office Accesories/${name}.glb`,
+        `/assets/models/${name}.glb`,
+      ];
+
+      const gltf = await loadExistingGlb(possibleSrcs);
+
+      if (!gltf) {
+        console.error(`No se encontró GLB para accesorio: ${name}`);
+        alert(
+          `No se encontró el modelo 3D para "${name}". Verifica que exista en /assets/models/Office Accesories/`
+        );
+        return;
+      }
+
+      const obj = gltf.scene;
+
+      // Normalizar escala solo para accesorios (algunos GLB vienen en mm y quedan gigantes)
+      obj.updateMatrixWorld(true);
+      const accBox = new THREE.Box3().setFromObject(obj);
+      const accSize = new THREE.Vector3();
+      accBox.getSize(accSize);
+      const maxDim = Math.max(accSize.x, accSize.y, accSize.z);
+
+      if (Number.isFinite(maxDim) && maxDim > 0) {
+        // Si es enorme (p.ej. > 10m), lo llevamos a tamaño razonable (~1m máx)
+        if (maxDim > 10) {
+          const scale = 1 / maxDim;
+          obj.scale.multiplyScalar(scale);
+          obj.updateMatrixWorld(true);
+        }
+      }
+
+      // 3) Preparar BOM: solo si tiene código de precio
+      const accParts =
+        det && det.codigo
+          ? [
+              {
+                code: det.codigo,
+                description: det.descripcion,
+                qty: 1,
+                unitPrice: Number(det.precio || 0),
+                prices: {
+                  CO: detCO?.precio || 0,
+                  EUC: detEUC?.precio || 0,
+                  USD: detUSD?.precio || 0,
+                },
+              },
+            ]
+          : [];
+
+      obj.userData = {
+        ...(obj.userData || {}),
+        kind: 'OFFICE_ACCESSORY',
+        codigoPT: name,
+        code: name,
+        name: det?.descripcion || name,
+        accessoryName: name,
+        accParts,
+        accMeta: {
+          descripcion: det?.descripcion || name,
+          precio: det?.precio || 0,
+          udm: det?.udm || 'und',
+        },
+      };
+
+      obj.name = `OFFICE_ACCESSORY_${name}`;
+
+      // 4) Posición y agregar a escena
+      obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
+      obj.updateMatrixWorld(true);
+
+      scene.add(obj);
+      parts.push({ code: name, obj });
+      pickables.push(obj);
+
+      setActivePart(obj);
+      emitBOM();
+
+      if (parts.length === 1) frameObject(obj);
+      refreshFloorAndGrid();
+    }
+
     async function addCatalogItem(codigoPT) {
+
       if (readOnly) return;
       const codigo = String(codigoPT);
 
@@ -1521,7 +1696,7 @@ export default function ThreeCanvas({
       controls.update();
     }
 
-    function addSurfaceFromRules({ line, widthMm, depthMm, thickMm }) {
+    function _addSurfaceFromRules({ line, widthMm, depthMm, thickMm }) {
       if (readOnly) return;
       // 1) resolver codigoPT real (del XML) usando reglas
       const codigoPT = resolveSurfaceCodigoPT({ line, widthMm, depthMm, thickMm });
@@ -1979,128 +2154,64 @@ export default function ThreeCanvas({
       }
     }
 
-    function movePartToXZInternal(id, x, z) {
-      const found = parts.find(({ obj }) => (obj?.userData?.instanceId || obj?.uuid) === id);
-
-      const target = found?.obj;
-      if (!target) return false;
-      if (target?.userData?.lockedMovement) return false;
-
-      target.position.x = x;
-      target.position.z = z;
-      target.updateMatrixWorld(true);
-
-      if (selectionHelper) selectionHelper.update();
-      emitBOM?.();
-      refreshFloorAndGrid();
-      return true;
-    }
-
-    function refreshFloorAndGrid() {
-      if (!sceneRef.current || !floorMeshRef.current) return;
-
-      const bounds = computeSceneXZBounds(getPartsSnapshot2D(), walls);
-
-      updateFloorAndGrid({
-        floorMesh: floorMeshRef.current,
-        gridHelper: gridHelperRef,
-        scene: sceneRef.current,
-        bounds,
-      });
-
-      applyFloorVisualState();
-    }
-
-    refreshFloorAndGridRef.current = refreshFloorAndGrid;
-
-    function applyFloorVisualState() {
-      const floor = floorMeshRef.current;
-      const grid = gridHelperRef.current;
-      if (!floor || !grid) return;
-
-      const showGrid = floor.userData?.showGrid !== false;
-      grid.visible = showGrid;
-    }
-
-    function syncGridVisibility() {
-      const grid = gridHelperRef.current;
-      if (!grid) return;
-
-      // Si el activo es el piso, manda showGrid del piso
-      if (activePart?.userData?.isFloor) {
-        grid.visible = activePart.userData?.showGrid !== false;
-        return;
-      }
-
-      // Para cualquier otro objeto, deja la cuadrícula visible
-      grid.visible = true;
-    }
-
-    emitBOM();
-
     onApiReady?.({
-      addCatalogItem,
-      addPart,
-      // superficies
-      addSurface,
-      addSurfaceFromRules,
-      addExternalGlbPart,
-      //Vigas nativas
-      addNativeBlockPart,
-      // utilidades
-      toggleSnap,
-      exportProject,
-      loadProject,
-      clearProject,
-      // eliminar
-      removeActivePart,
-      removePartById,
-      applyFinishToActivePart,
-      //2d dibujo
-      getPartsSnapshot2D,
-      selectPartById,
-      addTypology,
-      addChair,
-      addHares,
-      addPlant,
-      exportGLTF: () => exportSceneToGLTF(scene, { filename: 'proyecto.glb' }),
-      exportDXF: () => {
-        const snap = getPartsSnapshot2D();
-        exportPlanToDXF({
-          walls,
-          partsSnapshot: snap,
-          filename: 'planta.dxf',
-        });
-      },
-      setMoveAsGroup: (value) => {
-        moveAsGroupRef.current = value;
-        setMoveAsGroup(value);
-      },
-      toggleMoveAsGroup: () => {
-        const next = !moveAsGroupRef.current;
-        moveAsGroupRef.current = next;
-        setMoveAsGroup(next);
-      },
-      getMoveAsGroup: () => moveAsGroupRef.current,
-      //eliminar por grupo
-      setDeleteAsGroup: (value) => {
-        deleteAsGroupRef.current = value;
-        setDeleteAsGroup(value);
-      },
-      toggleDeleteAsGroup: () => {
-        const next = !deleteAsGroupRef.current;
-        deleteAsGroupRef.current = next;
-        setDeleteAsGroup(next);
-      },
-      getDeleteAsGroup: () => deleteAsGroupRef.current,
-      removeTargetOrGroup: (target) => removeTargetOrGroup(target),
-      removeActiveOrGroup: () => removeTargetOrGroup(activePart),
-      //para el popup
-      updateSelectedDuctType,
-      movePartToXZ: (id, x, z) => movePartToXZInternal(id, x, z),
-      selectFloor,
-      updateFloorVisualOptions,
-    });
+        addPart,
+        addSurface,
+        addCatalogItem,
+        addExternalGlbPart,
+        addNativeBlockPart,
+        toggleSnap,
+        exportProject,
+        loadProject,
+        clearProject,
+        removeActivePart,
+        removePartById,
+        applyFinishToActivePart,
+        getPartsSnapshot2D,
+        selectPartById,
+        addTypology,
+        addChair,
+        addHares,
+        addPlant,
+        addOfficeAccessory,
+        exportGLTF: () => exportSceneToGLTF(scene, { filename: 'proyecto.glb' }),
+        exportDXF: () => {
+          const snap = getPartsSnapshot2D();
+          exportPlanToDXF({
+            walls,
+            partsSnapshot: snap,
+            fileName: 'proyecto.dxf',
+          });
+        },
+        setMoveAsGroup: (value) => {
+          if (readOnly) return;
+          moveAsGroupRef.current = value;
+          setMoveAsGroup(value);
+        },
+        toggleMoveAsGroup: () => {
+          const next = !moveAsGroupRef.current;
+          moveAsGroupRef.current = next;
+          setMoveAsGroup(next);
+        },
+        getMoveAsGroup: () => moveAsGroupRef.current,
+        setDeleteAsGroup: (value) => {
+          if (readOnly) return;
+          deleteAsGroupRef.current = value;
+          setDeleteAsGroup(value);
+        },
+        toggleDeleteAsGroup: () => {
+          const next = !deleteAsGroupRef.current;
+          deleteAsGroupRef.current = next;
+          setDeleteAsGroup(next);
+        },
+        getDeleteAsGroup: () => deleteAsGroupRef.current,
+        removeTargetOrGroup: (target) => removeTargetOrGroup(target),
+        removeActiveOrGroup: () => removeTargetOrGroup(activePart),
+        updateSelectedDuctType,
+        movePartToXZ: (id, x, z) => movePartToXZInternal(id, x, z),
+        selectFloor,
+        updateFloorVisualOptions,
+      });
 
     function getGroupedObjects(target) {
       const groupId = target?.userData?.groupId;

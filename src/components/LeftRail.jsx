@@ -19,6 +19,11 @@ export default function LeftRail({ active, onChange }) {
       image: '/assets/iconos_imagen/Hares.png',
     },
     {
+      id: 'officeAccesories',
+      label: 'Office Accesories',
+      image: '/assets/iconos_imagen/Accesorios.png',
+    },
+    {
       id: 'koncisaPlus',
       label: 'Koncisa Plus',
       image: '/assets/iconos_imagen/koncisa2PlussLibrary.png',

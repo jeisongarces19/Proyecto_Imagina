@@ -9,6 +9,7 @@ import {
 } from '../services/chairsLoader';
 import { loadHaresItems } from '../services/haresLoader';
 import { loadPlantsItems } from '../services/plantsLoader';
+import { loadOfficeAccessoriesItems } from '../services/officeAccessoriesLoader';
 import { getThreeMaterialFromDef } from '../materials/materialRegistry'; // Ajusta la ruta según tu estructura de carpetas
 
 import KoncisaPlusPanel from './KoncisaPlusPanel';
@@ -129,6 +130,7 @@ export default function LeftPanel({
   onAddChair,
   onAddHares,
   onAddPlant,
+  onAddOfficeAccessory,
   onToggleSnap,
   // muros
   wallMode,
@@ -170,6 +172,11 @@ export default function LeftPanel({
   const [qPlants, setQPlants] = useState('');
   const [plantsItems, setPlantsItems] = useState([]);
   const [plantsReady, setPlantsReady] = useState(false);
+
+  // OFFICE ACCESORIES states
+  const [qOfficeAccesories, setQOfficeAccesories] = useState('');
+  const [officeAccessoriesItems, setOfficeAccessoriesItems] = useState([]);
+  const [officeAccessoriesReady, setOfficeAccessoriesReady] = useState(false);
 
   //Materiales genericos
   const [qMaterials, setQMaterials] = useState('');
@@ -438,6 +445,41 @@ export default function LeftPanel({
   }, [country]);
 
   // ================================
+  // Cargar OFFICE ACCESORIES
+  // ================================
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const items = await loadOfficeAccessoriesItems(country);
+        if (!alive) return;
+        const arr = items.map((acc) => ({
+          codigoPT: acc.name,
+          ui: {
+            title: acc.descripcion || acc.name,
+            subtitle: acc.found ? `${country}` : 'Sin precio',
+          },
+          prices: {
+            [country]: Number(acc.precio || 0),
+            CO: Number(acc.precio || 0),
+          },
+          model: { kind: 'OFFICE_ACCESSORY' },
+          raw: acc,
+        }));
+        setOfficeAccessoriesItems(arr);
+        setOfficeAccessoriesReady(true);
+      } catch (err) {
+        console.error('Error cargando Office Accesories:', err);
+        if (alive) setOfficeAccessoriesReady(true);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, [country]);
+
+  // ================================
   // Filtrado de Tipologías
   // ================================
   const typologiesFiltered = useMemo(() => {
@@ -628,6 +670,21 @@ export default function LeftPanel({
       return code.includes(q) || title.includes(q);
     });
   }, [plantsItems, qPlants]);
+
+  // ================================
+  // Filtrado de OFFICE ACCESORIES
+  // ================================
+  const officeAccessoriesFiltered = useMemo(() => {
+    const q = String(qOfficeAccesories || '')
+      .trim()
+      .toLowerCase();
+    if (!q) return officeAccessoriesItems || [];
+    return (officeAccessoriesItems || []).filter((it) => {
+      const code = String(it?.codigoPT ?? '').toLowerCase();
+      const title = String(it?.ui?.title ?? '').toLowerCase();
+      return code.includes(q) || title.includes(q);
+    });
+  }, [officeAccessoriesItems, qOfficeAccesories]);
 
   return (
     <div
@@ -1456,6 +1513,64 @@ export default function LeftPanel({
           {plantsReady && plantsFiltered.length === 0 && (
             <div style={{ fontSize: 12, opacity: 0.7, marginTop: 10 }}>
               No hay plantas disponibles. Agrega entradas a plantas.json
+            </div>
+          )}
+        </>
+      )}
+
+      {/* ======================= OFFICE ACCESORIES ======================= */}
+      {section === 'officeAccesories' && (
+        <>
+          <h1 style={{ margin: '0 0 12px 0' }}>Office Accesories</h1>
+
+          <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>
+            Selecciona un accesorio de oficina para agregarlo al proyecto.
+          </div>
+
+          <input
+            value={qOfficeAccesories}
+            onChange={(e) => setQOfficeAccesories(e.target.value)}
+            placeholder="Buscar por nombre o descripción..."
+            style={{
+              width: '100%',
+              padding: 10,
+              borderRadius: 10,
+              border: '1px solid #e5e7eb',
+              marginBottom: 10,
+              outline: 'none',
+            }}
+          />
+
+          {!officeAccessoriesReady && (
+            <div style={{ fontSize: 12, opacity: 0.7 }}>Cargando Office Accesories...</div>
+          )}
+
+          <div style={{ display: 'grid', gap: 8 }}>
+            {officeAccessoriesFiltered.map((it) => (
+              <button
+                key={String(it.codigoPT)}
+                disabled={readOnly}
+                onClick={() => !readOnly && onAddOfficeAccessory(it.codigoPT)}
+                style={cardBtn(readOnly)}
+              >
+                <CardImage
+                  assetName={it.codigoPT}
+                  title={it.ui?.title || it.codigoPT}
+                />
+                <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
+                <div style={{ fontSize: 12, opacity: 0.85 }}>{it.ui?.title}</div>
+                {it.raw?.found && (
+                  <div style={{ fontSize: 11, opacity: 0.65 }}>
+                    Precio: ${it.prices?.[country] || 0}
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {officeAccessoriesReady && officeAccessoriesFiltered.length === 0 && (
+            <div style={{ fontSize: 12, opacity: 0.7, marginTop: 10 }}>
+              No hay accesorios disponibles. Agrega entradas a officeAccessories.json
             </div>
           )}
         </>
