@@ -1,6 +1,11 @@
 // src/components/PropertiesPanel.jsx
 import { useEffect, useMemo, useState } from 'react';
 
+import {
+  KONCISA_PRIVACY_PANEL_FINISH_OPTIONS,
+  getKoncisaPrivacyPanelFinishById,
+} from '../koncisaPlus/rules/koncisaPrivacyPanelFinishOptions';
+
 export default function PropertiesPanel({
   part,
   partAcabado,
@@ -315,6 +320,33 @@ export default function PropertiesPanel({
             )}
           </div>
         </>
+      )}
+
+      {part?.type === 'pantalla' && (
+        <div style={{ marginTop: 12 }}>
+          <label>Acabado de pantalla</label>
+
+          <select
+            value={part?.privacyPanelFinishId || ''}
+            onChange={(e) => {
+              const selected = getKoncisaPrivacyPanelFinishById(e.target.value);
+              api?.updateActivePrivacyPanelFinish?.({
+                ...selected,
+                privacyPanelFinishId: selected.id,
+              });
+            }}
+            style={{ width: '100%' }}
+            disabled={readOnly}
+          >
+            <option value="">Seleccionar acabado de pantalla</option>
+
+            {KONCISA_PRIVACY_PANEL_FINISH_OPTIONS.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       )}
 
       <hr style={{ margin: '14px 0' }} />

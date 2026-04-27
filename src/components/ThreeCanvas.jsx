@@ -26,6 +26,12 @@ import { getOfficeAccessoryDetail } from '../services/officeAccessoriesLoader';
 
 import { resolveKoncisaDucto } from '../koncisaPlus/rules/koncisaDuctoRules';
 
+import {
+  createKoncisaPrivacyPanelProcedural,
+  panelHasCanto,
+  KONCISA_PRIVACY_PANEL,
+} from '../koncisaPlus/parts/pantallas';
+
 const MM_TO_M = 1 / 1000;
 
 export default function ThreeCanvas({
@@ -492,6 +498,16 @@ export default function ThreeCanvas({
 
         line: obj.userData?.line || null,
 
+        // NUEVO PARA PANTALLAS
+        type: obj.userData?.type || null,
+        subtype: obj.userData?.subtype || null,
+        material: obj.userData?.material || null,
+        finishCode: obj.userData?.finishCode || null,
+        finishLabel: obj.userData?.finishLabel || null,
+        hasCanto: obj.userData?.hasCanto || false,
+        hasBacker: obj.userData?.hasBacker || false,
+        privacyPanelFinishId: obj.userData?.privacyPanelFinishId || null,
+
         subKey,
         subName,
         subMaterialCode,
@@ -893,10 +909,27 @@ export default function ThreeCanvas({
     // Subir por padres hasta encontrar el objeto que tiene userData.code
     function getRootPartObject(intersectObj) {
       let cur = intersectObj;
+
       while (cur) {
-        if (cur.userData && cur.userData.code) return cur;
+        // 1. Prioridad máxima: raíz explícita
+        if (cur.userData?.isPartRoot) {
+          return cur;
+        }
+
+        // 2. Tipos principales seleccionables
+        if (
+          cur.userData?.kind === 'PART' ||
+          cur.userData?.kind === 'SURFACE' ||
+          cur.userData?.kind === 'TYPOLOGY' ||
+          cur.userData?.kind === 'PRIVACY_PANEL' ||
+          cur.userData?.kind === 'KONCISA_PLUS_ASSEMBLY'
+        ) {
+          return cur;
+        }
+
         cur = cur.parent;
       }
+
       return null;
     }
 
@@ -1095,7 +1128,12 @@ export default function ThreeCanvas({
       const spawnZ = 0.5; // fijo positivo (o 0.5 + (parts.length%3)*0.9)
       obj.position.set(spawnX, 0, spawnZ);
 
-      scene.add(obj);
+      //scene.add(obj);
+      if (parentGroup) {
+        parentGroup.add(obj);
+      } else {
+        scene.add(obj);
+      }
       parts.push({ code: codigoPT, obj }); // BOM por codigoPT
       pickables.push(obj);
 
@@ -1243,7 +1281,12 @@ export default function ThreeCanvas({
       obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
       obj.updateMatrixWorld(true);
 
-      scene.add(obj);
+      //scene.add(obj);
+      if (parentGroup) {
+        parentGroup.add(obj);
+      } else {
+        scene.add(obj);
+      }
       parts.push({ code: codigo, obj });
       pickables.push(obj);
 
@@ -1328,7 +1371,12 @@ export default function ThreeCanvas({
       obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
       obj.updateMatrixWorld(true);
 
-      scene.add(obj);
+      //scene.add(obj);
+      if (parentGroup) {
+        parentGroup.add(obj);
+      } else {
+        scene.add(obj);
+      }
       parts.push({ code: codigo, obj });
       pickables.push(obj);
 
@@ -1410,7 +1458,12 @@ export default function ThreeCanvas({
       obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
       obj.updateMatrixWorld(true);
 
-      scene.add(obj);
+      //scene.add(obj);
+      if (parentGroup) {
+        parentGroup.add(obj);
+      } else {
+        scene.add(obj);
+      }
       parts.push({ code: codigo, obj });
       pickables.push(obj);
 
@@ -1517,7 +1570,12 @@ export default function ThreeCanvas({
       obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
       obj.updateMatrixWorld(true);
 
-      scene.add(obj);
+      //scene.add(obj);
+      if (parentGroup) {
+        parentGroup.add(obj);
+      } else {
+        scene.add(obj);
+      }
       parts.push({ code: name, obj });
       pickables.push(obj);
 
@@ -1624,7 +1682,12 @@ export default function ThreeCanvas({
       obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
       obj.updateMatrixWorld(true);
 
-      scene.add(obj);
+      //scene.add(obj);
+      if (parentGroup) {
+        parentGroup.add(obj);
+      } else {
+        scene.add(obj);
+      }
       parts.push({ code: name, obj });
       pickables.push(obj);
 
@@ -1806,65 +1869,151 @@ export default function ThreeCanvas({
       });
     }
 
-    function removePartObject(obj) {
-      if (obj?.userData?.lockedDelete) return false;
-      if (!obj) return false;
+    function isDescendantOf(obj, root) {
+      let cur = obj;
 
-      // quitar de escena
-      try {
-        scene.remove(obj);
-      } catch (err) {
-        void err;
+      while (cur) {
+        if (cur === root) return true;
+        cur = cur.parent;
       }
 
-      // quitar de arrays internos
-      const idx = parts.findIndex((p) => p.obj === obj);
-      if (idx >= 0) parts.splice(idx, 1);
+      return false;
+    }
 
-      const pIdx = pickables.indexOf(obj);
-      if (pIdx >= 0) pickables.splice(pIdx, 1);
+    function removePartsRecordsUnder(root) {
+      for (let i = parts.length - 1; i >= 0; i--) {
+        const obj = parts[i]?.obj;
 
-      // selección
-      if (activePart === obj) {
+        if (!obj) continue;
+
+        if (obj === root || isDescendantOf(obj, root)) {
+          parts.splice(i, 1);
+        }
+      }
+    }
+
+    function removePickablesUnder(root) {
+      for (let i = pickables.length - 1; i >= 0; i--) {
+        const obj = pickables[i];
+
+        if (!obj) continue;
+
+        if (obj === root || isDescendantOf(obj, root)) {
+          pickables.splice(i, 1);
+        }
+      }
+    }
+
+    function getAssemblyId(obj) {
+      return obj?.userData?.instanceId || obj?.userData?.code || obj?.uuid || null;
+    }
+
+    function removeFloatingChildrenOfAssembly(assemblyObj) {
+      const assemblyId = getAssemblyId(assemblyObj);
+
+      if (!assemblyId) return;
+
+      const floatingChildren = parts
+        .map((p) => p.obj)
+        .filter((obj) => {
+          if (!obj) return false;
+          if (obj === assemblyObj) return false;
+
+          const parentAssemblyId = obj.userData?.parentAssemblyId;
+
+          if (!parentAssemblyId) return false;
+
+          // Si ya es descendiente real, no se elimina aquí porque se elimina con el padre.
+          if (isDescendantOf(obj, assemblyObj)) return false;
+
+          return parentAssemblyId === assemblyId;
+        });
+
+      floatingChildren.forEach((child) => {
+        removePartObject(child, {
+          skipFloatingChildren: true,
+        });
+      });
+    }
+
+    function removePartObject(obj, options = {}) {
+      if (!obj) return false;
+
+      const root = getRootPartObject(obj) || obj;
+
+      const { skipFloatingChildren = false } = options;
+
+      const isAssembly =
+        root.userData?.kind === 'KONCISA_PLUS_ASSEMBLY' || root.userData?.type === 'koncisa-plus';
+
+      // Si se elimina un puesto, primero elimina pantallas asociadas que estén por fuera.
+      if (isAssembly && !skipFloatingChildren) {
+        removeFloatingChildrenOfAssembly(root);
+      }
+
+      // Quitar de su padre real.
+      try {
+        if (root.parent) {
+          root.parent.remove(root);
+        } else {
+          scene.remove(root);
+        }
+      } catch {}
+
+      // Quitar registros internos del objeto y de todos sus hijos registrados.
+      removePartsRecordsUnder(root);
+      removePickablesUnder(root);
+
+      // Si la selección activa era este objeto o algo dentro de él, limpiar selección.
+      if (activePart === root || isDescendantOf(activePart, root)) {
         activePart = null;
+        activeSubMesh = null;
+
         if (selectionHelper) {
           try {
             scene.remove(selectionHelper);
-          } catch (err) {
-            void err;
-          }
+          } catch {}
+
           selectionHelper = null;
         }
-        onSelectionChange?.(null);
 
-        onFloatingEditorRequest?.({
-          open: false,
-          x: 0,
-          y: 0,
-          part: null,
-        });
+        onSelectionChange?.(null);
       }
 
-      // liberar recursos
-      disposeObject3D(obj);
+      disposeObject3D(root);
 
       emitBOM();
-      refreshFloorAndGrid();
+
       return true;
     }
 
     function removeActivePart() {
       if (readOnly) return false;
       if (!activePart) return false;
-      return removePartObject(activePart);
+
+      const root = getRootPartObject(activePart) || activePart;
+
+      return removePartObject(root);
     }
 
     function removePartById(instanceId) {
       if (readOnly) return false;
-      const found = parts.find(
-        ({ obj }) => (obj?.userData?.instanceId || obj?.uuid) === instanceId
-      );
+
+      const found = parts.find(({ obj }) => {
+        const ids = [
+          obj?.userData?.instanceId,
+          obj?.userData?.code,
+          obj?.userData?.codigoPT,
+          obj?.uuid,
+        ]
+          .filter(Boolean)
+          .map(String);
+
+        return ids.includes(String(instanceId));
+      });
+
       if (!found?.obj) return false;
+
       return removePartObject(found.obj);
     }
 
@@ -2104,7 +2253,12 @@ export default function ThreeCanvas({
       const spawnZ = 0.5; // fijo positivo (o 0.5 + (parts.length%3)*0.9)
       obj.position.set(spawnX, 0, spawnZ);
 
-      scene.add(obj);
+      //scene.add(obj);
+      if (parentGroup) {
+        parentGroup.add(obj);
+      } else {
+        scene.add(obj);
+      }
       parts.push({ code, obj });
 
       // MUY IMPORTANTE: para click/drag
@@ -2153,9 +2307,406 @@ export default function ThreeCanvas({
       }
     }
 
+    //pantllas:
+    async function loadGlbCached(src, cacheKey) {
+      const finalKey = cacheKey || src;
+
+      if (!src) {
+        throw new Error('No se recibió ruta del modelo GLB.');
+      }
+
+      if (!catalogCache.has(finalKey)) {
+        const gltf = await new Promise((resolve, reject) => {
+          loader.load(src, resolve, undefined, reject);
+        });
+
+        const base = gltf.scene;
+
+        // Si el GLB viene en milímetros, lo bajamos a metros.
+        const box = new THREE.Box3().setFromObject(base);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        const maxDim = Math.max(size.x, size.y, size.z);
+
+        if (maxDim > 10) {
+          base.scale.setScalar(0.001);
+        }
+
+        base.traverse((node) => {
+          if (!node?.isMesh) return;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        });
+
+        catalogCache.set(finalKey, {
+          base,
+          meta: null,
+        });
+      }
+
+      return catalogCache.get(finalKey).base;
+    }
+
+    async function addKoncisaPrivacyPanel({
+      tipo = 'lateral',
+      material = 'formica',
+      lengthMm = 1200,
+      heightMm = 300,
+      thickMm,
+      finishCode = '22008689',
+      finishLabel = null,
+      privacyPanelFinishId = null,
+
+      x = 0,
+      y = 900,
+      z = 0,
+
+      color,
+      cantoColor,
+
+      parentGroup = null,
+    } = {}) {
+      if (readOnly) return null;
+
+      const group = createKoncisaPrivacyPanelProcedural({
+        tipo,
+        material,
+        lengthMm,
+        heightMm,
+        thickMm,
+        finishCode,
+        x,
+        y,
+        z,
+        color,
+        cantoColor,
+        privacyPanelFinishId,
+      });
+
+      const parentGroupId =
+        parentGroup?.userData?.groupId ||
+        parentGroup?.userData?.instanceId ||
+        parentGroup?.userData?.code ||
+        null;
+
+      const parentGroupName =
+        parentGroup?.userData?.groupName || parentGroup?.userData?.name || 'Koncisa Plus';
+
+      group.userData.finishLabel = finishLabel;
+      group.userData.privacyPanelFinishId = privacyPanelFinishId;
+
+      group.userData.isPartRoot = true;
+      group.userData.kind = 'PRIVACY_PANEL';
+      group.userData.type = 'pantalla';
+
+      // ✅ CLAVE PARA BOM AGRUPADO
+      group.userData.groupId = parentGroupId;
+      group.userData.groupName = parentGroupName;
+      group.userData.parentAssemblyId = parentGroupId;
+      group.userData.parentAssemblyName = parentGroupName;
+
+      try {
+        const supportConfig = group.userData.supportConfig || {
+          modelSrc: '/assets/models/2KAC272000-30x60.glb',
+          code: '2KAC272000',
+          name: 'Soporte pantalla Koncisa Plus',
+        };
+
+        const supportBase = await loadGlbCached(
+          supportConfig.modelSrc,
+          `KONCISA_PRIVACY_PANEL_SUPPORT_${supportConfig.code}`
+        );
+
+        const anchors = group.userData.supportAnchors || [];
+
+        anchors.forEach((anchor, index) => {
+          const support = supportBase.clone(true);
+
+          support.name = `SOPORTE_PANTALLA_${index + 1}`;
+
+          support.position.set(
+            anchor.position?.[0] || 0,
+            anchor.position?.[1] || 0,
+            anchor.position?.[2] || 0
+          );
+
+          support.rotation.set(
+            anchor.rotation?.[0] || 0,
+            anchor.rotation?.[1] || 0,
+            anchor.rotation?.[2] || 0
+          );
+
+          support.traverse((node) => {
+            node.userData = {
+              ...(node.userData || {}),
+              isSubPart: true,
+              parentType: 'pantalla',
+              kind: 'SUBPART',
+              category: 'soportes',
+              code: supportConfig.code,
+              name: supportConfig.name,
+              parentCode: group.userData.code,
+              groupId: parentGroupId,
+              groupName: parentGroupName,
+              parentAssemblyId: parentGroupId,
+            };
+
+            if (node?.isMesh) {
+              node.castShadow = true;
+              node.receiveShadow = true;
+            }
+          });
+
+          group.add(support);
+        });
+      } catch (err) {
+        console.warn(
+          'No se pudo cargar el GLB del soporte de pantalla. La pantalla se creó sin soportes:',
+          err
+        );
+      }
+
+      if (parentGroup) {
+        parentGroup.add(group);
+      } else {
+        scene.add(group);
+      }
+
+      parts.push({
+        code: group.userData.code,
+        obj: group,
+      });
+
+      pickables.push(group);
+
+      setActivePart(group);
+      group.updateMatrixWorld(true);
+
+      if (selectionHelper) selectionHelper.update();
+
+      emitBOM();
+
+      return group;
+    }
+
+    function updateActivePrivacyPanelFinish(panelFinish) {
+      if (readOnly) return false;
+      if (!activePart) return false;
+
+      const root = getRootPartObject(activePart) || activePart;
+
+      if (root.userData?.type !== 'pantalla' && root.userData?.kind !== 'PRIVACY_PANEL') {
+        console.warn('La pieza activa no es una pantalla Koncisa Plus.');
+        return false;
+      }
+
+      const {
+        id = null,
+        privacyPanelFinishId = id,
+        tipo = root.userData.subtype || 'lateral',
+        material = 'formica',
+        finishCode = null,
+        finishLabel = '',
+        hasCanto = panelHasCanto(material),
+        hasBacker = material === 'tela-backer',
+      } = panelFinish || {};
+
+      root.userData.subtype = tipo;
+      root.userData.material = material;
+      root.userData.finishCode = finishCode;
+      root.userData.finishLabel = finishLabel;
+      root.userData.hasCanto = hasCanto;
+      root.userData.hasBacker = hasBacker;
+      root.userData.materialCode = finishCode;
+      root.userData.privacyPanelFinishId = privacyPanelFinishId;
+
+      root.traverse((node) => {
+        if (!node?.isMesh) return;
+
+        const subKey = node.userData?.subKey || node.name;
+
+        // =========================
+        // PANTALLA PRINCIPAL
+        // =========================
+        if (subKey === 'pantalla' || node.name === 'PANTALLA') {
+          node.userData.material = material;
+          node.userData.finishCode = finishCode;
+          node.userData.materialCode = finishCode;
+
+          if (material === 'vidrio') {
+            node.material = new THREE.MeshStandardMaterial({
+              color: 0xbfdff2,
+              transparent: true,
+              opacity: 0.38,
+              roughness: 0.05,
+              metalness: 0,
+            });
+          } else if (material === 'tela' || material === 'tela-backer') {
+            node.material = new THREE.MeshStandardMaterial({
+              color: 0x9b9b9b,
+              roughness: 0.95,
+              metalness: 0,
+            });
+          } else if (material === 'melamina') {
+            node.material = new THREE.MeshStandardMaterial({
+              color: 0xd8c7a3,
+              roughness: 0.75,
+              metalness: 0,
+            });
+          } else {
+            node.material = new THREE.MeshStandardMaterial({
+              color: 0xd9d9d9,
+              roughness: 0.75,
+              metalness: 0,
+            });
+          }
+
+          node.material.needsUpdate = true;
+        }
+
+        // =========================
+        // CANTOS
+        // =========================
+        const isCanto =
+          subKey === 'canto' ||
+          node.userData?.category === 'cantos' ||
+          String(node.name || '')
+            .toUpperCase()
+            .includes('CANTO');
+
+        if (isCanto) {
+          node.visible = !!hasCanto;
+        }
+      });
+
+      const supportConfig = root.userData.supportConfig || {
+        code: '2KAC272000',
+        name: 'Soporte pantalla Koncisa Plus',
+      };
+
+      root.userData.typologyParts = [
+        {
+          code: root.userData.code,
+          description: `Pantalla ${tipo} ${material} ${root.userData.dim?.lengthMm || ''}x${
+            root.userData.dim?.heightMm || ''
+          }`,
+          qty: 1,
+          unitPrice: 0,
+        },
+        {
+          code: supportConfig.code,
+          description: supportConfig.name,
+          qty: 2,
+          unitPrice: 0,
+        },
+      ];
+
+      if (hasCanto) {
+        root.userData.typologyParts.push({
+          code: `CANTO-${material}-${finishCode || 'SIN-CODIGO'}`,
+          description: `Canto para pantalla ${material}`,
+          qty: 1,
+          unitPrice: 0,
+        });
+      }
+
+      root.updateMatrixWorld(true);
+
+      if (selectionHelper) selectionHelper.update();
+
+      onSelectionChange?.({
+        code: root.userData.codigoPT || root.userData.code,
+        dimMm: root.userData?.dimMm || root.userData?.dim || null,
+        dimM: root.userData?.dimM || null,
+
+        materialCode: root.userData?.materialCode ?? null,
+        materialBase: root.userData?.materialBase ?? null,
+
+        line: root.userData?.line ?? null,
+
+        type: root.userData?.type || null,
+        subtype: root.userData?.subtype || null,
+        material: root.userData?.material || null,
+        finishCode: root.userData?.finishCode || null,
+        finishLabel: root.userData?.finishLabel || null,
+        hasCanto: root.userData?.hasCanto || false,
+        hasBacker: root.userData?.hasBacker || false,
+        privacyPanelFinishId: root.userData?.privacyPanelFinishId || null,
+
+        subKey: null,
+        subName: null,
+        subMaterialCode: null,
+      });
+
+      emitBOM();
+
+      return true;
+    }
+
+    function createKoncisaPlusAssemblyGroup(config = {}) {
+      const now = Date.now();
+
+      const groupId = config.groupId || `KONCISA_${now}_${Math.random().toString(16).slice(2, 8)}`;
+
+      const groupName = config.groupName || 'Koncisa Plus';
+
+      const group = new THREE.Group();
+
+      group.name = groupName;
+
+      group.userData = {
+        isPartRoot: true,
+        excludeFromBOM: true,
+
+        kind: 'KONCISA_PLUS_ASSEMBLY',
+        type: 'koncisa-plus',
+        line: 'KONCISA.PLUS',
+
+        code: groupId,
+        codigoPT: groupId,
+        instanceId: groupId,
+
+        groupId,
+        groupName,
+
+        name: groupName,
+        description: groupName,
+        config,
+
+        meta: {
+          category: 'ensamble',
+          line: 'KONCISA.PLUS',
+        },
+      };
+
+      scene.add(group);
+
+      // OJO:
+      // No agregar a parts porque si no aparece en el BOM como producto $0.
+      // parts.push({ code: groupId, obj: group }); ❌
+
+      pickables.push(group);
+
+      setActivePart(group);
+      emitBOM();
+
+      return group;
+    }
+
     onApiReady?.({
       addPart,
       addSurface,
+      // pantallas Koncisa Plus
+      addKoncisaPrivacyPanel,
+      updateActivePrivacyPanelFinish,
+      // ensamble Koncisa Plus
+      createKoncisaPlusAssemblyGroup,
+      getActivePart: () => activePart,
+      selectObject: (obj) => {
+        if (obj) setActivePart(obj);
+      },
+
       addCatalogItem,
       addExternalGlbPart,
       addNativeBlockPart,
@@ -2610,40 +3161,66 @@ export default function ThreeCanvas({
         groupId,
         groupName,
         logicalCode,
+
+        // ✅ NUEVO
+        parentGroup = null,
       } = {},
       item
     ) {
       if (readOnly) return;
+
       if (!codigoPT) {
         console.warn('No se crea superficie: no hay codigoPT real (regla faltante).');
         alert(
           'No tenemos esa superficie disponible para la medida, espesor y acabado seleccionados.'
         );
-
         return;
       }
 
-      const widthMm = dim?.widthMm ?? Math.round(widthM * 1000);
-      const depthMm = dim?.depthMm ?? Math.round(depthM * 1000);
-      const thickMm = dim?.thickMm ?? Math.round(thicknessM * 1000);
+      const widthMm = dim?.widthMm ?? Math.round((widthM || 0) * 1000);
+      const depthMm = dim?.depthMm ?? Math.round((depthM || 0) * 1000);
+      const thickMm = dim?.thickMm ?? Math.round((thicknessM || 0) * 1000);
 
       const mesh = createSurfaceMesh({ widthM, depthM, thicknessM });
       const meta = createSurfaceMeta({ widthM, depthM, thicknessM });
 
       const code = String(codigoPT);
-
       const catalogItem = item || catalogByCodeRef.current?.get?.(code) || null;
-
+      /*
+      const description =
+        item?.ui?.title ||
+        item?.ui?.subtitle ||
+        item?.raw?.descripcion ||
+        item?.raw?.description ||
+        code;
+*/
       const description =
         catalogItem?.ui?.title ||
         catalogItem?.ui?.subtitle ||
         catalogItem?.raw?.descripcion ||
-        catalogItem?.raw?.description ||
-        code;
+        catalogItem?.raw?.description;
 
+      /*
+      const description =
+        item?.description ||
+        item?.descripcion ||
+        item?.name ||
+        item?.raw?.descripcion ||
+        item?.raw?.description ||
+        item?.ui?.title ||
+        item?.ui?.subtitle ||
+        catalogItem?.ui?.title ||
+        catalogItem?.ui?.subtitle ||
+        catalogItem?.raw?.descripcion ||
+        catalogItem?.raw?.description ||
+        logicalCode ||
+        code;
+*/
       const rawPrice =
+        catalogItem?.prices?.[countryRef.current] ??
         catalogItem?.prices?.CO ??
         catalogItem?.prices?.co ??
+        catalogItem?.raw?.prices?.[countryRef.current] ??
         catalogItem?.raw?.prices?.CO ??
         catalogItem?.raw?.price ??
         0;
@@ -2659,17 +3236,24 @@ export default function ThreeCanvas({
         meta,
         units: 'm',
         instanceId: `${code}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
+
         generico: item?.generico || item?.raw?.generico || null,
         materialBase: item?.materialBase || item?.raw?.material || 'LAMINA',
         materialCode: item?.materialCode || null,
+
         description,
         unitPrice,
-        groupId: groupId || null,
-        groupName: groupName || null,
+
+        groupId: groupId || parentGroup?.userData?.instanceId || null,
+        groupName: groupName || parentGroup?.userData?.name || null,
+        parentAssemblyId: parentGroup?.userData?.instanceId || parentGroup?.userData?.code || null,
+
         logicalCode: logicalCode || null,
       };
 
       mesh.name = code;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
 
       if (position) {
         mesh.position.set(position.x || 0, position.y || 0, position.z || 0);
@@ -2677,7 +3261,13 @@ export default function ThreeCanvas({
         mesh.position.set(parts.length * 0.9, 0, 0);
       }
 
-      scene.add(mesh);
+      // ✅ CLAVE
+      if (parentGroup) {
+        parentGroup.add(mesh);
+      } else {
+        scene.add(mesh);
+      }
+
       parts.push({ code, obj: mesh });
       pickables.push(mesh);
 
@@ -2686,12 +3276,17 @@ export default function ThreeCanvas({
       setActivePart(mesh);
       emitBOM();
       refreshFloorAndGrid();
+
+      return mesh;
     }
 
     // VIGAS Bloque nativo
     function addNativeBlockPart(part) {
       if (readOnly) return;
       if (!part?.dimMm) return;
+
+      // ✅ CLAVE
+      const parentGroup = part?.parentGroup || null;
 
       const widthM = (part.dimMm.widthMm || 0) / 1000;
       const heightM = (part.dimMm.heightMm || 0) / 1000;
@@ -2742,28 +3337,44 @@ export default function ThreeCanvas({
         unitPrice,
         meta: part.meta || {},
         instanceId: `${code || 'block'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
-        groupId: part?.groupId || null,
-        groupName: part?.groupName || null,
+
+        groupId: part?.groupId || parentGroup?.userData?.instanceId || null,
+        groupName: part?.groupName || parentGroup?.userData?.name || null,
+        parentAssemblyId: parentGroup?.userData?.instanceId || parentGroup?.userData?.code || null,
+
         logicalCode: part?.logicalCode || null,
       };
 
       mesh.name = code || part.name || 'BLOCK_PART';
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
 
-      scene.add(mesh);
+      if (parentGroup) {
+        parentGroup.add(mesh);
+      } else {
+        scene.add(mesh);
+      }
+
       parts.push({ code: code || mesh.name, obj: mesh });
       pickables.push(mesh);
 
       setActivePart(mesh);
       emitBOM();
       refreshFloorAndGrid();
+
+      return mesh;
     }
 
     async function addExternalGlbPart(part) {
       if (readOnly) return;
+
       if (!part?.model?.src) {
         console.warn('No se puede cargar el GLB: falta model.src');
         return;
       }
+
+      // ✅ CLAVE: tomar parentGroup desde el objeto part
+      const parentGroup = part?.parentGroup || null;
 
       try {
         const loader = new GLTFLoader();
@@ -2812,8 +3423,12 @@ export default function ThreeCanvas({
           unitPrice,
           meta: part.meta || {},
           instanceId: `${code || 'glb'}__${Date.now()}__${Math.random().toString(16).slice(2)}`,
-          groupId: part?.groupId || null,
-          groupName: part?.groupName || null,
+
+          groupId: part?.groupId || parentGroup?.userData?.instanceId || null,
+          groupName: part?.groupName || parentGroup?.userData?.name || null,
+          parentAssemblyId:
+            parentGroup?.userData?.instanceId || parentGroup?.userData?.code || null,
+
           logicalCode: part?.logicalCode || null,
 
           // NUEVO: contexto de acabados
@@ -2825,7 +3440,29 @@ export default function ThreeCanvas({
 
         obj.name = code || part.name || 'GLB_PART';
 
-        scene.add(obj);
+        obj.traverse((node) => {
+          if (!node) return;
+
+          node.userData = {
+            ...(node.userData || {}),
+            parentAssemblyId:
+              parentGroup?.userData?.instanceId || parentGroup?.userData?.code || null,
+            groupId: part?.groupId || parentGroup?.userData?.instanceId || null,
+            groupName: part?.groupName || parentGroup?.userData?.name || null,
+          };
+
+          if (node.isMesh) {
+            node.castShadow = true;
+            node.receiveShadow = true;
+          }
+        });
+
+        if (parentGroup) {
+          parentGroup.add(obj);
+        } else {
+          scene.add(obj);
+        }
+
         parts.push({ code: code || obj.name, obj });
         pickables.push(obj);
 
@@ -2911,6 +3548,17 @@ export default function ThreeCanvas({
           generico: activePart.userData?.generico || null,
           genericos: activePart.userData?.genericos || null,
           line: activePart.userData?.line || null,
+
+          // NUEVO PARA PANTALLAS
+          type: obj.userData?.type || null,
+          subtype: obj.userData?.subtype || null,
+          material: obj.userData?.material || null,
+          finishCode: obj.userData?.finishCode || null,
+          finishLabel: obj.userData?.finishLabel || null,
+          hasCanto: obj.userData?.hasCanto || false,
+          hasBacker: obj.userData?.hasBacker || false,
+          privacyPanelFinishId: obj.userData?.privacyPanelFinishId || null,
+
           subKey,
           subName,
           subMaterialCode,

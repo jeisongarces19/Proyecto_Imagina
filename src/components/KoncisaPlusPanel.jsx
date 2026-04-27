@@ -12,6 +12,11 @@ import { useMemo, useState, useEffect } from 'react';
 import { KONCISA_SURFACE_FINISH_OPTIONS } from '../koncisaPlus/rules/koncisaSurfaceFinishOptions';
 import DuctConfigModal from './DuctConfigModal';
 
+import {
+  KONCISA_PRIVACY_PANEL_FINISH_OPTIONS,
+  getKoncisaPrivacyPanelFinishById,
+} from '../koncisaPlus/rules/koncisaPrivacyPanelFinishOptions';
+
 function redondearLargo(mm) {
   if (mm <= 1000) return 1000;
   if (mm <= 1200) return 1200;
@@ -45,6 +50,11 @@ export default function KoncisaPlusPanel({ onCreate }) {
   const [grommetFinish, setGrommetFinish] = useState('ALUMINIUM');
   const [selectedFinishId, setSelectedFinishId] = useState('FORMICA_30');
 
+  const [includePrivacyPanel, setIncludePrivacyPanel] = useState(true);
+  const [selectedPrivacyPanelFinishId, setSelectedPrivacyPanelFinishId] = useState(
+    'PANEL_LATERAL_FORMICA_22008689'
+  );
+
   const [tipoCostado, setTipoCostado] = useState('RECT');
 
   const selectedFinish = useMemo(() => {
@@ -53,6 +63,11 @@ export default function KoncisaPlusPanel({ onCreate }) {
       KONCISA_SURFACE_FINISH_OPTIONS[0]
     );
   }, [selectedFinishId]);
+
+  //pantalla
+  const selectedPrivacyPanelFinish = useMemo(() => {
+    return getKoncisaPrivacyPanelFinishById(selectedPrivacyPanelFinishId);
+  }, [selectedPrivacyPanelFinishId]);
 
   const largoCobroMm = useMemo(() => {
     return redondearLargo(largoRealMm);
@@ -104,7 +119,33 @@ export default function KoncisaPlusPanel({ onCreate }) {
       variant: selectedFinish.variant,
       finishLabel: selectedFinish.label,
       ductModes,
+      privacyPanel: {
+        enabled: includePrivacyPanel,
+        tipo: selectedPrivacyPanelFinish.tipo,
+        material: selectedPrivacyPanelFinish.material,
+        finishCode: selectedPrivacyPanelFinish.finishCode,
+        finishLabel: selectedPrivacyPanelFinish.label,
+        heightMm: selectedPrivacyPanelFinish.heightMm,
+        hasCanto: selectedPrivacyPanelFinish.hasCanto,
+        hasBacker: selectedPrivacyPanelFinish.hasBacker,
+
+        // Para lateral normalmente debe tomar el fondo/ancho del puesto.
+        // Si luego quieres que lateral use largo, se cambia aquí.
+        lengthMm: selectedPrivacyPanelFinish.tipo === 'lateral' ? anchoCobroMm : largoCobroMm,
+      },
     });
+    // TEMPORAL: prueba de pantalla lateral visible
+    /*
+    window.threeApi?.addKoncisaPrivacyPanel?.({
+      tipo: 'lateral',
+      material: 'formica',
+      lengthMm: width,
+      heightMm: 300,
+      finishCode: '22008689',
+      x: 0,
+      y: 900,
+      z: 0,
+    });*/
   };
 
   const opcionesLargo = modoEspecial ? opcionesLargoEspecial : opcionesLargoNormal;
@@ -235,6 +276,53 @@ export default function KoncisaPlusPanel({ onCreate }) {
             </option>
           ))}
         </select>
+      </div>
+
+      <div
+        style={{
+          border: '1px solid #ddd',
+          borderRadius: 8,
+          padding: 10,
+          background: '#fff',
+          display: 'grid',
+          gap: 8,
+        }}
+      >
+        <label>
+          <input
+            type="checkbox"
+            checked={includePrivacyPanel}
+            onChange={(e) => setIncludePrivacyPanel(e.target.checked)}
+          />{' '}
+          Incluir pantalla
+        </label>
+
+        {includePrivacyPanel && (
+          <>
+            <div>
+              <label>Acabado / tipo de pantalla</label>
+              <select
+                value={selectedPrivacyPanelFinishId}
+                onChange={(e) => setSelectedPrivacyPanelFinishId(e.target.value)}
+                style={{ width: '100%' }}
+              >
+                {KONCISA_PRIVACY_PANEL_FINISH_OPTIONS.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div style={{ fontSize: 12, opacity: 0.8 }}>
+              <div>Tipo: {selectedPrivacyPanelFinish.tipo}</div>
+              <div>Material: {selectedPrivacyPanelFinish.material}</div>
+              <div>Finish code: {selectedPrivacyPanelFinish.finishCode}</div>
+              <div>Canto: {selectedPrivacyPanelFinish.hasCanto ? 'Sí' : 'No'}</div>
+              <div>Backer: {selectedPrivacyPanelFinish.hasBacker ? 'Sí' : 'No'}</div>
+            </div>
+          </>
+        )}
       </div>
 
       <button type="button" onClick={() => setDuctConfigOpen(true)}>
