@@ -527,6 +527,8 @@ export default function App() {
         onExportSvg={exportPlanSvg}
         onExportPng={exportPlanPng}
         onExportPdf={exportPlanPdf}
+        onExportGlb={() => threeApiRef.current?.exportGLTF?.()}
+        onExportDxf={() => threeApiRef.current?.exportDXF?.()}
       />
 
       {/* APP GRID */}
@@ -680,14 +682,14 @@ export default function App() {
               gap: 8,
             }}
           >
-            {perms.canExport && (
+            {/*perms.canExport && (
               <>
                 <button onClick={() => threeApiRef.current?.exportGLTF?.()}>Exportar GLB</button>
                 <button onClick={() => threeApiRef.current?.exportDXF?.()}>
                   Exportar DXF (planta)
                 </button>
               </>
-            )}
+            )*/}
           </div>
 
           <ThreeCanvas

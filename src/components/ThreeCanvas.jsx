@@ -2883,7 +2883,7 @@ export default function ThreeCanvas({
 
         targets.forEach((obj) => {
           obj.userData.materialCode = code;
-          obj.userData.materialDef = def;
+          //obj.userData.materialDef = def;
 
           applyMaterialToObject3D(obj, code, def);
 
@@ -2929,7 +2929,7 @@ export default function ThreeCanvas({
       // ===== SURFACE / FLOOR =====
       if (isSurface) {
         activePart.userData.materialCode = code;
-        activePart.userData.materialDef = def;
+        //activePart.userData.materialDef = def;
 
         applyMaterialToObject3D(activePart, code, def);
 
@@ -2969,7 +2969,7 @@ export default function ThreeCanvas({
         };
       } else {
         activePart.userData.materialCode = code;
-        activePart.userData.materialDef = def;
+        //activePart.userData.materialDef = def;
 
         applyMaterialToObject3D(activePart, code, def);
 
