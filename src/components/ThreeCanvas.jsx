@@ -908,6 +908,7 @@ export default function ThreeCanvas({
     // Subir por padres hasta encontrar el objeto que tiene userData.code
     function getRootPartObject(intersectObj) {
       let cur = intersectObj;
+      let fallback = null;
 
       while (cur) {
         // 1. Prioridad máxima: raíz explícita
@@ -915,21 +916,29 @@ export default function ThreeCanvas({
           return cur;
         }
 
-        // 2. Tipos principales seleccionables
+        const kind = cur.userData?.kind;
+
+        // 2. Priorizar contenedores/raíces de ensamblaje
         if (
-          cur.userData?.kind === 'PART' ||
-          cur.userData?.kind === 'SURFACE' ||
-          cur.userData?.kind === 'TYPOLOGY' ||
-          cur.userData?.kind === 'PRIVACY_PANEL' ||
-          cur.userData?.kind === 'KONCISA_PLUS_ASSEMBLY'
+          kind === 'TYPOLOGY' ||
+          kind === 'CHAIR' ||
+          kind === 'ARES' ||
+          kind === 'PLANT' ||
+          kind === 'OFFICE_ACCESSORY' ||
+          kind === 'KONCISA_PLUS_ASSEMBLY'
         ) {
           return cur;
+        }
+
+        // 3. Fallback: piezas sueltas seleccionables
+        if (!fallback && (kind === 'PART' || kind === 'SURFACE' || kind === 'PRIVACY_PANEL')) {
+          fallback = cur;
         }
 
         cur = cur.parent;
       }
 
-      return null;
+      return fallback;
     }
 
     function updateMouseFromEvent(e) {
@@ -1262,6 +1271,7 @@ export default function ThreeCanvas({
       // 5) userData: OJO con el kind y el nombre de la lista
       obj.userData = {
         ...(obj.userData || {}),
+        isPartRoot: true,
         kind: 'TYPOLOGY', // ✅ ESTE ES EL QUE VA A LEER emitBOM
         codigoPT: codigo,
         code: codigo,
@@ -3002,8 +3012,11 @@ export default function ThreeCanvas({
         },
       });
 
+      const isAssemblyRoot =
+        root?.userData?.kind === 'KONCISA_PLUS_ASSEMBLY' || root?.userData?.type === 'koncisa-plus';
+
       //if (moveAsGroup && root?.userData?.groupId) {
-      if (moveAsGroupRef.current && root?.userData?.groupId) {
+      if (moveAsGroupRef.current && root?.userData?.groupId && !isAssemblyRoot) {
         const grouped = getGroupedObjects(root);
         dragGroupStartRef.current = grouped.map((obj) => ({
           obj,
