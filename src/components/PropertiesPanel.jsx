@@ -10,16 +10,12 @@ export default function PropertiesPanel({
   part,
   partAcabado,
   allowedFinishCodes = null, // ✅ NUEVO: array de códigos permitidos o null
-  bomItems = [],
   byCode,
   api,
   materials = [],
-  materialsAcabado = [],
   materialsByCode,
   readOnly = false,
 }) {
-  const hasBom = Array.isArray(bomItems) && bomItems.length > 0;
-
   const [applyScope, setApplyScope] = useState('PART'); // PART | GROUP | ALL
   const [finishQuery, setFinishQuery] = useState(''); // 🔎 buscar por código o nombre
 
@@ -56,10 +52,9 @@ export default function PropertiesPanel({
 
   //
 
-  const formatMoney = (n) => (n || 0).toLocaleString('es-CO');
-
   // (opcional) limpiar búsqueda cuando cambias de parte/subparte
   useEffect(() => {
+    // eslint-disable-next-line
     setFinishQuery('');
   }, [part?.code, part?.subKey, part?.activeSubKey, part?.subName]);
 
@@ -97,18 +92,6 @@ export default function PropertiesPanel({
 
   //para poner el acabado por grupos
   const canApplyGroup = !!part?.groupId;
-
-  const groupScopeLabel = useMemo(() => {
-    if (part?.kind === 'SURFACE') return 'Grupo similar';
-    const cat = String(part?.meta?.category || '').toLowerCase();
-
-    if (cat === 'costados') return 'Grupo similar';
-    if (cat === 'ductos') return 'Grupo similar';
-    if (cat === 'pantallas') return 'Grupo similar';
-    if (cat === 'grommets') return 'Grupo similar';
-
-    return 'Grupo similar';
-  }, [part]);
 
   return (
     <div
