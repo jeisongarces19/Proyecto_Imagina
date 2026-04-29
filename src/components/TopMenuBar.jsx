@@ -28,6 +28,8 @@ export default function TopMenuBar({
   onExportSvg,
   onExportPng,
   onExportPdf,
+  onExportGlb,
+  onExportDxf,
 }) {
   const [open, setOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
@@ -36,6 +38,18 @@ export default function TopMenuBar({
   const canLoadSave = !!perms?.canLoadSave;
 
   const bomShowText = bomOpen ? 'Cerrar Inventario (BOM)' : 'Abrir Inventario (BOM)';
+
+  const doExportGlb = () => {
+    onExportGlb?.();
+    setOpen(false);
+    setExportOpen(false);
+  };
+
+  const doExportDxf = () => {
+    onExportDxf?.();
+    setOpen(false);
+    setExportOpen(false);
+  };
 
   const labelUser = useMemo(() => {
     const ses = user?.label || user?.role || '—';
@@ -200,7 +214,7 @@ export default function TopMenuBar({
                 }}
                 onMouseDown={(e) => e.preventDefault()}
               >
-                exportar 2d
+                Exportar
               </button>
 
               {exportOpen && (
@@ -216,11 +230,25 @@ export default function TopMenuBar({
                     zIndex: 10000,
                   }}
                 >
+                  <MenuItem label="Exportar GLB" onClick={doExportGlb} />
+                  <MenuItem label="Exportar DXF" onClick={doExportDxf} />
+
+                  <div style={{ height: 1, background: '#e5e7eb', margin: '6px 0' }} />
+
                   <MenuItem label="Exportar SVG" onClick={doExportSvg} />
                   <MenuItem label="Exportar PNG" onClick={doExportPng} />
                   <MenuItem label="Exportar PDF" onClick={doExportPdf} />
-                  <div style={{ marginTop: 8, fontSize: 11, color: '#777', lineHeight: 1.35 }}>
-                    PDF abre la ventana de impresión (puedes elegir “Guardar como PDF”).
+
+                  <div
+                    style={{
+                      marginTop: 8,
+                      fontSize: 11,
+                      color: '#777',
+                      lineHeight: 1.35,
+                      padding: '0 12px 10px',
+                    }}
+                  >
+                    PDF abre la ventana de impresión. GLB exporta el modelo 3D limpio del proyecto.
                   </div>
                 </div>
               )}

@@ -865,130 +865,209 @@ export default function LeftPanel({
 
       {section === 'koncisaPlus' && (
         <KoncisaPlusPanel
-          onCreate={(config) => {
-            //const parts = buildKoncisaPlus(config);
+          onCreate={async (config) => {
+            const api = threeApiRef.current;
+            if (!api) {
+              alert('El visor 3D aún no está listo.');
+              return;
+            }
+
             const result = buildKoncisaPlus(config);
             const { groupId, groupName, parts } = result;
 
+            // ✅ 1. Crear grupo padre del puesto
+            const puestoGroup = api.createKoncisaPlusAssemblyGroup?.({
+              ...config,
+              groupId,
+              groupName,
+            });
+
+            if (!puestoGroup) {
+              alert('No se pudo crear el grupo del puesto Koncisa Plus.');
+              return;
+            }
+
+            // =========================
             // SUPERFICIES
+            // =========================
             const superficies = parts.filter((p) => p.type === 'superficie');
 
-            superficies.forEach((surface) => {
+            for (const surface of superficies) {
               if (!surface.code) {
                 alert(`No tenemos disponible esta superficie: ${surface.logicalCode}`);
-                return;
+                continue;
               }
 
               const { widthMm, depthMm, thickMm } = surface.dimMm || {};
 
-              threeApiRef.current?.addSurface?.({
-                line: surface.line,
-                codigoPT: surface.code,
-                widthM: (widthMm || 0) / 1000,
-                depthM: (depthMm || 0) / 1000,
-                thicknessM: (thickMm || 0) / 1000,
-                dim: {
-                  widthMm,
-                  depthMm,
-                  thickMm,
-                },
-                position: {
-                  x: (surface.position?.x || 0) / 1000,
-                  y: (surface.position?.y || 0) / 1000,
-                  z: (surface.position?.z || 0) / 1000,
-                },
-                groupId: surface.groupId || groupId,
-                groupName: surface.groupName || groupName,
-                logicalCode: surface.logicalCode,
-              });
-            });
+              api.addSurface?.(
+                {
+                  line: surface.line,
+                  codigoPT: surface.code,
+                  widthM: (widthMm || 0) / 1000,
+                  depthM: (depthMm || 0) / 1000,
+                  thicknessM: (thickMm || 0) / 1000,
+                  dim: {
+                    widthMm,
+                    depthMm,
+                    thickMm,
+                  },
+                  position: {
+                    x: (surface.position?.x || 0) / 1000,
+                    y: (surface.position?.y || 0) / 1000,
+                    z: (surface.position?.z || 0) / 1000,
+                  },
+                  groupId: surface.groupId || groupId,
+                  groupName: surface.groupName || groupName,
 
+                  // ✅ CLAVE
+                  parentGroup: puestoGroup,
+
+                  logicalCode: surface.logicalCode,
+                },
+                surface
+              );
+            }
+
+            // =========================
             // GROMMETS
+            // =========================
             const grommets = parts.filter((p) => p.type === 'grommet');
 
-            grommets.forEach((grommet) => {
+            for (const grommet of grommets) {
               if (!grommet.code) {
                 alert(`No tenemos disponible este grommet: ${grommet.logicalCode}`);
-                return;
+                continue;
               }
 
-              threeApiRef.current?.addExternalGlbPart?.({
+              await api.addExternalGlbPart?.({
                 ...grommet,
                 groupId: grommet.groupId || groupId,
                 groupName: grommet.groupName || groupName,
-              });
-            });
 
+                // ✅ CLAVE
+                parentGroup: puestoGroup,
+              });
+            }
+
+            // =========================
+            // PASACABLES
+            // =========================
             const pasacables = parts.filter((p) => p.type === 'pasacable');
 
-            pasacables.forEach((pasacable) => {
+            for (const pasacable of pasacables) {
               if (!pasacable.code) {
                 alert(`No tenemos disponible este pasacable: ${pasacable.logicalCode}`);
-                return;
+                continue;
               }
 
-              threeApiRef.current?.addExternalGlbPart?.({
+              await api.addExternalGlbPart?.({
                 ...pasacable,
                 groupId: pasacable.groupId || groupId,
                 groupName: pasacable.groupName || groupName,
-              });
-            });
 
+                // ✅ CLAVE
+                parentGroup: puestoGroup,
+              });
+            }
+
+            // =========================
+            // COSTADOS
+            // =========================
             const costados = parts.filter((p) => p.type === 'costado');
 
-            costados.forEach((costado) => {
-              console.log('COSTADO =>', costado);
-
+            for (const costado of costados) {
               if (!costado.code) {
                 alert(`No tenemos disponible este costado: ${costado.logicalCode}`);
-                return;
+                continue;
               }
 
               if (!costado?.model?.src) {
                 alert(`Este costado no tiene modelo 3D asociado: ${costado.logicalCode}`);
-                return;
+                continue;
               }
 
-              threeApiRef.current?.addExternalGlbPart?.({
+              await api.addExternalGlbPart?.({
                 ...costado,
                 groupId: costado.groupId || groupId,
                 groupName: costado.groupName || groupName,
-              });
-            });
 
-            //VIGAS
+                // ✅ CLAVE
+                parentGroup: puestoGroup,
+              });
+            }
+
+            // =========================
+            // VIGAS
+            // =========================
             const vigas = parts.filter((p) => p.type === 'viga');
 
-            vigas.forEach((viga) => {
+            for (const viga of vigas) {
               if (!viga.code) {
                 alert(`No tenemos disponible esta viga: ${viga.logicalCode}`);
-                return;
+                continue;
               }
 
-              threeApiRef.current?.addNativeBlockPart?.({
+              api.addNativeBlockPart?.({
                 ...viga,
                 groupId: viga.groupId || groupId,
                 groupName: viga.groupName || groupName,
-              });
-            });
 
+                // ✅ CLAVE
+                parentGroup: puestoGroup,
+              });
+            }
+
+            // =========================
+            // DUCTOS
+            // =========================
             const ductos = parts.filter((p) => p.type === 'ducto');
 
-            ductos.forEach((ducto) => {
+            for (const ducto of ductos) {
               if (!ducto.code) {
                 alert(`No tenemos disponible este ducto: ${ducto.logicalCode}`);
-                return;
+                continue;
               }
 
-              threeApiRef.current?.addExternalGlbPart?.({
+              await api.addExternalGlbPart?.({
                 ...ducto,
                 groupId: ducto.groupId || groupId,
                 groupName: ducto.groupName || groupName,
+
+                // ✅ CLAVE
+                parentGroup: puestoGroup,
               });
-            });
+            }
+
+            // =========================
+            // PANTALLA KONCISA PLUS
+            // =========================
+            if (config.privacyPanel?.enabled) {
+              await api.addKoncisaPrivacyPanel?.({
+                tipo: config.privacyPanel.tipo,
+                material: config.privacyPanel.material,
+                lengthMm: config.privacyPanel.lengthMm,
+                heightMm: config.privacyPanel.heightMm,
+                finishCode: config.privacyPanel.finishCode,
+                finishLabel: config.privacyPanel.finishLabel,
+                privacyPanelFinishId: config.privacyPanel.privacyPanelFinishId,
+
+                // posición relativa dentro del puesto
+                x: 0,
+                y: 900,
+                z: 0,
+
+                // ✅ CLAVE: queda pegada al puesto
+                parentGroup: puestoGroup,
+              });
+            }
+
+            // ✅ Dejar seleccionado el puesto completo al final
+            api.selectObject?.(puestoGroup);
 
             console.log('PARTS KONCISA', parts);
             console.log('GROUP KONCISA', groupId);
+            console.log('PUESTO GROUP', puestoGroup);
           }}
         />
       )}
