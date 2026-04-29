@@ -20,7 +20,7 @@ import { exportPlanToDXF } from '../utils/exportDXF';
 
 import { getTipologiaDetalle } from '../services/tipologiasDetalle';
 import { getChairDetail } from '../services/chairsLoader';
-import { getHaresDetail } from '../services/haresLoader';
+import { getAresDetail } from '../services/aresLoader';
 import { getPlantDetail } from '../services/plantsLoader';
 import { getOfficeAccessoryDetail } from '../services/officeAccessoriesLoader';
 
@@ -800,15 +800,15 @@ export default function ThreeCanvas({
           continue;
         }
 
-        if (obj.userData?.kind === 'HARES') {
+        if (obj.userData?.kind === 'ARES') {
           const parentCode = normalizeText(
             obj.userData?.codigoPT || obj.userData?.code || p.code || ''
           );
           const label =
-            obj.userData?.name || obj.userData?.haresMeta?.descripcion || `HARES ${parentCode}`;
+            obj.userData?.name || obj.userData?.aresMeta?.descripcion || `Ares ${parentCode}`;
           const groupInstanceId = obj.userData?.instanceId || obj.uuid || p.id;
 
-          const list = obj.userData?.haresParts || [];
+          const list = obj.userData?.aresParts || [];
 
           if (Array.isArray(list) && list.length) {
             for (const it of list) {
@@ -1339,15 +1339,15 @@ export default function ThreeCanvas({
       refreshFloorAndGrid();
     }
 
-    async function addHares(codigoHares) {
+    async function addAres(codigoAres) {
       if (readOnly) return;
-      const codigo = String(codigoHares);
+      const codigo = String(codigoAres);
 
-      // 1) trae detalle del producto HARES desde el XML
+      // 1) trae detalle del producto Ares desde el XML
       const [detCO, detEUC, detUSD] = await Promise.all([
-        getHaresDetail(codigo, 'CO'),
-        getHaresDetail(codigo, 'EUC'),
-        getHaresDetail(codigo, 'USD'),
+        getAresDetail(codigo, 'CO'),
+        getAresDetail(codigo, 'EUC'),
+        getAresDetail(codigo, 'USD'),
       ]);
 
       const det =
@@ -1359,24 +1359,24 @@ export default function ThreeCanvas({
 
       if (!det) {
         console.warn(
-          `HARES: producto ${codigo} no encontrado en PriceList, se cargará sin precio.`
+          `Ares: producto ${codigo} no encontrado en PriceList, se cargará sin precio.`
         );
       }
 
-      // 2) cargar GLB desde carpeta HARES
-      const possibleSrcs = [`/assets/models/HARES/${codigo}.glb`, `/assets/models/${codigo}.glb`];
+      // 2) cargar GLB desde carpeta Ares
+      const possibleSrcs = [`/assets/models/Ares/${codigo}.glb`, `/assets/models/${codigo}.glb`];
 
       const gltf = await loadExistingGlb(possibleSrcs);
 
       if (!gltf) {
-        console.error(`No se encontró un GLB válido para HARES ${codigo}`);
+        console.error(`No se encontró un GLB válido para Ares ${codigo}`);
         return;
       }
 
       const obj = gltf.scene;
 
       // 3) userData
-      const haresParts = [
+      const aresParts = [
         {
           code: codigo,
           description: det?.descripcion || codigo,
@@ -1392,19 +1392,19 @@ export default function ThreeCanvas({
 
       obj.userData = {
         ...(obj.userData || {}),
-        kind: 'HARES',
+        kind: 'ARES',
         codigoPT: codigo,
         code: codigo,
         name: det?.descripcion || codigo,
-        haresParts,
-        haresMeta: {
+        aresParts,
+        aresMeta: {
           descripcion: det?.descripcion || codigo,
           precio: det?.precio || 0,
           udm: det?.udm || 'und',
         },
       };
 
-      obj.name = `HARES_${codigo}`;
+      obj.name = `ARES_${codigo}`;
 
       // 4) posición inicial
       obj.position.set(Math.max(0, parts.length * 0.9), 0, 0);
@@ -2171,7 +2171,7 @@ export default function ThreeCanvas({
         selectPartById,
         addTypology,
         addChair,
-        addHares,
+        addAres,
         addPlant,
         addOfficeAccessory,
         exportGLTF: () => exportSceneToGLTF(scene, { filename: 'proyecto.glb' }),

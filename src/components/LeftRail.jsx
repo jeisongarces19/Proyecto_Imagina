@@ -14,9 +14,9 @@ export default function LeftRail({ active, onChange }) {
       image: '/assets/iconos_imagen/Flores.png',
     },
     {
-      id: 'hares',
-      label: 'HARES',
-      image: '/assets/iconos_imagen/Hares.png',
+      id: 'ares',
+      label: 'Ares',
+      image: '/assets/iconos_imagen/Ares.png',
     },
     {
       id: 'officeAccesories',

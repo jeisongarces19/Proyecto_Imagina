@@ -1,12 +1,12 @@
-// src/services/haresLoader.js
-// Lista de códigos HARES disponibles (los que tienen GLB en /assets/models/HARES/)
+// src/services/aresLoader.js
+// Lista de códigos Ares disponibles (los que tienen GLB en /assets/models/Ares/)
 // Agregar aquí cada nuevo código cuando se añada el GLB correspondiente.
-const HARES_CODES = [
+const ARES_CODES = [
   '22000134845',
 ];
 
 const cacheByList = new Map();
-let cacheHaresItems = null;
+let cacheAresItems = null;
 
 function normalizeList(list) {
   return String(list || 'CO')
@@ -73,14 +73,14 @@ async function loadPriceListMap(list = 'CO') {
   return map;
 }
 
-// Devuelve la lista de items HARES disponibles con precios del XML para el país dado
-export async function loadHaresItems(list = 'CO') {
-  if (cacheHaresItems) return cacheHaresItems;
+// Devuelve la lista de items Ares disponibles con precios del XML para el país dado
+export async function loadAresItems(list = 'CO') {
+  if (cacheAresItems) return cacheAresItems;
 
   try {
     const priceMap = await loadPriceListMap(list);
 
-    const items = HARES_CODES.map((code) => {
+    const items = ARES_CODES.map((code) => {
       const det = priceMap.get(code);
       return {
         codigo: code,
@@ -91,11 +91,11 @@ export async function loadHaresItems(list = 'CO') {
       };
     });
 
-    cacheHaresItems = items;
+    cacheAresItems = items;
     return items;
   } catch (err) {
-    console.error('[loadHaresItems] Error:', err);
-    return HARES_CODES.map((code) => ({
+    console.error('[loadAresItems] Error:', err);
+    return ARES_CODES.map((code) => ({
       codigo: code,
       descripcion: code,
       precio: 0,
@@ -105,7 +105,7 @@ export async function loadHaresItems(list = 'CO') {
   }
 }
 
-export async function getHaresDetail(codigo, list = 'CO') {
+export async function getAresDetail(codigo, list = 'CO') {
   try {
     const map = await loadPriceListMap(list);
     return map.get(String(codigo)) || null;

@@ -5,7 +5,7 @@ import {
   loadChairsCategoryMap,
   loadCategoriasSillas,
 } from '../services/chairsLoader';
-import { loadHaresItems } from '../services/haresLoader';
+import { loadAresItems } from '../services/aresLoader';
 import { loadPlantsItems } from '../services/plantsLoader';
 import { loadOfficeAccessoriesItems } from '../services/officeAccessoriesLoader';
 
@@ -25,7 +25,7 @@ function CardImage({
   assetName,
   title,
   imageFit = 'cover',
-  imageHeight = 120,
+  imageHeight = 96,
   imagePadding = 0,
   imageBackground = '#ffffff',
 }) {
@@ -63,8 +63,8 @@ function CardImage({
         width: '100%',
         height: imageHeight,
         overflow: 'hidden',
-        borderRadius: 10,
-        marginBottom: 8,
+        borderRadius: 8,
+        marginBottom: 6,
         background: imageBackground,
         padding: imagePadding,
         boxSizing: 'border-box',
@@ -101,8 +101,8 @@ function PlantCardImage({ plantName, title }) {
       assetName={plantName}
       title={title}
       imageFit="contain"
-      imageHeight={156}
-      imagePadding={12}
+      imageHeight={120}
+      imagePadding={8}
       imageBackground="#ffffff"
     />
   );
@@ -114,8 +114,8 @@ function OfficeAccessoryCardImage({ accessoryName, title }) {
       assetName={accessoryName}
       title={title}
       imageFit="contain"
-      imageHeight={156}
-      imagePadding={12}
+      imageHeight={120}
+      imagePadding={8}
       imageBackground="#ffffff"
     />
   );
@@ -141,7 +141,7 @@ export default function LeftPanel({
   onAddCatalogItem,
   onAddTypology,
   onAddChair,
-  onAddHares,
+  onAddAres,
   onAddPlant,
   onAddOfficeAccessory,
   onToggleSnap,
@@ -174,10 +174,10 @@ export default function LeftPanel({
   const [subcategoriasSillasGlobalCountByCategoria, setSubcategoriasSillasGlobalCountByCategoria] =
     useState({});
 
-  // HARES states
-  const [qHares, setQHares] = useState('');
-  const [haresItems, setHaresItems] = useState([]);
-  const [haresReady, setHaresReady] = useState(false);
+  // Ares states
+  const [qAres, setQAres] = useState('');
+  const [aresItems, setAresItems] = useState([]);
+  const [aresReady, setAresReady] = useState(false);
 
   // PLANTS AND FLOWERS states
   const [qPlants, setQPlants] = useState('');
@@ -364,32 +364,32 @@ export default function LeftPanel({
   }, [country]);
 
   // ================================
-  // Cargar HARES
+  // Cargar Ares
   // ================================
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
-        const items = await loadHaresItems(country);
+        const items = await loadAresItems(country);
         if (!alive) return;
         const arr = items.map((c) => ({
           codigoPT: String(c.codigo),
           ui: {
             title: c.descripcion || String(c.codigo),
-            subtitle: 'HARES',
+            subtitle: 'ARES',
           },
           prices: {
             [country]: Number(c.precio || 0),
             CO: Number(c.precio || 0),
           },
-          model: { kind: 'HARES' },
+          model: { kind: 'ARES' },
           raw: c,
         }));
-        setHaresItems(arr);
-        setHaresReady(true);
+        setAresItems(arr);
+        setAresReady(true);
       } catch (err) {
-        console.error('Error cargando HARES:', err);
-        if (alive) setHaresReady(true);
+        console.error('Error cargando Ares:', err);
+        if (alive) setAresReady(true);
       }
     })();
 
@@ -631,19 +631,19 @@ export default function LeftPanel({
   }, [categoriaSillaFilter, subcategoriasSillasGlobalCountByCategoria]);
 
   // ================================
-  // Filtrado de HARES
+  // Filtrado de Ares
   // ================================
-  const haresFiltered = useMemo(() => {
-    const q = String(qHares || '')
+  const aresFiltered = useMemo(() => {
+    const q = String(qAres || '')
       .trim()
       .toLowerCase();
-    if (!q) return haresItems || [];
-    return (haresItems || []).filter((it) => {
+    if (!q) return aresItems || [];
+    return (aresItems || []).filter((it) => {
       const code = String(it?.codigoPT ?? '').toLowerCase();
       const title = String(it?.ui?.title ?? '').toLowerCase();
       return code.includes(q) || title.includes(q);
     });
-  }, [haresItems, qHares]);
+  }, [aresItems, qAres]);
 
   // ================================
   // Filtrado de PLANTS AND FLOWERS
@@ -1411,18 +1411,18 @@ export default function LeftPanel({
         </>
       )}
 
-      {/* ======================= HARES ======================= */}
-      {section === 'hares' && (
+      {/* ======================= ARES ======================= */}
+      {section === 'ares' && (
         <>
-          <h1 style={{ margin: '0 0 12px 0' }}>HARES</h1>
+          <h1 style={{ margin: '0 0 12px 0' }}>Ares</h1>
 
           <div style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>
-            Selecciona un producto HARES para agregarlo al proyecto.
+            Selecciona un producto Ares para agregarlo al proyecto.
           </div>
 
           <input
-            value={qHares}
-            onChange={(e) => setQHares(e.target.value)}
+            value={qAres}
+            onChange={(e) => setQAres(e.target.value)}
             placeholder="Buscar por código o descripción..."
             style={{
               width: '100%',
@@ -1434,14 +1434,14 @@ export default function LeftPanel({
             }}
           />
 
-          {!haresReady && <div style={{ fontSize: 12, opacity: 0.7 }}>Cargando HARES...</div>}
+          {!aresReady && <div style={{ fontSize: 12, opacity: 0.7 }}>Cargando Ares...</div>}
 
           <div style={{ display: 'grid', gap: 8 }}>
-            {haresFiltered.map((it) => (
+            {aresFiltered.map((it) => (
               <button
                 key={String(it.codigoPT)}
                 disabled={readOnly}
-                onClick={() => !readOnly && onAddHares(it.codigoPT)}
+                onClick={() => !readOnly && onAddAres(it.codigoPT)}
                 style={cardBtn(readOnly)}
               >
                 <div style={{ fontWeight: 900 }}>{it.codigoPT}</div>
@@ -1571,8 +1571,8 @@ export default function LeftPanel({
 function cardBtn(readOnly) {
   return {
     textAlign: 'left',
-    padding: '10px 10px',
-    borderRadius: 12,
+    padding: '8px',
+    borderRadius: 10,
     border: '1px solid #e5e7eb',
     background: '#fff',
     cursor: readOnly ? 'not-allowed' : 'pointer',
@@ -1596,8 +1596,8 @@ const lab = { display: 'grid', gap: 6, fontSize: 12, fontWeight: 800 };
 const inp = { padding: 8, borderRadius: 10, border: '1px solid #ddd' };
 const disabledCard = {
   textAlign: 'left',
-  padding: '10px 10px',
-  borderRadius: 12,
+  padding: '8px',
+  borderRadius: 10,
   border: '1px solid #e5e7eb',
   background: '#fafafa',
   cursor: 'not-allowed',

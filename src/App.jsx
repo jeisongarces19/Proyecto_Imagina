@@ -657,8 +657,8 @@ export default function App() {
               onAddChair={(codigoSilla) =>
                 !readOnly && threeApiRef.current?.addChair?.(codigoSilla)
               }
-              onAddHares={(codigoHares) =>
-                !readOnly && threeApiRef.current?.addHares?.(codigoHares)
+              onAddAres={(codigoAres) =>
+                !readOnly && threeApiRef.current?.addAres?.(codigoAres)
               }
               onAddPlant={(plantName) => !readOnly && threeApiRef.current?.addPlant?.(plantName)}
               onAddOfficeAccessory={(accessoryName) =>
